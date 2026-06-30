@@ -4,7 +4,7 @@
   padding: 1.2rem 0;
 }
 
-.navbar__container {
+.navbar_container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -13,28 +13,26 @@
   align-items: center;
 }
 
-.navbar__brand {
+.navbar_brand {
   display: flex;
   align-items: center;
   gap: 0.7rem;
 }
 
-.navbar__logo {
+.navbar_logo {
   width: 45px;
   height: 45px;
-  border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
-.navbar__title {
+.navbar_title {
   color: #fff;
   font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
-::ng-deep .navbar__signin-btn {
+::ng-deep .navbar_signin-btn {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.6) !important;
   color: #fff !important;
@@ -42,6 +40,6 @@
   padding: 0.55rem 1.6rem !important;
 }
 
-::ng-deep .navbar__signin-btn:hover {
+::ng-deep .navbar_signin-btn:hover {
   background: rgba(255, 255, 255, 0.3) !important;
 }
