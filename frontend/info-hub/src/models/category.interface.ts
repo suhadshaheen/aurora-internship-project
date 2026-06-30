@@ -1,5 +1,6 @@
-export interface Category {
-  cat_id: string;
-  cat_name: string;
+export interface ICategory {
+  catId: string;
+  catName: string;
   userId: string;
+  dateCreated: Date;
 }
