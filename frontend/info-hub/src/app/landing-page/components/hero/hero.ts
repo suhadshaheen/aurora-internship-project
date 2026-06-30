@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-
+import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-hero',
-  imports: [],
+  imports: [CardModule],
   templateUrl: './hero.html',
   styleUrl: './hero.css',
 })
