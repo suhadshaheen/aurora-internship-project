@@ -5,7 +5,7 @@ import { LandingPage } from './landing-page/landing-page';
   selector: 'app-root',
   imports: [RouterOutlet, LandingPage],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('info-hub');
