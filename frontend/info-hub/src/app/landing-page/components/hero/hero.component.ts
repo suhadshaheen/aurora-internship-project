@@ -3,8 +3,8 @@ import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-hero',
   imports: [CardModule],
-  templateUrl: './hero.html',
-  styleUrl: './hero.css',
+  templateUrl: './hero.component.html',
+  styleUrl: './hero.component.css',
 })
 export class Hero {
   readonly title = "Your team's collective intelligence, organized.";
