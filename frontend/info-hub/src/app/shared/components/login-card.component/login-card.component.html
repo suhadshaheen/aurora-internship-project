@@ -4,13 +4,14 @@
     <div class="login-left">
       <h1>{{ title1 }}</h1>
       <p>{{ description1 }}</p>
-
+     <ng-content select="[left-content]"></ng-content>
 
     </div>
 
     <div class="login-right">
       <div class="right-top">
         <img src="/assets/Aurora%20(logo)-01.png" alt="Aurora logo" class="aurora-logo" />
+        <ng-content select="[right-content]"></ng-content>
       </div>
 
       <div class="right-text">
