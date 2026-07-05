@@ -6,12 +6,13 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RESET_PASSWORD_CONSTANTS } from '../../../reset-password/reset-password.constants';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password-card',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, PasswordModule, ButtonModule, MessageModule, ToastModule],
+  imports: [FormsModule, PasswordModule, ButtonModule, MessageModule, ToastModule, RouterModule],
   templateUrl: './reset-password-card.component.html',
   styleUrl: './reset-password-card.component.css',
 })

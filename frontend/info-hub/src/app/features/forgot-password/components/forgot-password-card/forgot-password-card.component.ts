@@ -6,11 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { FORGOT_PASSWORD_CONSTANTS } from '../../forgot-password.constants';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password-card',
   standalone: true,
-  imports: [MessageModule, ToastModule, ButtonModule, InputTextModule, FormField],
+  imports: [MessageModule, ToastModule, ButtonModule, InputTextModule, FormField, RouterModule],
   templateUrl: './forgot-password-card.component.html',
   styleUrl: './forgot-password-card.component.css',
 })
@@ -21,7 +22,7 @@ export class ForgotPasswordCard {
 
   forgotForm = form(this.model, (path) => {
     required(path.email, {
-      when: ({ state }) => state.touched(),
+      when: ({ state }) => state.dirty(),
       message: 'Email is required.',
     });
     email(path.email, {
