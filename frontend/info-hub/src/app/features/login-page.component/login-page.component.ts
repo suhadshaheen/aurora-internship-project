@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-
+import {LoginCardComponent} from '../../shared/login-card.component/login-card.component';
 @Component({
   selector: 'app-login-page.component',
-  imports: [],
+  imports: [LoginCardComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })

@@ -1,0 +1,10 @@
+.login-page {
+  min-height: 100vh;
+  background: #97ddea;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+}
