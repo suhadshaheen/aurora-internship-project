@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LandingPage } from './landing-page/landing-page';
+import { LandingPage } from './landing-page/landingPage.component';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, LandingPage],
