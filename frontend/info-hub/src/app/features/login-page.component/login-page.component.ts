@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { LoginCardComponent } from '../../shared/login-card.component/login-card.component';
+
+import { LoginCardComponent } from '../../shared/components/login-card.component/login-card.component';
+
 @Component({
   selector: 'app-login-page.component',
   imports: [LoginCardComponent],
