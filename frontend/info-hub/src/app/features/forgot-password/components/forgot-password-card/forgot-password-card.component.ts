@@ -33,6 +33,7 @@ export class ForgotPasswordCard {
     });
   });
 
+  //
   onSubmit(event: Event) {
     event.preventDefault();
     submit(this.forgotForm, async () => {
