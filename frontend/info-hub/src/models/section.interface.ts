@@ -1,8 +1,9 @@
-export interface Section {
+export interface ISection {
   sectionId: string;
   title: string;
   content: string;
   userId: string;
-  cat_id: string;
+  catId: string;
   visibility: boolean;
+  dateCreated: Date;
 }

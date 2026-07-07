@@ -1,0 +1,100 @@
+.navbar {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.097);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+}
+
+.navbar_container {
+  margin: 0 auto;
+  padding: 0 3rem 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar_brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.navbar_brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar_title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.navbar_tagline {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.navbar_logo {
+  width: 39px;
+  height: 39px;
+  object-fit: cover;
+}
+
+.navbar_aurora-logo {
+  height: 43px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .navbar_container {
+    padding: 0 1.5rem;
+  }
+
+  .navbar_title {
+    font-size: 1.5rem;
+  }
+
+  .navbar_tagline {
+    font-size: 0.8rem;
+  }
+
+  .navbar_aurora-logo {
+    height: 28px;
+  }
+
+  .navbar_logo {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar_container {
+    padding: 0 1rem;
+  }
+
+  .navbar_tagline {
+    display: none;
+  }
+
+  .navbar_title {
+    font-size: 1rem;
+  }
+
+  .navbar_aurora-logo {
+    height: 22px;
+  }
+
+  .navbar_logo {
+    width: 30px;
+    height: 30px;
+  }
+}

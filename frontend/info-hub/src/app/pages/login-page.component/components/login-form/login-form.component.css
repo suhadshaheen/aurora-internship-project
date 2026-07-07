@@ -1,0 +1,161 @@
+.login-form {
+  width: 100%;
+  max-width: 380px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field-wrapper {
+  width: 100%;
+  display: block;
+}
+
+/* Email input */
+.login-input {
+  width: 100%;
+  height: 64px;
+
+  border-radius: 10px !important;
+  border: none !important;
+
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #1c2433 !important;
+
+  font-size: 16px;
+  padding: 24px 18px 8px !important;
+}
+
+/* Email placeholder */
+.login-input::placeholder {
+  font-size: 13px;
+  color: #9aa0a6;
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* Password wrapper */
+:host ::ng-deep .password-field {
+  width: 100%;
+  display: block;
+}
+
+:host ::ng-deep .password-field .p-password {
+  width: 100%;
+}
+
+/* Password input */
+:host ::ng-deep .password-field input {
+  width: 100%;
+  height: 64px;
+
+  border-radius: 10px !important;
+  border: none !important;
+
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #1c2433 !important;
+
+  font-size: 16px;
+  padding: 24px 50px 8px 18px !important;
+}
+
+/* Password placeholder */
+:host ::ng-deep .password-field input::placeholder {
+  font-size: 13px;
+  color: #9aa0a6;
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* Floating label */
+:host ::ng-deep .p-floatlabel label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #39c6d3;
+}
+
+/* Focus effect */
+.login-input:focus {
+  border-color: #39c6d3 !important;
+  box-shadow: 0 0 0 1px rgba(57, 198, 211, 0.35) !important;
+}
+
+:host ::ng-deep .password-field input:focus {
+  border-color: #39c6d3 !important;
+  box-shadow: 0 0 0 1px rgba(57, 198, 211, 0.35) !important;
+}
+
+/* Eye icon */
+:host ::ng-deep .password-field .p-password-toggle-mask-icon {
+  color: #8e96a3;
+}
+
+/* Forgot password */
+.forgot-password {
+  align-self: flex-start;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+/* Login button */
+:host ::ng-deep .login-btn {
+  width: 100%;
+  height: 58px;
+
+  border: none !important;
+  border-radius: 12px !important;
+
+  background: linear-gradient(
+    135deg,
+    #18375f 0%,
+    #6579b8 52%,
+    #42c7d3 100%
+  ) !important;
+
+  color: #ffffff !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+
+  box-shadow: 0 8px 18px rgba(24, 55, 95, 0.25);
+}
+
+:host ::ng-deep .p-button.login-btn {
+  width: 100%;
+}
+
+:host ::ng-deep .login-btn .p-button-label {
+  font-weight: 700;
+}
+
+/* Disabled button */
+:host ::ng-deep .login-btn:disabled,
+:host ::ng-deep .p-button.login-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Error messages */
+.error-message {
+  color: #ffe1e1;
+  font-size: 13px;
+  margin-top: -8px;
+}
+.forgot-password {
+  display: block;
+  text-align: right;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #1a1a2e ;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "catId": "1",
+    "catName": "HR & Policies",
+    "userId": "3",
+    "dateCreated": "2025-02-08T00:00:00.000Z"
+  },
+  {
+    "catId": "2",
+    "catName": "Finance",
+    "userId": "4",
+    "dateCreated": "2025-06-16T00:00:00.000Z"
+  },
+  {
+    "catId": "3",
+    "catName": "IT & Security",
+    "userId": "1",
+    "dateCreated": "2025-01-19T00:00:00.000Z"
+  },
+  {
+    "catId": "4",
+    "catName": "Marketing",
+    "userId": "5",
+    "dateCreated": "2025-01-25T00:00:00.000Z"
+  },
+  {
+    "catId": "5",
+    "catName": "Product & Projects",
+    "userId": "3",
+    "dateCreated": "2025-05-30T00:00:00.000Z"
+  }
+]
