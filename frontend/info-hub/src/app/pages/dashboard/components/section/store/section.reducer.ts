@@ -1,15 +1,15 @@
 import { ISection } from '../../../../../../models/section.interface';
 import { createReducer, on } from '@ngrx/store';
-import * as SectionActions from './section.actions';
+import { SectionActions } from './section.actions';
 
-export interface SectionState {
+export interface ISectionState {
   sections: ISection[];
   selectedSection: ISection | null;
   loading: boolean;
   error: string | null;
 }
 
-const initialSectionState: SectionState = {
+const initialSectionState: ISectionState = {
   sections: [],
   selectedSection: null,
   loading: false,
