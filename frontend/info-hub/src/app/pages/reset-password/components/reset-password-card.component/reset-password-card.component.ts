@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { RESET_PASSWORD_CONSTANTS } from '../../../reset-password/reset-password.constants';
+import { RESET_PASSWORD_CONSTANTS } from '../../reset-password.constants';
 import { RouterModule } from '@angular/router';
 
 @Component({
