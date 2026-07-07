@@ -8,6 +8,8 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { MessageService } from 'primeng/api';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { sectionReducer } from './pages/dashboard/components/section/store/section.reducer';
+import { categoryReducer } from './pages/dashboard/components/category/store/category.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,5 +27,9 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     provideStore(),
     provideEffects(),
+    provideStore({
+      category: categoryReducer,
+      section: sectionReducer,
+    }),
   ],
 };

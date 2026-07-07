@@ -1,0 +1,85 @@
+import { ISection } from '../../../../../../models/section.interface';
+import { createReducer, on } from '@ngrx/store';
+import * as SectionActions from './section.actions';
+
+export interface SectionState {
+  sections: ISection[];
+  selectedSection: ISection | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialSectionState: SectionState = {
+  sections: [],
+  selectedSection: null,
+  loading: false,
+  error: null,
+};
+
+export const sectionReducer = createReducer(
+  initialSectionState,
+  on(SectionActions.loadSections, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(SectionActions.loadSectionsSuccess, (state, { sections }) => ({
+    ...state,
+    loading: false,
+    sections,
+  })),
+  on(SectionActions.loadSectionsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(SectionActions.addSection, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(SectionActions.addSectionSuccess, (state, { section }) => ({
+    ...state,
+    loading: false,
+    sections: [...state.sections, section],
+  })),
+  on(SectionActions.addSectionFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(SectionActions.deleteSection, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(SectionActions.deleteSectionSuccess, (state, { sectionId }) => ({
+    ...state,
+    loading: false,
+    sections: state.sections.filter((s) => s.sectionId !== sectionId),
+  })),
+  on(SectionActions.deleteSectionFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(SectionActions.updateSection, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(SectionActions.updateSectionSuccess, (state, { section }) => ({
+    ...state,
+    loading: false,
+    sections: state.sections.map((s) => (s.sectionId === section.sectionId ? section : s)),
+  })),
+  on(SectionActions.updateSectionFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(SectionActions.selectSection, (state, { section }) => ({
+    ...state,
+    selectedSection: section,
+  })),
+);

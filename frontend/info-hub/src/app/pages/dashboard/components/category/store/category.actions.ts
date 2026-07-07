@@ -9,14 +9,14 @@ export const CategoryActions = {
   ),
   loadCategoriesFailure: createAction(
     '[Category] Load Categories Failure',
-    props<{ error: any }>(),
+    props<{ error: string }>(),
   ),
   addCategory: createAction('[Category] Add Category', props<{ category: ICategory }>()),
   addCategorySuccess: createAction(
     '[Category] Add Category Success',
     props<{ category: ICategory }>(),
   ),
-  addCategoryFailure: createAction('[Category] Add Category Failure', props<{ error: any }>()),
+  addCategoryFailure: createAction('[Category] Add Category Failure', props<{ error: string }>()),
   deleteCategory: createAction('[Category] Delete Category', props<{ catId: string }>()),
   deleteCategorySuccess: createAction(
     '[Category] Delete Category Success',
@@ -24,6 +24,6 @@ export const CategoryActions = {
   ),
   deleteCategoryFailure: createAction(
     '[Category] Delete Category Failure',
-    props<{ error: any }>(),
+    props<{ error: string }>(),
   ),
 };

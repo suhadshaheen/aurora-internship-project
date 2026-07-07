@@ -4,8 +4,9 @@ import * as CategoryActions from './category.actions';
 
 export interface CategoryState {
   categories: ICategory[];
+
   loading: boolean;
-  error: any;
+  error: string | null;
 }
 
 export const initialCategoryState: CategoryState = {

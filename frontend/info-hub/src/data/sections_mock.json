@@ -1,0 +1,182 @@
+[
+  {
+    "sectionId": "1",
+    "title": "Company Overview",
+    "content": "A brief introduction to the company's mission, vision, and core values.",
+    "userId": "8",
+    "catId": "1",
+    "visibility": true,
+    "dateCreated": "2025-05-06T00:00:00.000Z"
+  },
+  {
+    "sectionId": "2",
+    "title": "HR Policies",
+    "content": "Guidelines covering leave, attendance, and workplace conduct.",
+    "userId": "15",
+    "catId": "2",
+    "visibility": true,
+    "dateCreated": "2025-12-13T00:00:00.000Z"
+  },
+  {
+    "sectionId": "3",
+    "title": "Onboarding Guide",
+    "content": "Step-by-step instructions for new employees joining the team.",
+    "userId": "35",
+    "catId": "1",
+    "visibility": false,
+    "dateCreated": "2025-01-17T00:00:00.000Z"
+  },
+  {
+    "sectionId": "4",
+    "title": "IT Security Policy",
+    "content": "Rules and best practices for protecting company data and systems.",
+    "userId": "2",
+    "catId": "1",
+    "visibility": true,
+    "dateCreated": "2025-04-30T00:00:00.000Z"
+  },
+  {
+    "sectionId": "5",
+    "title": "Remote Work Guidelines",
+    "content": "Policies and expectations for employees working remotely.",
+    "userId": "33",
+    "catId": "5",
+    "visibility": true,
+    "dateCreated": "2025-10-15T00:00:00.000Z"
+  },
+  {
+    "sectionId": "6",
+    "title": "Payroll Information",
+    "content": "Details about salary payment schedules and deductions.",
+    "userId": "13",
+    "catId": "5",
+    "visibility": false,
+    "dateCreated": "2025-04-23T00:00:00.000Z"
+  },
+  {
+    "sectionId": "7",
+    "title": "Employee Benefits",
+    "content": "Overview of health insurance, retirement plans, and other perks.",
+    "userId": "29",
+    "catId": "5",
+    "visibility": true,
+    "dateCreated": "2026-02-19T00:00:00.000Z"
+  },
+  {
+    "sectionId": "8",
+    "title": "Code of Conduct",
+    "content": "Standards of behavior expected from all employees.",
+    "userId": "1",
+    "catId": "2",
+    "visibility": false,
+    "dateCreated": "2025-06-24T00:00:00.000Z"
+  },
+  {
+    "sectionId": "9",
+    "title": "Performance Reviews",
+    "content": "Process and criteria used for annual performance evaluations.",
+    "userId": "18",
+    "catId": "2",
+    "visibility": true,
+    "dateCreated": "2026-05-06T00:00:00.000Z"
+  },
+  {
+    "sectionId": "10",
+    "title": "Training Programs",
+    "content": "List of available training and professional development courses.",
+    "userId": "22",
+    "catId": "1",
+    "visibility": true,
+    "dateCreated": "2025-07-14T00:00:00.000Z"
+  },
+  {
+    "sectionId": "11",
+    "title": "Vacation Policy",
+    "content": "Rules regarding annual leave requests and approvals.",
+    "userId": "7",
+    "catId": "3",
+    "visibility": true,
+    "dateCreated": "2025-11-06T00:00:00.000Z"
+  },
+  {
+    "sectionId": "12",
+    "title": "Health and Safety",
+    "content": "Workplace safety procedures and emergency protocols.",
+    "userId": "17",
+    "catId": "1",
+    "visibility": false,
+    "dateCreated": "2025-10-02T00:00:00.000Z"
+  },
+  {
+    "sectionId": "13",
+    "title": "Travel Policy",
+    "content": "Guidelines for booking and expensing business travel.",
+    "userId": "8",
+    "catId": "4",
+    "visibility": true,
+    "dateCreated": "2025-10-10T00:00:00.000Z"
+  },
+  {
+    "sectionId": "14",
+    "title": "Marketing Strategy",
+    "content": "An outline of the current marketing plan and objectives.",
+    "userId": "19",
+    "catId": "5",
+    "visibility": true,
+    "dateCreated": "2025-10-23T00:00:00.000Z"
+  },
+  {
+    "sectionId": "15",
+    "title": "Product Roadmap",
+    "content": "Upcoming features and release timeline for the product.",
+    "userId": "13",
+    "catId": "1",
+    "visibility": true,
+    "dateCreated": "2025-12-05T00:00:00.000Z"
+  },
+  {
+    "sectionId": "16",
+    "title": "Customer Support Guide",
+    "content": "Best practices for handling customer inquiries and complaints.",
+    "userId": "15",
+    "catId": "3",
+    "visibility": true,
+    "dateCreated": "2026-03-14T00:00:00.000Z"
+  },
+  {
+    "sectionId": "17",
+    "title": "Finance Reports",
+    "content": "Summary of quarterly financial performance and budgets.",
+    "userId": "15",
+    "catId": "1",
+    "visibility": false,
+    "dateCreated": "2025-05-23T00:00:00.000Z"
+  },
+  {
+    "sectionId": "18",
+    "title": "Project Management Tips",
+    "content": "Techniques for planning and tracking project progress.",
+    "userId": "30",
+    "catId": "3",
+    "visibility": true,
+    "dateCreated": "2025-07-09T00:00:00.000Z"
+  },
+  {
+    "sectionId": "19",
+    "title": "Data Privacy Policy",
+    "content": "How the company collects, stores, and protects user data.",
+    "userId": "23",
+    "catId": "2",
+    "visibility": true,
+    "dateCreated": "2025-12-26T00:00:00.000Z"
+  },
+  {
+    "sectionId": "20",
+    "title": "Meeting Etiquette",
+    "content": "Guidelines for conducting effective and respectful meetings.",
+    "userId": "5",
+    "catId": "5",
+    "visibility": true,
+    "dateCreated": "2025-10-01T00:00:00.000Z"
+  }
+]
