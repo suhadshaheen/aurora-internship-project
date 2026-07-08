@@ -11,7 +11,12 @@ import { provideEffects } from '@ngrx/effects';
 import { sectionReducer } from './pages/dashboard/components/section/store/section.reducer';
 import { categoryReducer } from './pages/dashboard/components/category/store/category.reducer';
 import { provideHttpClient } from '@angular/common/http';
-
+import {  commentReducer } from './pages/dashboard/components/comment/store/comment.reducer';
+import { CommentEffects } from './pages/dashboard/components/comment/store/comment.effects';
+import { AuthEffects } from './pages/login-page.component/store/auth.effects';
+import {  authReducer } from './pages/login-page.component/store/auth.reducer';
+import { CategoryEffects } from './pages/dashboard/components/category/store/category.effects';
+import { SectionEffects } from './pages/dashboard/components/section/store/section.effects';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -27,10 +32,17 @@ export const appConfig: ApplicationConfig = {
     }),
     MessageService,
     provideStore(),
-    provideEffects(),
+    provideEffects(
+       AuthEffects,
+       CommentEffects,
+       CategoryEffects,
+       SectionEffects,
+    ),
     provideStore({
       category: categoryReducer,
       section: sectionReducer,
+      comment: commentReducer,
+      auth: authReducer,
     }),
     provideHttpClient(),
   ],

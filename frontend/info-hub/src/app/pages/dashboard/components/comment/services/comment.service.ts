@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { IComment } from '../../../../../../models/comment.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CommentService {
+  private apiUrl = 'http://localhost:3002/comments';
+
+  constructor(private http: HttpClient) {}
+
+  getCommentsBySectionId(sectionId: string): Observable<IComment[]> {
+    return this.http.get<IComment[]>(`${this.apiUrl}?sectionId=${sectionId}`);
+  }
+
+  addComment(comment: IComment): Observable<IComment> {
+    return this.http.post<IComment>(this.apiUrl, comment);
+  }
+
+  updateComment(commentId: string, content: string): Observable<IComment> {
+    return this.http.patch<IComment>(`${this.apiUrl}/${commentId}`, {
+      content,
+    });
+  }
+
+  deleteComment(commentId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${commentId}`);
+  }
+}
