@@ -2,14 +2,14 @@ import { createReducer, on } from '@ngrx/store';
 import { ICategory } from '../../../../../../models/category.interface';
 import * as CategoryActions from './category.actions';
 
-export interface CategoryState {
+export interface ICategoryState {
   categories: ICategory[];
 
   loading: boolean;
   error: string | null;
 }
 
-export const initialCategoryState: CategoryState = {
+export const initialCategoryState: ICategoryState = {
   categories: [],
   loading: false,
   error: null,
