@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { CommentActions } from './comment.actions';
-import { IComment } from '../../../../../../models/comment.interface'; 
-
+import { IComment } from '../../../../../../models/comment.interface';
 
 export interface CommentState {
   comments: IComment[];
@@ -10,7 +9,6 @@ export interface CommentState {
   error: string | null;
 }
 
-
 export const initialCommentState: CommentState = {
   comments: [],
   selectedComment: null,
@@ -18,7 +16,6 @@ export const initialCommentState: CommentState = {
   error: null,
 };
 
-export const commentFeatureKey = 'comments';
 
 export const commentReducer = createReducer(
   initialCommentState,
@@ -42,38 +39,65 @@ export const commentReducer = createReducer(
     error,
   })),
 
-  on(CommentActions.addComment, (state, { sectionId, userId, content, commentId, dateCreated }) => {
-    const newComment: IComment = {
-      commentId,
-      sectionId,
-      userId,
-      content,
-      parentCommentId : '', 
-      dateCreated 
-    };
-
-    return {
-      ...state,
-      comments: [...state.comments, newComment],
-      error: null,
-    };
-  }),
-
-  on(CommentActions.updateComment, (state, { commentId, content }) => ({
+  on(CommentActions.addComment, (state) => ({
     ...state,
-    comments: state.comments.map((comment) =>
-      comment.commentId === commentId
-        ? { ...comment, content }
-        : comment
+    loading: true,
+    error: null,
+  })),
+
+  on(CommentActions.addCommentSuccess, (state, { comment }) => ({
+    ...state,
+    comments: [...state.comments, comment],
+    loading: false,
+    error: null,
+  })),
+
+  on(CommentActions.addCommentFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  on(CommentActions.updateComment, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(CommentActions.updateCommentSuccess, (state, { comment }) => ({
+    ...state,
+    comments: state.comments.map((oldComment) =>
+      oldComment.commentId === comment.commentId ? comment : oldComment
     ),
     selectedComment: null,
+    loading: false,
     error: null,
   })),
 
-  on(CommentActions.deleteComment, (state, { commentId }) => ({
+  on(CommentActions.updateCommentFailure, (state, { error }) => ({
     ...state,
-    comments: state.comments.filter((comment) => comment.commentId !== commentId),
+    loading: false,
+    error,
+  })),
+
+  on(CommentActions.deleteComment, (state) => ({
+    ...state,
+    loading: true,
     error: null,
   })),
 
+  on(CommentActions.deleteCommentSuccess, (state, { commentId }) => ({
+    ...state,
+    comments: state.comments.filter(
+      (comment) => comment.commentId !== commentId
+    ),
+    loading: false,
+    error: null,
+  })),
+
+  on(CommentActions.deleteCommentFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
 );

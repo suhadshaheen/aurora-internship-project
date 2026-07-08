@@ -2,7 +2,6 @@ import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from './auth.actions';
 import { initialAuthState } from './auth.state';
 
-export const authFeatureKey = 'auth';
 
 export const authReducer = createReducer(
   initialAuthState,
