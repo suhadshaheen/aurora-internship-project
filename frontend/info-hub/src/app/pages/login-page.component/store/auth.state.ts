@@ -1,6 +1,6 @@
 export interface AuthUser {
   id: number;
-  user_name: string;
+  userName: string;
   email: string;
   role: 'guest' | 'employee' | 'admin';
 }
