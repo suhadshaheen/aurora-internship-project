@@ -1,20 +1,20 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { SectionState } from './section.reducer';
+import { ISectionState } from './section.reducer';
 
-export const selectSectionState = createFeatureSelector<SectionState>('section');
+export const selectSectionState = createFeatureSelector<ISectionState>('section');
 export const selectAllSections = createSelector(
   selectSectionState,
-  (state: SectionState) => state.sections,
+  (state: ISectionState) => state.sections,
 );
 
 export const selectSelectedSection = createSelector(
   selectSectionState,
-  (state: SectionState) => state.selectedSection,
+  (state: ISectionState) => state.selectedSection,
 );
 
 export const selectSectionLoading = createSelector(
   selectSectionState,
-  (state: SectionState) => state.loading,
+  (state: ISectionState) => state.loading,
 );
 export const selectSectionError = createSelector(selectSectionState, (state) => state.error);
 

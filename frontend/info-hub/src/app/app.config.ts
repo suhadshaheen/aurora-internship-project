@@ -10,6 +10,7 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { sectionReducer } from './pages/dashboard/components/section/store/section.reducer';
 import { categoryReducer } from './pages/dashboard/components/category/store/category.reducer';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,5 +32,6 @@ export const appConfig: ApplicationConfig = {
       category: categoryReducer,
       section: sectionReducer,
     }),
+    provideHttpClient(),
   ],
 };
