@@ -59,7 +59,8 @@
   type="submit"
   label="Log In"
   styleClass="login-btn"
-  [disabled]="loginForm.invalid || !isEmailDomainValid()">
+  [disabled]="loginForm.invalid || !isEmailDomainValid()"
+  (click)="login()">
 </p-button>
 
 </form>
