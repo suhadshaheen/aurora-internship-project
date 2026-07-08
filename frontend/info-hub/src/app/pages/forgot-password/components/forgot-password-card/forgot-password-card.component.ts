@@ -38,9 +38,13 @@ export class ForgotPasswordCard {
     });
   });
 
-  //
   onSubmit(event: Event) {
+    event.preventDefault();
+
+    if (this.forgotForm.email().invalid()) return;
+
     this.isLoading = true;
+
     this.authService.sendResetLink(this.forgotForm.email().value() ?? '').subscribe({
       next: () => {
         this.isLoading = false;
@@ -61,15 +65,6 @@ export class ForgotPasswordCard {
           life: 3000,
         });
       },
-    });
-    event.preventDefault();
-    submit(this.forgotForm, async () => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Email Sent!',
-        detail: 'Check your inbox for the reset link.',
-        life: 3000,
-      });
     });
   }
 }

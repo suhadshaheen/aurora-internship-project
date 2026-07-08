@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class SectionsService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3003/sections/';
+  private readonly baseUrl = 'http://localhost:3000/sections';
 
   getAll(): Observable<ISection[]> {
     return this.http.get<ISection[]>(this.baseUrl);

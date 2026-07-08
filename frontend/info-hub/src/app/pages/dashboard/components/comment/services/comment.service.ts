@@ -7,7 +7,7 @@ import { IComment } from '../../../../../../models/comment.interface';
   providedIn: 'root',
 })
 export class CommentService {
-  private apiUrl = 'http://localhost:3002/comments';
+  private readonly apiUrl = 'http://localhost:3000/comments';
 
   constructor(private http: HttpClient) {}
 
