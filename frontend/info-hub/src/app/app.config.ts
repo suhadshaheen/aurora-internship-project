@@ -2,7 +2,6 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
-
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
@@ -31,19 +30,18 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     MessageService,
-    provideStore(),
-    provideEffects(
-       AuthEffects,
-       CommentEffects,
-       CategoryEffects,
-       SectionEffects,
-    ),
     provideStore({
       category: categoryReducer,
       section: sectionReducer,
       comment: commentReducer,
       auth: authReducer,
     }),
+    provideEffects(
+       AuthEffects,
+       CommentEffects,
+       CategoryEffects,
+       SectionEffects,
+    ),
     provideHttpClient(),
   ],
 };
