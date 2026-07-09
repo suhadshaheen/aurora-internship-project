@@ -6,8 +6,8 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RESET_PASSWORD_CONSTANTS } from '../../reset-password.constants';
-import { RouterModule } from '@angular/router';
-
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../../shared/services/auth.services';
 @Component({
   selector: 'app-reset-password-card',
   standalone: true,
@@ -18,6 +18,8 @@ import { RouterModule } from '@angular/router';
 })
 export class ResetPasswordCardComponent {
   messageService = inject(MessageService);
+  authService = inject(AuthService);
+  router = inject(Router);
   constants = RESET_PASSWORD_CONSTANTS;
 
   newPassword: string = '';

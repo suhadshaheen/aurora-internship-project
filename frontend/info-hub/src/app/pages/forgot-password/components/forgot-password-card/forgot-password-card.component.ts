@@ -6,7 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { FORGOT_PASSWORD_CONSTANTS } from '../../forgot-password.constants';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../../shared/services/auth.services';
 
 @Component({
   selector: 'app-forgot-password-card',
@@ -17,7 +18,11 @@ import { RouterModule } from '@angular/router';
 })
 export class ForgotPasswordCard {
   messageService = inject(MessageService);
+  authService = inject(AuthService);
+  router = inject(Router);
+  isLoading = false;
   constants = FORGOT_PASSWORD_CONSTANTS;
+
   model = signal({ email: '' });
 
   forgotForm = form(this.model, (path) => {
@@ -33,16 +38,33 @@ export class ForgotPasswordCard {
     });
   });
 
-  //
   onSubmit(event: Event) {
     event.preventDefault();
-    submit(this.forgotForm, async () => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Email Sent!',
-        detail: 'Check your inbox for the reset link.',
-        life: 3000,
-      });
+
+    if (this.forgotForm.email().invalid()) return;
+
+    this.isLoading = true;
+
+    this.authService.sendResetLink(this.forgotForm.email().value() ?? '').subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Email Sent!',
+          detail: 'Check your inbox for the reset link.',
+          life: 3000,
+        });
+        setTimeout(() => this.router.navigate(['/reset-password']), 3000);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.message,
+          life: 3000,
+        });
+      },
     });
   }
 }

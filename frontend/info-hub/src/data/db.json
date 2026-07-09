@@ -1,0 +1,715 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin1@auroratech.ps",
+      "userName": "Admin 1",
+      "role": "admin",
+      "password": "Admin1123"
+    },
+    {
+      "id": "2",
+      "email": "admin2@auroratech.ps",
+      "userName": "Admin 2",
+      "role": "admin",
+      "password": "Admin2123"
+    },
+    {
+      "id": "3",
+      "email": "admin3@auroratech.ps",
+      "userName": "Admin 3",
+      "role": "admin",
+      "password": "Admin3123"
+    },
+    {
+      "id": "4",
+      "email": "admin4@auroratech.ps",
+      "userName": "Admin 4",
+      "role": "admin",
+      "password": "Admin4123"
+    },
+    {
+      "id": "5",
+      "email": "admin5@auroratech.ps",
+      "userName": "Admin 5",
+      "role": "admin",
+      "password": "Admin5123"
+    },
+    {
+      "id": "6",
+      "email": "employee1@auroratech.ps",
+      "userName": "Employee 1",
+      "role": "employee",
+      "password": "Emp11239"
+    },
+    {
+      "id": "7",
+      "email": "employee2@auroratech.ps",
+      "userName": "Employee 2",
+      "role": "employee",
+      "password": "Emp21239"
+    },
+    {
+      "id": "8",
+      "email": "employee3@auroratech.ps",
+      "userName": "Employee 3",
+      "role": "employee",
+      "password": "Emp31239"
+    },
+    {
+      "id": "9",
+      "email": "employee4@auroratech.ps",
+      "userName": "Employee 4",
+      "role": "employee",
+      "password": "Emp41239"
+    },
+    {
+      "id": "10",
+      "email": "employee5@auroratech.ps",
+      "userName": "Employee 5",
+      "role": "employee",
+      "password": "Emp51239"
+    },
+    {
+      "id": "11",
+      "email": "employee6@auroratech.ps",
+      "userName": "Employee 6",
+      "role": "employee",
+      "password": "Emp61239"
+    },
+    {
+      "id": "12",
+      "email": "employee7@auroratech.ps",
+      "userName": "Employee 7",
+      "role": "employee",
+      "password": "Emp71239"
+    },
+    {
+      "id": "13",
+      "email": "employee8@auroratech.ps",
+      "userName": "Employee 8",
+      "role": "employee",
+      "password": "Emp81239"
+    },
+    {
+      "id": "14",
+      "email": "employee9@auroratech.ps",
+      "userName": "Employee 9",
+      "role": "employee",
+      "password": "Emp91239"
+    },
+    {
+      "id": "15",
+      "email": "employee10@auroratech.ps",
+      "userName": "Employee 10",
+      "role": "employee",
+      "password": "Emp10123"
+    },
+    {
+      "id": "16",
+      "email": "employee11@auroratech.ps",
+      "userName": "Employee 11",
+      "role": "employee",
+      "password": "Emp11123"
+    },
+    {
+      "id": "17",
+      "email": "employee12@auroratech.ps",
+      "userName": "Employee 12",
+      "role": "employee",
+      "password": "Emp12123"
+    },
+    {
+      "id": "18",
+      "email": "employee13@auroratech.ps",
+      "userName": "Employee 13",
+      "role": "employee",
+      "password": "Emp13123"
+    },
+    {
+      "id": "19",
+      "email": "employee14@auroratech.ps",
+      "userName": "Employee 14",
+      "role": "employee",
+      "password": "Emp14123"
+    },
+    {
+      "id": "20",
+      "email": "employee15@auroratech.ps",
+      "userName": "Employee 15",
+      "role": "employee",
+      "password": "Emp15123"
+    },
+    {
+      "id": "21",
+      "email": "employee16@auroratech.ps",
+      "userName": "Employee 16",
+      "role": "employee",
+      "password": "Emp16123"
+    },
+    {
+      "id": "22",
+      "email": "employee17@auroratech.ps",
+      "userName": "Employee 17",
+      "role": "employee",
+      "password": "Emp17123"
+    },
+    {
+      "id": "23",
+      "email": "employee18@auroratech.ps",
+      "userName": "Employee 18",
+      "role": "employee",
+      "password": "Emp18123"
+    },
+    {
+      "id": "24",
+      "email": "employee19@auroratech.ps",
+      "userName": "Employee 19",
+      "role": "employee",
+      "password": "Emp19123"
+    },
+    {
+      "id": "25",
+      "email": "employee20@auroratech.ps",
+      "userName": "Employee 20",
+      "role": "employee",
+      "password": "Emp20123"
+    },
+    {
+      "id": "26",
+      "email": "employee21@auroratech.ps",
+      "userName": "Employee 21",
+      "role": "employee",
+      "password": "Emp21123"
+    },
+    {
+      "id": "27",
+      "email": "employee22@auroratech.ps",
+      "userName": "Employee 22",
+      "role": "employee",
+      "password": "Emp22123"
+    },
+    {
+      "id": "28",
+      "email": "employee23@auroratech.ps",
+      "userName": "Employee 23",
+      "role": "employee",
+      "password": "Emp23123"
+    },
+    {
+      "id": "29",
+      "email": "employee24@auroratech.ps",
+      "userName": "Employee 24",
+      "role": "employee",
+      "password": "Emp24123"
+    },
+    {
+      "id": "30",
+      "email": "employee25@auroratech.ps",
+      "userName": "Employee 25",
+      "role": "employee",
+      "password": "Emp25123"
+    },
+    {
+      "id": "31",
+      "email": "employee26@auroratech.ps",
+      "userName": "Employee 26",
+      "role": "employee",
+      "password": "Emp26123"
+    },
+    {
+      "id": "32",
+      "email": "employee27@auroratech.ps",
+      "userName": "Employee 27",
+      "role": "employee",
+      "password": "Emp27123"
+    },
+    {
+      "id": "33",
+      "email": "employee28@auroratech.ps",
+      "userName": "Employee 28",
+      "role": "employee",
+      "password": "Emp28123"
+    },
+    {
+      "id": "34",
+      "email": "employee29@auroratech.ps",
+      "userName": "Employee 29",
+      "role": "employee",
+      "password": "Emp29123"
+    },
+    {
+      "id": "35",
+      "email": "employee30@auroratech.ps",
+      "userName": "Employee 30",
+      "role": "employee",
+      "password": "Emp30123"
+    },
+    {
+      "id": "36",
+      "email": "guest1@auroratech.ps",
+      "userName": "Guest 1",
+      "role": "guest"
+    },
+    {
+      "id": "37",
+      "email": "guest2@auroratech.ps",
+      "userName": "Guest 2",
+      "role": "guest"
+    },
+    {
+      "id": "38",
+      "email": "guest3@auroratech.ps",
+      "userName": "Guest 3",
+      "role": "guest"
+    },
+    {
+      "id": "39",
+      "email": "guest4@auroratech.ps",
+      "userName": "Guest 4",
+      "role": "guest"
+    },
+    {
+      "id": "40",
+      "email": "guest5@auroratech.ps",
+      "userName": "Guest 5",
+      "role": "guest"
+    },
+    {
+      "id": "41",
+      "email": "guest6@auroratech.ps",
+      "userName": "Guest 6",
+      "role": "guest"
+    },
+    {
+      "id": "42",
+      "email": "guest7@auroratech.ps",
+      "userName": "Guest 7",
+      "role": "guest"
+    },
+    {
+      "id": "43",
+      "email": "guest8@auroratech.ps",
+      "userName": "Guest 8",
+      "role": "guest"
+    },
+    {
+      "id": "44",
+      "email": "guest9@auroratech.ps",
+      "userName": "Guest 9",
+      "role": "guest"
+    },
+    {
+      "id": "45",
+      "email": "guest10@auroratech.ps",
+      "userName": "Guest 10",
+      "role": "guest"
+    },
+    {
+      "id": "46",
+      "email": "guest11@auroratech.ps",
+      "userName": "Guest 11",
+      "role": "guest"
+    },
+    {
+      "id": "47",
+      "email": "guest12@auroratech.ps",
+      "userName": "Guest 12",
+      "role": "guest"
+    },
+    {
+      "id": "48",
+      "email": "guest13@auroratech.ps",
+      "userName": "Guest 13",
+      "role": "guest"
+    },
+    {
+      "id": "49",
+      "email": "guest14@auroratech.ps",
+      "userName": "Guest 14",
+      "role": "guest"
+    },
+    {
+      "id": "50",
+      "email": "guest15@auroratech.ps",
+      "userName": "Guest 15",
+      "role": "guest"
+    }
+  ],
+  "categories": [
+    {
+      "catId": "1",
+      "catName": "HR & Policies",
+      "userId": "3",
+      "dateCreated": "2025-02-08T00:00:00.000Z"
+    },
+    {
+      "catId": "2",
+      "catName": "Finance",
+      "userId": "4",
+      "dateCreated": "2025-06-16T00:00:00.000Z"
+    },
+    {
+      "catId": "3",
+      "catName": "IT & Security",
+      "userId": "1",
+      "dateCreated": "2025-01-19T00:00:00.000Z"
+    },
+    {
+      "catId": "4",
+      "catName": "Marketing",
+      "userId": "5",
+      "dateCreated": "2025-01-25T00:00:00.000Z"
+    },
+    {
+      "catId": "5",
+      "catName": "Product & Projects",
+      "userId": "3",
+      "dateCreated": "2025-05-30T00:00:00.000Z"
+    }
+  ],
+  "sections": [
+    {
+      "sectionId": "1",
+      "title": "Company Overview",
+      "content": "A brief introduction to the company's mission, vision, and core values.",
+      "userId": "8",
+      "catId": "1",
+      "visibility": true,
+      "dateCreated": "2025-05-06T00:00:00.000Z"
+    },
+    {
+      "sectionId": "2",
+      "title": "HR Policies",
+      "content": "Guidelines covering leave, attendance, and workplace conduct.",
+      "userId": "15",
+      "catId": "2",
+      "visibility": true,
+      "dateCreated": "2025-12-13T00:00:00.000Z"
+    },
+    {
+      "sectionId": "3",
+      "title": "Onboarding Guide",
+      "content": "Step-by-step instructions for new employees joining the team.",
+      "userId": "35",
+      "catId": "1",
+      "visibility": false,
+      "dateCreated": "2025-01-17T00:00:00.000Z"
+    },
+    {
+      "sectionId": "4",
+      "title": "IT Security Policy",
+      "content": "Rules and best practices for protecting company data and systems.",
+      "userId": "2",
+      "catId": "1",
+      "visibility": true,
+      "dateCreated": "2025-04-30T00:00:00.000Z"
+    },
+    {
+      "sectionId": "5",
+      "title": "Remote Work Guidelines",
+      "content": "Policies and expectations for employees working remotely.",
+      "userId": "33",
+      "catId": "5",
+      "visibility": true,
+      "dateCreated": "2025-10-15T00:00:00.000Z"
+    },
+    {
+      "sectionId": "6",
+      "title": "Payroll Information",
+      "content": "Details about salary payment schedules and deductions.",
+      "userId": "13",
+      "catId": "5",
+      "visibility": false,
+      "dateCreated": "2025-04-23T00:00:00.000Z"
+    },
+    {
+      "sectionId": "7",
+      "title": "Employee Benefits",
+      "content": "Overview of health insurance, retirement plans, and other perks.",
+      "userId": "29",
+      "catId": "5",
+      "visibility": true,
+      "dateCreated": "2026-02-19T00:00:00.000Z"
+    },
+    {
+      "sectionId": "8",
+      "title": "Code of Conduct",
+      "content": "Standards of behavior expected from all employees.",
+      "userId": "1",
+      "catId": "2",
+      "visibility": false,
+      "dateCreated": "2025-06-24T00:00:00.000Z"
+    },
+    {
+      "sectionId": "9",
+      "title": "Performance Reviews",
+      "content": "Process and criteria used for annual performance evaluations.",
+      "userId": "18",
+      "catId": "2",
+      "visibility": true,
+      "dateCreated": "2026-05-06T00:00:00.000Z"
+    },
+    {
+      "sectionId": "10",
+      "title": "Training Programs",
+      "content": "List of available training and professional development courses.",
+      "userId": "22",
+      "catId": "1",
+      "visibility": true,
+      "dateCreated": "2025-07-14T00:00:00.000Z"
+    },
+    {
+      "sectionId": "11",
+      "title": "Vacation Policy",
+      "content": "Rules regarding annual leave requests and approvals.",
+      "userId": "7",
+      "catId": "3",
+      "visibility": true,
+      "dateCreated": "2025-11-06T00:00:00.000Z"
+    },
+    {
+      "sectionId": "12",
+      "title": "Health and Safety",
+      "content": "Workplace safety procedures and emergency protocols.",
+      "userId": "17",
+      "catId": "1",
+      "visibility": false,
+      "dateCreated": "2025-10-02T00:00:00.000Z"
+    },
+    {
+      "sectionId": "13",
+      "title": "Travel Policy",
+      "content": "Guidelines for booking and expensing business travel.",
+      "userId": "8",
+      "catId": "4",
+      "visibility": true,
+      "dateCreated": "2025-10-10T00:00:00.000Z"
+    },
+    {
+      "sectionId": "14",
+      "title": "Marketing Strategy",
+      "content": "An outline of the current marketing plan and objectives.",
+      "userId": "19",
+      "catId": "5",
+      "visibility": true,
+      "dateCreated": "2025-10-23T00:00:00.000Z"
+    },
+    {
+      "sectionId": "15",
+      "title": "Product Roadmap",
+      "content": "Upcoming features and release timeline for the product.",
+      "userId": "13",
+      "catId": "1",
+      "visibility": true,
+      "dateCreated": "2025-12-05T00:00:00.000Z"
+    },
+    {
+      "sectionId": "16",
+      "title": "Customer Support Guide",
+      "content": "Best practices for handling customer inquiries and complaints.",
+      "userId": "15",
+      "catId": "3",
+      "visibility": true,
+      "dateCreated": "2026-03-14T00:00:00.000Z"
+    },
+    {
+      "sectionId": "17",
+      "title": "Finance Reports",
+      "content": "Summary of quarterly financial performance and budgets.",
+      "userId": "15",
+      "catId": "1",
+      "visibility": false,
+      "dateCreated": "2025-05-23T00:00:00.000Z"
+    },
+    {
+      "sectionId": "18",
+      "title": "Project Management Tips",
+      "content": "Techniques for planning and tracking project progress.",
+      "userId": "30",
+      "catId": "3",
+      "visibility": true,
+      "dateCreated": "2025-07-09T00:00:00.000Z"
+    },
+    {
+      "sectionId": "19",
+      "title": "Data Privacy Policy",
+      "content": "How the company collects, stores, and protects user data.",
+      "userId": "23",
+      "catId": "2",
+      "visibility": true,
+      "dateCreated": "2025-12-26T00:00:00.000Z"
+    },
+    {
+      "sectionId": "20",
+      "title": "Meeting Etiquette",
+      "content": "Guidelines for conducting effective and respectful meetings.",
+      "userId": "5",
+      "catId": "5",
+      "visibility": true,
+      "dateCreated": "2025-10-01T00:00:00.000Z"
+    }
+  ],
+  "comments": [
+    {
+      "commentId": "1",
+      "content": "This is really helpful, thanks for sharing!",
+      "parentCommentId": null,
+      "userId": "11",
+      "sectionId": "14",
+      "dateCreated": "2025-10-01T20:00:00.000Z"
+    },
+    {
+      "commentId": "2",
+      "content": "I have a question about the third point mentioned here.",
+      "parentCommentId": null,
+      "userId": "19",
+      "sectionId": "16",
+      "dateCreated": "2025-06-19T15:00:00.000Z"
+    },
+    {
+      "commentId": "3",
+      "content": "Could you clarify what applies to remote employees?",
+      "parentCommentId": "1",
+      "userId": "33",
+      "sectionId": "6",
+      "dateCreated": "2025-11-14T16:00:00.000Z"
+    },
+    {
+      "commentId": "4",
+      "content": "Great overview, exactly what I was looking for.",
+      "parentCommentId": "1",
+      "userId": "1",
+      "sectionId": "12",
+      "dateCreated": "2025-12-25T13:00:00.000Z"
+    },
+    {
+      "commentId": "5",
+      "content": "I think we should update this section with the new policy.",
+      "parentCommentId": null,
+      "userId": "15",
+      "sectionId": "2",
+      "dateCreated": "2025-10-10T23:00:00.000Z"
+    },
+    {
+      "commentId": "6",
+      "content": "Does this apply to part-time employees as well?",
+      "parentCommentId": null,
+      "userId": "27",
+      "sectionId": "20",
+      "dateCreated": "2025-10-13T01:00:00.000Z"
+    },
+    {
+      "commentId": "7",
+      "content": "Thanks for the clarification, that makes sense now.",
+      "parentCommentId": null,
+      "userId": "35",
+      "sectionId": "16",
+      "dateCreated": "2025-04-29T20:00:00.000Z"
+    },
+    {
+      "commentId": "8",
+      "content": "I disagree with this approach, can we discuss further?",
+      "parentCommentId": null,
+      "userId": "24",
+      "sectionId": "1",
+      "dateCreated": "2025-05-19T23:00:00.000Z"
+    },
+    {
+      "commentId": "9",
+      "content": "This helped me a lot during onboarding.",
+      "parentCommentId": null,
+      "userId": "8",
+      "sectionId": "1",
+      "dateCreated": "2025-10-19T05:00:00.000Z"
+    },
+    {
+      "commentId": "10",
+      "content": "Can someone confirm if this is still up to date?",
+      "parentCommentId": "1",
+      "userId": "22",
+      "sectionId": "13",
+      "dateCreated": "2025-11-04T04:00:00.000Z"
+    },
+    {
+      "commentId": "11",
+      "content": "I noticed a typo in the second paragraph.",
+      "parentCommentId": "10",
+      "userId": "31",
+      "sectionId": "8",
+      "dateCreated": "2025-04-08T06:00:00.000Z"
+    },
+    {
+      "commentId": "12",
+      "content": "Adding my team's feedback on this topic.",
+      "parentCommentId": null,
+      "userId": "47",
+      "sectionId": "3",
+      "dateCreated": "2025-05-02T17:00:00.000Z"
+    },
+    {
+      "commentId": "13",
+      "content": "This should be shared with the whole department.",
+      "parentCommentId": null,
+      "userId": "25",
+      "sectionId": "7",
+      "dateCreated": "2025-08-22T04:00:00.000Z"
+    },
+    {
+      "commentId": "14",
+      "content": "Following up on my previous question above.",
+      "parentCommentId": null,
+      "userId": "27",
+      "sectionId": "10",
+      "dateCreated": "2025-09-03T14:00:00.000Z"
+    },
+    {
+      "commentId": "15",
+      "content": "Is there a more detailed version of this available?",
+      "parentCommentId": "2",
+      "userId": "21",
+      "sectionId": "16",
+      "dateCreated": "2025-09-14T08:00:00.000Z"
+    },
+    {
+      "commentId": "16",
+      "content": "Appreciate the quick response on this matter.",
+      "parentCommentId": "10",
+      "userId": "11",
+      "sectionId": "16",
+      "dateCreated": "2025-03-02T15:00:00.000Z"
+    },
+    {
+      "commentId": "17",
+      "content": "This aligns well with what we discussed last meeting.",
+      "parentCommentId": null,
+      "userId": "48",
+      "sectionId": "17",
+      "dateCreated": "2025-06-22T18:00:00.000Z"
+    },
+    {
+      "commentId": "18",
+      "content": "Not sure this is accurate, let me double check.",
+      "parentCommentId": null,
+      "userId": "36",
+      "sectionId": "20",
+      "dateCreated": "2025-04-27T05:00:00.000Z"
+    },
+    {
+      "commentId": "19",
+      "content": "Thanks, this resolved my confusion completely.",
+      "parentCommentId": null,
+      "userId": "41",
+      "sectionId": "12",
+      "dateCreated": "2025-08-18T11:00:00.000Z"
+    },
+    {
+      "commentId": "20",
+      "content": "Looking forward to the updated version of this section.",
+      "parentCommentId": "6",
+      "userId": "20",
+      "sectionId": "8",
+      "dateCreated": "2025-04-22T05:00:00.000Z"
+    }
+  ]
+}

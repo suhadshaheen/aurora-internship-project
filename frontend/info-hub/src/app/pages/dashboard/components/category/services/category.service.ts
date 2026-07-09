@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class CategoryService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3001/categories/';
+  private readonly baseUrl = 'http://localhost:3000/categories';
 
   getAll(): Observable<ICategory[]> {
     return this.http.get<ICategory[]>(this.baseUrl);
