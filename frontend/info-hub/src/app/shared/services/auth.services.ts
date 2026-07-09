@@ -52,6 +52,7 @@ export class AuthService {
         const user = users[0];
         if (!user) throw new Error('Email not found');
         if (user.role === 'guest') throw new Error('Guest users cannot reset password');
+        localStorage.setItem('resetEmail', email);
       }),
     );
   }
