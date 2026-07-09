@@ -8,6 +8,8 @@ import { RouterLink ,Router} from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../../store/auth.actions';
 import { selectAuthLoading, selectAuthError, selectIsLoggedIn } from '../../store/auth.selectors';
+import {  AsyncPipe } from '@angular/common';
+
 @Component({
   selector: 'app-login-form',
   imports: [
@@ -17,6 +19,7 @@ import { selectAuthLoading, selectAuthError, selectIsLoggedIn } from '../../stor
     ButtonModule,
     FloatLabelModule,
     RouterLink,
+    AsyncPipe
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
