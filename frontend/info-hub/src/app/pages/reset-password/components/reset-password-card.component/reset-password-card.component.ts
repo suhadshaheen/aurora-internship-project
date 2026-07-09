@@ -82,5 +82,3 @@ export class ResetPasswordCardComponent {
     });
   }
 }
-
-//هاي
