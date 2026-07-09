@@ -5,7 +5,7 @@
       "email": "admin1@auroratech.ps",
       "userName": "Admin 1",
       "role": "admin",
-      "password": "Admin1123"
+      "password": "suhadShaheen1"
     },
     {
       "id": "2",
@@ -341,31 +341,36 @@
       "catId": "1",
       "catName": "HR & Policies",
       "userId": "3",
-      "dateCreated": "2025-02-08T00:00:00.000Z"
+      "dateCreated": "2025-02-08T00:00:00.000Z",
+      "id": "2b8ECuXAjkU"
     },
     {
       "catId": "2",
       "catName": "Finance",
       "userId": "4",
-      "dateCreated": "2025-06-16T00:00:00.000Z"
+      "dateCreated": "2025-06-16T00:00:00.000Z",
+      "id": "Hat6Y6b_6Go"
     },
     {
       "catId": "3",
       "catName": "IT & Security",
       "userId": "1",
-      "dateCreated": "2025-01-19T00:00:00.000Z"
+      "dateCreated": "2025-01-19T00:00:00.000Z",
+      "id": "k5SnKz9iMKI"
     },
     {
       "catId": "4",
       "catName": "Marketing",
       "userId": "5",
-      "dateCreated": "2025-01-25T00:00:00.000Z"
+      "dateCreated": "2025-01-25T00:00:00.000Z",
+      "id": "GG4OFH8AITQ"
     },
     {
       "catId": "5",
       "catName": "Product & Projects",
       "userId": "3",
-      "dateCreated": "2025-05-30T00:00:00.000Z"
+      "dateCreated": "2025-05-30T00:00:00.000Z",
+      "id": "fcgHwpWWfhI"
     }
   ],
   "sections": [
@@ -376,7 +381,8 @@
       "userId": "8",
       "catId": "1",
       "visibility": true,
-      "dateCreated": "2025-05-06T00:00:00.000Z"
+      "dateCreated": "2025-05-06T00:00:00.000Z",
+      "id": "UvwJSqQzUtM"
     },
     {
       "sectionId": "2",
@@ -385,7 +391,8 @@
       "userId": "15",
       "catId": "2",
       "visibility": true,
-      "dateCreated": "2025-12-13T00:00:00.000Z"
+      "dateCreated": "2025-12-13T00:00:00.000Z",
+      "id": "5s5MxbhwIEM"
     },
     {
       "sectionId": "3",
@@ -394,7 +401,8 @@
       "userId": "35",
       "catId": "1",
       "visibility": false,
-      "dateCreated": "2025-01-17T00:00:00.000Z"
+      "dateCreated": "2025-01-17T00:00:00.000Z",
+      "id": "j3n1htYmpBI"
     },
     {
       "sectionId": "4",
@@ -403,7 +411,8 @@
       "userId": "2",
       "catId": "1",
       "visibility": true,
-      "dateCreated": "2025-04-30T00:00:00.000Z"
+      "dateCreated": "2025-04-30T00:00:00.000Z",
+      "id": "phzDCMzsZZg"
     },
     {
       "sectionId": "5",
@@ -412,7 +421,8 @@
       "userId": "33",
       "catId": "5",
       "visibility": true,
-      "dateCreated": "2025-10-15T00:00:00.000Z"
+      "dateCreated": "2025-10-15T00:00:00.000Z",
+      "id": "BomeWlUwHNs"
     },
     {
       "sectionId": "6",
@@ -421,7 +431,8 @@
       "userId": "13",
       "catId": "5",
       "visibility": false,
-      "dateCreated": "2025-04-23T00:00:00.000Z"
+      "dateCreated": "2025-04-23T00:00:00.000Z",
+      "id": "gZ8jASMQ5DM"
     },
     {
       "sectionId": "7",
@@ -430,7 +441,8 @@
       "userId": "29",
       "catId": "5",
       "visibility": true,
-      "dateCreated": "2026-02-19T00:00:00.000Z"
+      "dateCreated": "2026-02-19T00:00:00.000Z",
+      "id": "jbn0WMI_EUw"
     },
     {
       "sectionId": "8",
@@ -439,7 +451,8 @@
       "userId": "1",
       "catId": "2",
       "visibility": false,
-      "dateCreated": "2025-06-24T00:00:00.000Z"
+      "dateCreated": "2025-06-24T00:00:00.000Z",
+      "id": "b7DL5Db92QQ"
     },
     {
       "sectionId": "9",
@@ -448,7 +461,8 @@
       "userId": "18",
       "catId": "2",
       "visibility": true,
-      "dateCreated": "2026-05-06T00:00:00.000Z"
+      "dateCreated": "2026-05-06T00:00:00.000Z",
+      "id": "FU_3gX-pNbs"
     },
     {
       "sectionId": "10",
@@ -457,7 +471,8 @@
       "userId": "22",
       "catId": "1",
       "visibility": true,
-      "dateCreated": "2025-07-14T00:00:00.000Z"
+      "dateCreated": "2025-07-14T00:00:00.000Z",
+      "id": "aSiNiDH-wEU"
     },
     {
       "sectionId": "11",
@@ -466,7 +481,8 @@
       "userId": "7",
       "catId": "3",
       "visibility": true,
-      "dateCreated": "2025-11-06T00:00:00.000Z"
+      "dateCreated": "2025-11-06T00:00:00.000Z",
+      "id": "nO7TuyCEti4"
     },
     {
       "sectionId": "12",
@@ -475,7 +491,8 @@
       "userId": "17",
       "catId": "1",
       "visibility": false,
-      "dateCreated": "2025-10-02T00:00:00.000Z"
+      "dateCreated": "2025-10-02T00:00:00.000Z",
+      "id": "BsWsqV05Alo"
     },
     {
       "sectionId": "13",
@@ -484,7 +501,8 @@
       "userId": "8",
       "catId": "4",
       "visibility": true,
-      "dateCreated": "2025-10-10T00:00:00.000Z"
+      "dateCreated": "2025-10-10T00:00:00.000Z",
+      "id": "Qoj-t1Yqd0w"
     },
     {
       "sectionId": "14",
@@ -493,7 +511,8 @@
       "userId": "19",
       "catId": "5",
       "visibility": true,
-      "dateCreated": "2025-10-23T00:00:00.000Z"
+      "dateCreated": "2025-10-23T00:00:00.000Z",
+      "id": "m895JiNXdVE"
     },
     {
       "sectionId": "15",
@@ -502,7 +521,8 @@
       "userId": "13",
       "catId": "1",
       "visibility": true,
-      "dateCreated": "2025-12-05T00:00:00.000Z"
+      "dateCreated": "2025-12-05T00:00:00.000Z",
+      "id": "BrnxCsHhpjM"
     },
     {
       "sectionId": "16",
@@ -511,7 +531,8 @@
       "userId": "15",
       "catId": "3",
       "visibility": true,
-      "dateCreated": "2026-03-14T00:00:00.000Z"
+      "dateCreated": "2026-03-14T00:00:00.000Z",
+      "id": "GUmHSzqRxT4"
     },
     {
       "sectionId": "17",
@@ -520,7 +541,8 @@
       "userId": "15",
       "catId": "1",
       "visibility": false,
-      "dateCreated": "2025-05-23T00:00:00.000Z"
+      "dateCreated": "2025-05-23T00:00:00.000Z",
+      "id": "JeZJVC2VzdI"
     },
     {
       "sectionId": "18",
@@ -529,7 +551,8 @@
       "userId": "30",
       "catId": "3",
       "visibility": true,
-      "dateCreated": "2025-07-09T00:00:00.000Z"
+      "dateCreated": "2025-07-09T00:00:00.000Z",
+      "id": "a7AyB3tAIF0"
     },
     {
       "sectionId": "19",
@@ -538,7 +561,8 @@
       "userId": "23",
       "catId": "2",
       "visibility": true,
-      "dateCreated": "2025-12-26T00:00:00.000Z"
+      "dateCreated": "2025-12-26T00:00:00.000Z",
+      "id": "wxyGCpIEb24"
     },
     {
       "sectionId": "20",
@@ -547,7 +571,8 @@
       "userId": "5",
       "catId": "5",
       "visibility": true,
-      "dateCreated": "2025-10-01T00:00:00.000Z"
+      "dateCreated": "2025-10-01T00:00:00.000Z",
+      "id": "1AoSOBMBLNU"
     }
   ],
   "comments": [
@@ -557,7 +582,8 @@
       "parentCommentId": null,
       "userId": "11",
       "sectionId": "14",
-      "dateCreated": "2025-10-01T20:00:00.000Z"
+      "dateCreated": "2025-10-01T20:00:00.000Z",
+      "id": "ucyed2Ats2o"
     },
     {
       "commentId": "2",
@@ -565,7 +591,8 @@
       "parentCommentId": null,
       "userId": "19",
       "sectionId": "16",
-      "dateCreated": "2025-06-19T15:00:00.000Z"
+      "dateCreated": "2025-06-19T15:00:00.000Z",
+      "id": "fc1Df1O1geY"
     },
     {
       "commentId": "3",
@@ -573,7 +600,8 @@
       "parentCommentId": "1",
       "userId": "33",
       "sectionId": "6",
-      "dateCreated": "2025-11-14T16:00:00.000Z"
+      "dateCreated": "2025-11-14T16:00:00.000Z",
+      "id": "nsTLir3U5_k"
     },
     {
       "commentId": "4",
@@ -581,7 +609,8 @@
       "parentCommentId": "1",
       "userId": "1",
       "sectionId": "12",
-      "dateCreated": "2025-12-25T13:00:00.000Z"
+      "dateCreated": "2025-12-25T13:00:00.000Z",
+      "id": "f0D1BgwR4kc"
     },
     {
       "commentId": "5",
@@ -589,7 +618,8 @@
       "parentCommentId": null,
       "userId": "15",
       "sectionId": "2",
-      "dateCreated": "2025-10-10T23:00:00.000Z"
+      "dateCreated": "2025-10-10T23:00:00.000Z",
+      "id": "prf_AEzgjLc"
     },
     {
       "commentId": "6",
@@ -597,7 +627,8 @@
       "parentCommentId": null,
       "userId": "27",
       "sectionId": "20",
-      "dateCreated": "2025-10-13T01:00:00.000Z"
+      "dateCreated": "2025-10-13T01:00:00.000Z",
+      "id": "LE7O3hxp3Vw"
     },
     {
       "commentId": "7",
@@ -605,7 +636,8 @@
       "parentCommentId": null,
       "userId": "35",
       "sectionId": "16",
-      "dateCreated": "2025-04-29T20:00:00.000Z"
+      "dateCreated": "2025-04-29T20:00:00.000Z",
+      "id": "9TX3addJ4Ew"
     },
     {
       "commentId": "8",
@@ -613,7 +645,8 @@
       "parentCommentId": null,
       "userId": "24",
       "sectionId": "1",
-      "dateCreated": "2025-05-19T23:00:00.000Z"
+      "dateCreated": "2025-05-19T23:00:00.000Z",
+      "id": "B02gUCGGIkU"
     },
     {
       "commentId": "9",
@@ -621,7 +654,8 @@
       "parentCommentId": null,
       "userId": "8",
       "sectionId": "1",
-      "dateCreated": "2025-10-19T05:00:00.000Z"
+      "dateCreated": "2025-10-19T05:00:00.000Z",
+      "id": "8IhdZ_ZmsPE"
     },
     {
       "commentId": "10",
@@ -629,7 +663,8 @@
       "parentCommentId": "1",
       "userId": "22",
       "sectionId": "13",
-      "dateCreated": "2025-11-04T04:00:00.000Z"
+      "dateCreated": "2025-11-04T04:00:00.000Z",
+      "id": "2hzizMBkWPU"
     },
     {
       "commentId": "11",
@@ -637,7 +672,8 @@
       "parentCommentId": "10",
       "userId": "31",
       "sectionId": "8",
-      "dateCreated": "2025-04-08T06:00:00.000Z"
+      "dateCreated": "2025-04-08T06:00:00.000Z",
+      "id": "t85H0JPHgXU"
     },
     {
       "commentId": "12",
@@ -645,7 +681,8 @@
       "parentCommentId": null,
       "userId": "47",
       "sectionId": "3",
-      "dateCreated": "2025-05-02T17:00:00.000Z"
+      "dateCreated": "2025-05-02T17:00:00.000Z",
+      "id": "1mqHNLS3ShE"
     },
     {
       "commentId": "13",
@@ -653,7 +690,8 @@
       "parentCommentId": null,
       "userId": "25",
       "sectionId": "7",
-      "dateCreated": "2025-08-22T04:00:00.000Z"
+      "dateCreated": "2025-08-22T04:00:00.000Z",
+      "id": "N36A7PoZZHk"
     },
     {
       "commentId": "14",
@@ -661,7 +699,8 @@
       "parentCommentId": null,
       "userId": "27",
       "sectionId": "10",
-      "dateCreated": "2025-09-03T14:00:00.000Z"
+      "dateCreated": "2025-09-03T14:00:00.000Z",
+      "id": "Fp2C8HOiPIk"
     },
     {
       "commentId": "15",
@@ -669,7 +708,8 @@
       "parentCommentId": "2",
       "userId": "21",
       "sectionId": "16",
-      "dateCreated": "2025-09-14T08:00:00.000Z"
+      "dateCreated": "2025-09-14T08:00:00.000Z",
+      "id": "IMkiAWU4eVM"
     },
     {
       "commentId": "16",
@@ -677,7 +717,8 @@
       "parentCommentId": "10",
       "userId": "11",
       "sectionId": "16",
-      "dateCreated": "2025-03-02T15:00:00.000Z"
+      "dateCreated": "2025-03-02T15:00:00.000Z",
+      "id": "zw1j91V_gws"
     },
     {
       "commentId": "17",
@@ -685,7 +726,8 @@
       "parentCommentId": null,
       "userId": "48",
       "sectionId": "17",
-      "dateCreated": "2025-06-22T18:00:00.000Z"
+      "dateCreated": "2025-06-22T18:00:00.000Z",
+      "id": "uuJMKVEpLYE"
     },
     {
       "commentId": "18",
@@ -693,7 +735,8 @@
       "parentCommentId": null,
       "userId": "36",
       "sectionId": "20",
-      "dateCreated": "2025-04-27T05:00:00.000Z"
+      "dateCreated": "2025-04-27T05:00:00.000Z",
+      "id": "ru2BzfDRPE0"
     },
     {
       "commentId": "19",
@@ -701,7 +744,8 @@
       "parentCommentId": null,
       "userId": "41",
       "sectionId": "12",
-      "dateCreated": "2025-08-18T11:00:00.000Z"
+      "dateCreated": "2025-08-18T11:00:00.000Z",
+      "id": "uwLcBQjWmk0"
     },
     {
       "commentId": "20",
@@ -709,7 +753,9 @@
       "parentCommentId": "6",
       "userId": "20",
       "sectionId": "8",
-      "dateCreated": "2025-04-22T05:00:00.000Z"
+      "dateCreated": "2025-04-22T05:00:00.000Z",
+      "id": "UCdCBnaXFJ4"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

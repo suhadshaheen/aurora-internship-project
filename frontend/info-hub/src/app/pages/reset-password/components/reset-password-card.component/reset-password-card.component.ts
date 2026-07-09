@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { RESET_PASSWORD_CONSTANTS } from '../../reset-password.constants';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../shared/services/auth.services';
+
 @Component({
   selector: 'app-reset-password-card',
   standalone: true,
@@ -21,6 +22,7 @@ export class ResetPasswordCardComponent {
   authService = inject(AuthService);
   router = inject(Router);
   constants = RESET_PASSWORD_CONSTANTS;
+  isLoading = false;
 
   newPassword: string = '';
   confirmPassword: string = '';
@@ -52,11 +54,31 @@ export class ResetPasswordCardComponent {
   onSubmit(event: Event): void {
     event.preventDefault();
     if (!this.isFormValid) return;
-    this.messageService.add({
-      severity: 'success',
-      summary: this.constants.toast.summary,
-      detail: this.constants.toast.detail,
-      life: 3000,
+
+    this.isLoading = true;
+    const email = localStorage.getItem('resetEmail') ?? '';
+
+    this.authService.resetPassword(email, this.newPassword).subscribe({
+      next: () => {
+        this.isLoading = false;
+        localStorage.removeItem('resetEmail');
+        this.messageService.add({
+          severity: 'success',
+          summary: this.constants.toast.summary,
+          detail: this.constants.toast.detail,
+          life: 3000,
+        });
+        setTimeout(() => this.router.navigate(['/login']), 3000);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.message,
+          life: 3000,
+        });
+      },
     });
   }
 }
