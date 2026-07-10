@@ -1,0 +1,11 @@
+.dashboard-spacer {
+  min-height: 350px;
+}
+
+.sections-placeholder {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.3rem;
+  padding: 2rem;
+  color: #cbd5e1;
+}

@@ -1,10 +1,36 @@
 import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from './auth.actions';
-import { initialAuthState } from './auth.state';
+import { AuthState, initialAuthState } from './auth.state';
 
+export const getInitialAuthState = (): AuthState => {
+  if (typeof window === 'undefined' || typeof window.localStorage === 'undefined') {
+    return initialAuthState;
+  }
+
+  const storedToken = window.localStorage.getItem('token');
+  const storedUser = window.localStorage.getItem('user');
+
+  if (!storedToken || !storedUser) {
+    return initialAuthState;
+  }
+
+  try {
+    const parsedUser = JSON.parse(storedUser) as AuthState['user'];
+
+    return {
+      user: parsedUser,
+      token: storedToken,
+      isLoggedIn: true,
+      loading: false,
+      error: null,
+    };
+  } catch {
+    return initialAuthState;
+  }
+};
 
 export const authReducer = createReducer(
-  initialAuthState,
+  getInitialAuthState(),
 
   on(AuthActions.login, (state) => ({
     ...state,

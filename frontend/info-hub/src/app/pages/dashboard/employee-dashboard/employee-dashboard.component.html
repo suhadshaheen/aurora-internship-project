@@ -1,5 +1,13 @@
 <app-nav-bar></app-nav-bar>
 
-<section class="dashboard-page">
+@defer (on viewport) {
   <app-section-list></app-section-list>
-</section>
+} @placeholder {
+  <div class="sections-placeholder">
+    Sections will load when you scroll down...
+  </div>
+} @loading {
+  <div class="sections-placeholder">
+    Loading sections...
+  </div>
+}

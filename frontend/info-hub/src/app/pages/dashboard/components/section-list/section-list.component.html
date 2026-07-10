@@ -18,14 +18,15 @@
     <p class="error-text">{{ error }}</p>
   }
 
-  @if (sections$ | async; as sections) {
-    @if (sections.length > 0) {
-      <div class="sections-list">
-        @for (section of sections; track section.sectionId) {
-          <article class="section-item">
-            <div class="section-icon">
-              <i class="pi pi-folder"></i>
-            </div>
+@if (visibleSections$ | async; as sections) {
+  @if (sections.length > 0) {
+    <div class="sections-list">
+      @for (section of sections; track section.sectionId) {
+        <article class="section-item">
+          <div class="section-icon">
+            <i class="pi pi-folder"></i>
+          </div>
+
 
             <div class="section-main">
               <div class="section-top">

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import {combineLatest, map } from 'rxjs';
 
 import { TagModule } from 'primeng/tag';
 
@@ -11,6 +11,7 @@ import {
   selectSectionLoading,
   selectSectionError
 } from '../section/store/section.selectors';
+import { selectUserRole } from '../../../login-page.component/store/auth.selectors';
 
 @Component({
   selector: 'app-section-list',
@@ -26,11 +27,28 @@ import {
 export class SectionListComponent implements OnInit {
   private store = inject(Store);
 
-  sections$ = this.store.select(selectAllSections);
+  private sections$ = this.store.select(selectAllSections);
+  role$ = this.store.select(selectUserRole);
 
-  sectionCount$ = this.sections$.pipe(
-    map((sections) => sections.length)
-  );
+visibleSections$ = combineLatest([
+  this.sections$,
+  this.role$
+]).pipe(
+  map(([sections, role]) => {
+    const normalizedRole = role?.toLowerCase();
+
+    const canSeeHidden =
+      normalizedRole === 'admin' || normalizedRole === 'employee';
+
+    return sections.filter((section) => {
+      return section.visibility === true || canSeeHidden;
+    });
+  })
+);
+
+sectionCount$ = this.visibleSections$.pipe(
+  map((sections) => sections.length)
+);
 
   loading$ = this.store.select(selectSectionLoading);
   error$ = this.store.select(selectSectionError);
