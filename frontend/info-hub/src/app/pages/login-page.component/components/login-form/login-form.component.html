@@ -62,5 +62,7 @@
   [disabled]="loginForm.invalid || !isEmailDomainValid()"
   (click)="login()">
 </p-button>
-
+@if (error$ | async; as error) {
+  <small class="error-message">{{ error }}</small>
+}
 </form>
