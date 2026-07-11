@@ -41,7 +41,7 @@ export const sectionReducer = createReducer(
   on(SectionActions.addSectionSuccess, (state, { section }) => ({
     ...state,
     loading: false,
-    sections: [...state.sections, section],
+    sections: [section, ...state.sections],
   })),
   on(SectionActions.addSectionFailure, (state, { error }) => ({
     ...state,

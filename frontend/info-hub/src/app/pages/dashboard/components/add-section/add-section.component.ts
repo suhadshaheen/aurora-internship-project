@@ -21,7 +21,7 @@ export class AddSectionComponent {
   title: string = '';
   content: string = '';
   catId: string = '';
-
+  visibility: boolean = true;
 
   showDialog(): void {
     this.visible = true;
@@ -43,7 +43,7 @@ export class AddSectionComponent {
           content: this.content,
           userId: 'current-user',
           catId: this.catId.trim() || 'general',
-          visibility: true
+          visibility: this.visibility
         }
       })
     );
@@ -51,6 +51,7 @@ export class AddSectionComponent {
     this.title = '';
     this.content = '';
     this.catId = '';
+    this.visibility = true;
 
     this.visible = false;
   }
