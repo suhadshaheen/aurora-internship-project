@@ -5,6 +5,7 @@ import { ForgotPasswordPage } from './pages/forgot-password/forgot-password-page
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password-page.component/reset-password-page.component';
 import { EmployeeDashboardComponent } from './pages/dashboard/employee-dashboard/employee-dashboard.component';
 import { authGuard } from '../guards/auth.guard';
+import { GuestDashboardComponent} from './pages/dashboard/guest-dashboard/guest-dashboard.component';
 import { AdminDashboardComponent } from './pages/dashboard/admin-dashboard/admin-dashboard.component';
 export const routes: Routes = [
   {
@@ -33,4 +34,9 @@ export const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [authGuard],
   },
+  {
+    path: 'guest-dashboard',
+    component: GuestDashboardComponent,
+    canActivate: [authGuard],
+  }
 ];

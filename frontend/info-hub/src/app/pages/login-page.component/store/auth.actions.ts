@@ -13,6 +13,8 @@ export const AuthActions = createActionGroup({
 
     'Login Failure': props<{ error: string }>(),
 
+    'Continue As Guest': emptyProps(),
+
     'Logout': emptyProps(),
 
     'Clear Error': emptyProps()
