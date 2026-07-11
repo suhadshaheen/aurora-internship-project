@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest, map, switchMap } from 'rxjs';
+
 import { TagModule } from 'primeng/tag';
 
 import { SectionActions } from '../section/store/section.actions';
@@ -12,9 +13,10 @@ import {
   selectSectionError,
   selectSectionsByCategoryId,
 } from '../section/store/section.selectors';
-import { combineLatest } from 'rxjs';
 import { selectCurrentUser } from '../../../login-page.component/store/auth.selectors';
 import { selectSectionsByUserId } from '../section/store/section.selectors';
+import { selectUserRole } from '../../../login-page.component/store/auth.selectors';
+
 @Component({
   selector: 'app-section-list',
   standalone: true,
@@ -39,7 +41,22 @@ export class SectionListComponent implements OnInit {
       return this.store.select(selectAllSections);
     }),
   );
-  sectionCount$ = this.sections$.pipe(map((sections) => sections.length));
+
+  role$ = this.store.select(selectUserRole);
+
+  visibleSections$ = combineLatest([this.sections$, this.role$]).pipe(
+    map(([sections, role]) => {
+      const normalizedRole = role?.toLowerCase();
+
+      const canSeeHidden = normalizedRole === 'admin' || normalizedRole === 'employee';
+
+      return sections.filter((section) => {
+        return section.visibility === true || canSeeHidden;
+      });
+    }),
+  );
+
+  sectionCount$ = this.visibleSections$.pipe(map((sections) => sections.length));
 
   loading$ = this.store.select(selectSectionLoading);
   error$ = this.store.select(selectSectionError);
