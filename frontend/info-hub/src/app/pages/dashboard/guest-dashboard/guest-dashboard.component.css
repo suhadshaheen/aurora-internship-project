@@ -1,0 +1,28 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-layout__content {
+  flex: 1;
+  margin-left: 14rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-layout__main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.dashboard-spacer {
+  min-height: 350px;
+}
+
+.sections-placeholder {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.3rem;
+  padding: 2rem;
+  color: #cbd5e1;
+}
