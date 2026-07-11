@@ -1,1 +1,86 @@
-<p>side-bar.component works!</p>
+<div class="sidebar">
+  <p-confirmdialog />
+
+  <div class="sidebar__header">
+    <img src="assets/logo-4.png" class="sidebar__logo" alt="Info Hub" />
+    <span class="sidebar__title">Info Hub</span>
+  </div>
+
+  <hr class="sidebar__divider" />
+
+  <ul class="sidebar__menu">
+    <li class="sidebar__item">
+      <a
+        pRipple
+        (click)="onDashboardClick()"
+        [class.sidebar__item--active]="isDashboardActive()"
+        class="sidebar__link"
+      >
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <li class="sidebar__item">
+      <a
+        pRipple
+        (click)="onMySectionsClick()"
+        [class.sidebar__item--active]="isMineActive()"
+        class="sidebar__link"
+      >
+        <span>My Sections</span>
+      </a>
+    </li>
+
+    <li class="sidebar__item">
+      <div
+        pRipple
+        (click)="toggleCategories()"
+        class="sidebar__link sidebar__link--dropdown"
+        [class.sidebar__link--open]="categoriesOpen()"
+      >
+        <span>Categories</span>
+      </div>
+
+      <ul class="sidebar__submenu" [class.sidebar__submenu--open]="categoriesOpen()">
+        @if (isAdmin()) {
+          <li class="sidebar__subitem">
+            <a pRipple class="sidebar__link sidebar__link--add" (click)="onAddCategory()">
+              <span>Add Category</span>
+            </a>
+          </li>
+        }
+
+        @for (cat of categories(); track cat.catId) {
+          <li class="sidebar__subitem" [class.sidebar__item--active]="activeCatId() === cat.catId">
+            <a pRipple class="sidebar__link" (click)="onCategoryClick(cat.catId)">
+              <svg data-p-icon="tag" class="sidebar__icon"></svg>
+              <span>{{ cat.catName }}</span>
+            </a>
+            @if (isAdmin()) {
+              <button class="sidebar__delete-btn" (click)="onDeleteCategory(cat.catId)"></button>
+            }
+          </li>
+        } @empty {
+          <li class="sidebar__empty">No categories yet</li>
+        }
+      </ul>
+    </li>
+  </ul>
+
+  <div class="sidebar__footer">
+    <hr class="sidebar__divider" />
+
+    <div class="sidebar__user">
+      <p-avatar
+        [label]="currentUser()?.userName?.charAt(0) ?? 'U'"
+        shape="circle"
+        class="sidebar__avatar"
+      />
+      <span class="sidebar__username">{{ currentUser()?.userName ?? 'Guest' }}</span>
+    </div>
+
+    <a pRipple class="sidebar__link sidebar__link--logout" (click)="onLogout($event)">
+      <span>Logout</span>
+    </a>
+  </div>
+</div>

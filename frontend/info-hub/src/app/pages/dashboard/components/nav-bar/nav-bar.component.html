@@ -27,18 +27,38 @@
     </div>
   </ng-template>
 
-  <ng-template pTemplate="end">
+ <ng-template pTemplate="end">
+  @if (user$ | async; as user) {
     <div class="user-box">
       <p-avatar
-        label="E"
+        [label]="user.userName.charAt(0).toUpperCase()"
         shape="circle"
         styleClass="user-avatar">
       </p-avatar>
 
       <div class="user-info">
-        <span class="user-name">Employee</span>
-        <small>employee</small>
+        <span class="user-name">
+          {{ user.userName }}
+        </span>
+
+        <small>
+          {{ user.role }}
+        </small>
       </div>
     </div>
-  </ng-template>
+  } @else {
+    <div class="user-box">
+      <p-avatar
+        label="U"
+        shape="circle"
+        styleClass="user-avatar">
+      </p-avatar>
+
+      <div class="user-info">
+        <span class="user-name">User</span>
+        <small>Not loaded</small>
+      </div>
+    </div>
+  }
+</ng-template>
 </p-toolbar>

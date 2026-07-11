@@ -20,3 +20,5 @@ export const selectSectionError = createSelector(selectSectionState, (state) => 
 
 export const selectSectionsByCategoryId = (catId: string) =>
   createSelector(selectAllSections, (sections) => sections.filter((s) => s.catId === catId));
+export const selectSectionsByUserId = (userId: string | number) =>
+  createSelector(selectAllSections, (sections) => sections.filter((s) => s.userId === userId));
