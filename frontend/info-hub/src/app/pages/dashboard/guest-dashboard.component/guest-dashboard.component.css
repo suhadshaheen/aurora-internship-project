@@ -1,6 +1,7 @@
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 45%, #2f6f8f 100%);
 }
 
 .dashboard-layout__content {
@@ -8,11 +9,13 @@
   margin-left: 14rem;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 .dashboard-layout__main {
   flex: 1;
   padding: 1.5rem;
+  background: transparent;
 }
 
 .dashboard-spacer {
@@ -20,9 +23,11 @@
 }
 
 .sections-placeholder {
-  background: #111827;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(17, 24, 39, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1.3rem;
   padding: 2rem;
   color: #cbd5e1;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
