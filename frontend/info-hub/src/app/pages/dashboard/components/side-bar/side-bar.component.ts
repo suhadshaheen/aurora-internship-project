@@ -1,12 +1,15 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 
@@ -17,6 +20,7 @@ import {
 import { AuthActions } from '../../../../pages/login-page.component/store/auth.actions';
 import { CategoryActions } from '../category/store/category.actions';
 import { selectCategories } from '../category/store/category.selectors';
+import { SIDEBAR_ROUTES, QUERY_PARAMS, USER_ROLES } from '../side-bar/Sidebar.constants';
 
 @Component({
   selector: 'app-side-bar',
@@ -28,6 +32,9 @@ import { selectCategories } from '../category/store/category.selectors';
     RippleModule,
     StyleClassModule,
     ConfirmDialogModule,
+    DialogModule,
+    InputTextModule,
+    FormsModule,
     RouterModule,
     CommonModule,
   ],
@@ -40,25 +47,38 @@ export class SideBarComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   private confirmationService = inject(ConfirmationService);
-  isMineActive = signal(false);
+
   currentUser = this.store.selectSignal(selectCurrentUser);
   userRole = this.store.selectSignal(selectUserRole);
   categories = this.store.selectSignal(selectCategories);
-  isAdmin = computed(() => this.userRole() === 'admin');
-
+  isAdmin = computed(() => this.userRole() === USER_ROLES.admin);
+  isGuest = computed(() => this.userRole() === USER_ROLES.guest);
   categoriesOpen = signal(false);
+
   activeCatId = signal<string | null>(null);
+  isMineActive = signal(false);
   isDashboardActive = signal(false);
+
+  showAddCategoryDialog = false;
+  newCategoryName = '';
+
   constructor() {
     this.store.dispatch(CategoryActions.loadCategories());
   }
-
+  getDashboardRoute(): string {
+    const role = this.userRole();
+    if (role === USER_ROLES.admin) return SIDEBAR_ROUTES.adminDashboard;
+    if (role === USER_ROLES.guest) return SIDEBAR_ROUTES.guestDashboard;
+    return SIDEBAR_ROUTES.employeeDashboard;
+  }
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
-      const catParam = params.get('catId');
+      const catParam = params.get(QUERY_PARAMS.catId);
+      const mineParam = params.get(QUERY_PARAMS.mine) === 'true';
+
       this.activeCatId.set(catParam ? catParam : null);
-      this.isMineActive.set(params.get('mine') === 'true');
-      this.isDashboardActive.set(!catParam && params.get('mine') !== 'true');
+      this.isMineActive.set(mineParam);
+      this.isDashboardActive.set(!catParam && !mineParam);
     });
   }
 
@@ -66,9 +86,34 @@ export class SideBarComponent implements OnInit {
     this.categoriesOpen.update((v) => !v);
   }
 
-  onAddCategory() {
-    const name = prompt('Category name:');
+  onDashboardClick(): void {
+    this.router.navigate([this.getDashboardRoute()]);
+  }
+
+  onMySectionsClick(): void {
+    this.router.navigate([this.getDashboardRoute()], {
+      queryParams: { [QUERY_PARAMS.mine]: true },
+    });
+  }
+  onCategoryClick(catId: string): void {
+    this.router.navigate([this.getDashboardRoute()], {
+      queryParams: { [QUERY_PARAMS.catId]: catId },
+    });
+  }
+
+  onAddCategory(): void {
+    this.newCategoryName = '';
+    this.showAddCategoryDialog = true;
+  }
+
+  onCancelAddCategory(): void {
+    this.showAddCategoryDialog = false;
+  }
+
+  onConfirmAddCategory(): void {
+    const name = this.newCategoryName.trim();
     if (!name) return;
+
     this.store.dispatch(
       CategoryActions.addCategory({
         category: {
@@ -77,21 +122,16 @@ export class SideBarComponent implements OnInit {
         },
       }),
     );
+
+    this.showAddCategoryDialog = false;
+    this.newCategoryName = '';
   }
-  onDashboardClick(): void {
-    this.router.navigate(['/employee-dashboard']);
-  }
-  onDeleteCategory(catId: string) {
+
+  onDeleteCategory(catId: string): void {
     this.store.dispatch(CategoryActions.deleteCategory({ catId }));
   }
 
-  onCategoryClick(catId: string) {
-    this.router.navigate(['/employee-dashboard'], { queryParams: { catId } });
-  }
-  onMySectionsClick(): void {
-    this.router.navigate(['/employee-dashboard'], { queryParams: { mine: true } });
-  }
-  onLogout(event: Event) {
+  onLogout(event: Event): void {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Are you sure you want to log out?',
@@ -110,7 +150,7 @@ export class SideBarComponent implements OnInit {
       },
       accept: () => {
         this.store.dispatch(AuthActions.logout());
-        this.router.navigate(['/login']);
+        this.router.navigate([SIDEBAR_ROUTES.login]);
       },
     });
   }
