@@ -154,4 +154,7 @@ export class SideBarComponent implements OnInit {
       },
     });
   }
+  onBackToHome(): void {
+    this.router.navigate(['/']);
+  }
 }
