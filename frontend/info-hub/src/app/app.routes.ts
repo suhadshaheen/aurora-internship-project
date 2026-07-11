@@ -5,6 +5,7 @@ import { ForgotPasswordPage } from './pages/forgot-password/forgot-password-page
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password-page.component/reset-password-page.component';
 import { EmployeeDashboardComponent } from './pages/dashboard/employee-dashboard/employee-dashboard.component';
 import { authGuard } from '../guards/auth.guard';
+import { AdminDashboardComponent } from './pages/dashboard/admin-dashboard/admin-dashboard.component';
 export const routes: Routes = [
   {
     path: '',
@@ -25,6 +26,11 @@ export const routes: Routes = [
   {
     path: 'employee-dashboard',
     component: EmployeeDashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent,
     canActivate: [authGuard],
   },
 ];
