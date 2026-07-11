@@ -33,9 +33,10 @@
                 <div>
                   <h3>{{ section.title }}</h3>
 
-                  <p class="section-content">
-                    {{ section.content }}
-                  </p>
+                 <div
+                   class="section-content"
+                    [innerHTML]="section.content">
+                   </div>
                 </div>
 
                 @if (section.visibility) {
