@@ -573,6 +573,38 @@
       "visibility": true,
       "dateCreated": "2025-10-01T00:00:00.000Z",
       "id": "1AoSOBMBLNU"
+    },
+    {
+      "title": "New info",
+      "content": "<p>this&nbsp;is&nbsp;for&nbsp;testing</p>",
+      "userId": "current-user",
+      "catId": "1",
+      "visibility": true,
+      "id": "kg1Kql5V2lk"
+    },
+    {
+      "title": "New section 2",
+      "content": "<p>Testing&nbsp;the&nbsp;ordering</p>",
+      "userId": "current-user",
+      "catId": "2",
+      "visibility": true,
+      "id": "90F0eH9eiwk"
+    },
+    {
+      "title": "New3",
+      "content": "<ol><li><span style=\"color: rgb(230, 0, 0);\">Testing</span><u>&nbsp;the</u>&nbsp;<strong>e</strong><span class=\"ql-font-monospace\">dito</span>r</li></ol>",
+      "userId": "current-user",
+      "catId": "5",
+      "visibility": true,
+      "id": "DG62TGNbm-M"
+    },
+    {
+      "title": "testin visibility",
+      "content": "<p>testing</p>",
+      "userId": "current-user",
+      "catId": "4",
+      "visibility": true,
+      "id": "PuvUYBKV9BE"
     }
   ],
   "comments": [

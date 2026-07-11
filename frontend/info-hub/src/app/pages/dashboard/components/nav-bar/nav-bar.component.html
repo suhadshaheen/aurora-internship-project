@@ -9,21 +9,8 @@
   </ng-template>
 
   <ng-template pTemplate="center">
-    <div class="nav-links">
-      <button pButton type="button" class="nav-btn" text>
-        <i class="pi pi-home"></i>
-        <span>Home</span>
-      </button>
-
-      <button pButton type="button" class="nav-btn" text>
-        <i class="pi pi-folder"></i>
-        <span>Sections</span>
-      </button>
-
-      <button pButton type="button" class="nav-btn" text>
-        <i class="pi pi-comments"></i>
-        <span>Comments</span>
-      </button>
+    <div class="nav-page-label">
+      <span class="page-label">{{ currentPageTitle() }}</span>
     </div>
   </ng-template>
 

@@ -7,7 +7,7 @@
     </p>
     <div class="hero_buttons">
   <button class="hero_login" routerLink="/login">{{ loginText }}</button>
-  <button class="guest_btn">{{ guestText }} <span class="arrow">{{ arrow }}</span></button>
+  <button class="guest_btn" (click)="continueAsGuest()">{{ guestText }} <span class="arrow">{{ arrow }}</span></button>
 </div>
   </p-card>
 </section>

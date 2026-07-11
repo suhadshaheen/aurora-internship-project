@@ -159,3 +159,45 @@
 .forgot-password:hover {
   text-decoration: underline;
 }
+.back-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+
+  margin-top: 5rem; /* نزليه أكتر */
+  padding: 0.65rem 1.3rem;
+
+  border-radius: 999px;
+  border: 1px solid rgba(210, 223, 239, 0.65);
+
+  background: rgba(37, 99, 235, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color: #e0f2fe;
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow:
+    0 12px 30px rgba(123, 159, 238, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  transition: 0.2s ease;
+}
+
+.back-home-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(37, 99, 235, 0.32);
+  border-color: rgba(96, 165, 250, 0.95);
+  color: #ffffff;
+}
+
+.back-home-btn:active {
+  transform: translateY(0);
+}
+
+.back-home-btn i {
+  font-size: 0.9rem;
+  color: #93c5fd;
+}
