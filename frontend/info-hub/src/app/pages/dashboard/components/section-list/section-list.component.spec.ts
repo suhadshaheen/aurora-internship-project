@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SectonListComponent } from './section-list.component';
+import { SectionListComponent } from './section-list.component';
 
-describe('SectonListComponent', () => {
-  let component: SectonListComponent;
-  let fixture: ComponentFixture<SectonListComponent>;
+describe('SectionListComponent', () => {
+  let component: SectionListComponent;
+  let fixture: ComponentFixture<SectionListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SectonListComponent],
+      imports: [SectionListComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SectonListComponent);
+    fixture = TestBed.createComponent(SectionListComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
