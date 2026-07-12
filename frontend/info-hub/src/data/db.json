@@ -338,39 +338,33 @@
   ],
   "categories": [
     {
-      "catId": "1",
+      "id": "1",
       "catName": "HR & Policies",
       "userId": "3",
-      "dateCreated": "2025-02-08T00:00:00.000Z",
-      "id": "2b8ECuXAjkU"
+      "dateCreated": "2025-02-08T00:00:00.000Z"
     },
     {
-      "catId": "2",
+      "id": "2",
       "catName": "Finance",
       "userId": "4",
-      "dateCreated": "2025-06-16T00:00:00.000Z",
-      "id": "Hat6Y6b_6Go"
+      "dateCreated": "2025-06-16T00:00:00.000Z"
     },
     {
-      "catId": "3",
+      "id": "3",
       "catName": "IT & Security",
       "userId": "1",
-      "dateCreated": "2025-01-19T00:00:00.000Z",
-      "id": "k5SnKz9iMKI"
+      "dateCreated": "2025-01-19T00:00:00.000Z"
     },
     {
-      "catId": "4",
+      "id": "4",
       "catName": "Marketing",
       "userId": "5",
-      "dateCreated": "2025-01-25T00:00:00.000Z",
-      "id": "GG4OFH8AITQ"
+      "dateCreated": "2025-01-25T00:00:00.000Z"
     },
     {
-      "catId": "5",
-      "catName": "Product & Projects",
-      "userId": "3",
-      "dateCreated": "2025-05-30T00:00:00.000Z",
-      "id": "fcgHwpWWfhI"
+      "catName": "QA",
+      "userId": "1",
+      "id": "gInEHBkyQFc"
     }
   ],
   "sections": [
@@ -573,6 +567,38 @@
       "visibility": true,
       "dateCreated": "2025-10-01T00:00:00.000Z",
       "id": "1AoSOBMBLNU"
+    },
+    {
+      "title": "New info",
+      "content": "<p>this&nbsp;is&nbsp;for&nbsp;testing</p>",
+      "userId": "current-user",
+      "catId": "1",
+      "visibility": true,
+      "id": "kg1Kql5V2lk"
+    },
+    {
+      "title": "New section 2",
+      "content": "<p>Testing&nbsp;the&nbsp;ordering</p>",
+      "userId": "current-user",
+      "catId": "2",
+      "visibility": true,
+      "id": "90F0eH9eiwk"
+    },
+    {
+      "title": "New3",
+      "content": "<ol><li><span style=\"color: rgb(230, 0, 0);\">Testing</span><u>&nbsp;the</u>&nbsp;<strong>e</strong><span class=\"ql-font-monospace\">dito</span>r</li></ol>",
+      "userId": "current-user",
+      "catId": "5",
+      "visibility": true,
+      "id": "DG62TGNbm-M"
+    },
+    {
+      "title": "testin visibility",
+      "content": "<p>testing</p>",
+      "userId": "current-user",
+      "catId": "4",
+      "visibility": true,
+      "id": "PuvUYBKV9BE"
     }
   ],
   "comments": [

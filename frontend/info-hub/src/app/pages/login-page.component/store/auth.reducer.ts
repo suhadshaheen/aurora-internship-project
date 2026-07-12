@@ -47,12 +47,25 @@ export const authReducer = createReducer(
     error: null
   })),
 
+  
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error
   })),
-
+on(AuthActions.continueAsGuest, (state) => ({
+  ...state,
+  user: {
+    id: 0,
+    email: 'guest@auroratech.ps',
+    userName: 'Guest',
+    role: 'guest'
+  },
+  token: 'guest-token',
+  isLoggedIn: true,
+  loading: false,
+  error: null
+})),
   on(AuthActions.logout, () => ({
     ...initialAuthState
   })),

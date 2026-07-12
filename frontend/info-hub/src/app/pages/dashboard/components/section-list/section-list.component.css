@@ -11,7 +11,7 @@
 
 .subtitle {
   margin: 0 0 0.3rem;
-  color: #60a5fa;
+  color: #4dc5d9;
   font-weight: 600;
 }
 
@@ -30,7 +30,7 @@
   height: 32px;
   padding: 0 0.6rem;
   border-radius: 999px;
-  background: #2563eb;
+  background: #4dc5d9;
   color: white;
   font-size: 0.95rem;
 }
@@ -43,20 +43,24 @@
 
 .section-item {
   width: 100%;
-  background: #111827;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 1.3rem;
   padding: 1.2rem;
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.25);
   transition: 0.2s ease;
 }
 
 .section-item:hover {
   transform: translateY(-3px);
-  background: #1f2937;
-  border-color: rgba(96, 165, 250, 0.35);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(77, 197, 217, 0.4);
+  box-shadow: 0 14px 36px rgba(2, 6, 23, 0.32);
 }
 
 .section-icon {
@@ -71,7 +75,7 @@
 
 .section-icon i {
   font-size: 1.5rem;
-  color: #60a5fa;
+  color: #4dc5d9;
 }
 
 .section-main {
@@ -113,7 +117,7 @@
 }
 
 .section-meta i {
-  color: #60a5fa;
+  color: #4dc5d9;
 }
 
 .loading-text,

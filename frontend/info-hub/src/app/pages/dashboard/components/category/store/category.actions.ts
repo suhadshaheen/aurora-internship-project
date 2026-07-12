@@ -12,9 +12,10 @@ export const CategoryActions = {
     props<{ error: string }>(),
   ),
 
+  // TODO(TEMP-ID-RENAME): رجّع 'id' لـ 'catId' جوا الـ Omit
   addCategory: createAction(
     '[Category] Add Category',
-    props<{ category: Omit<ICategory, 'catId' | 'dateCreated'> }>(),
+    props<{ category: Omit<ICategory, 'id' | 'dateCreated'> }>(),
   ),
   addCategorySuccess: createAction(
     '[Category] Add Category Success',
@@ -22,10 +23,11 @@ export const CategoryActions = {
   ),
   addCategoryFailure: createAction('[Category] Add Category Failure', props<{ error: string }>()),
 
-  deleteCategory: createAction('[Category] Delete Category', props<{ catId: string }>()),
+  // TODO(TEMP-ID-RENAME): رجّع catId مكان id
+  deleteCategory: createAction('[Category] Delete Category', props<{ id: string }>()),
   deleteCategorySuccess: createAction(
     '[Category] Delete Category Success',
-    props<{ catId: string }>(),
+    props<{ id: string }>(),
   ),
   deleteCategoryFailure: createAction(
     '[Category] Delete Category Failure',

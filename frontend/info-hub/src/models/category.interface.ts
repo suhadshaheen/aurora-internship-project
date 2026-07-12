@@ -1,5 +1,6 @@
 export interface ICategory {
-  catId: string;
+  // catId: string;
+  id: string;
   catName: string;
   userId: string | number;
   dateCreated: Date;

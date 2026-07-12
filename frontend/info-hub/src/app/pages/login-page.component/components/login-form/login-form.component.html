@@ -55,14 +55,20 @@
     Forgot Password?
   </a>
 
-  <p-button
+  <button
+  pButton
   type="submit"
   label="Log In"
-  styleClass="login-btn"
-  [disabled]="loginForm.invalid || !isEmailDomainValid()"
-  (click)="login()">
-</p-button>
+  class="login-btn"
+  [disabled]="loginForm.invalid || !isEmailDomainValid()">
+</button>
 @if (error$ | async; as error) {
   <small class="error-message">{{ error }}</small>
 }
 </form>
+<button
+  type="button"
+  class="back-home-btn"
+  routerLink="/">
+  Back to Landing Page
+</button>
