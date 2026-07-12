@@ -7,7 +7,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { RouterLink, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../../store/auth.actions';
-import { selectAuthLoading, selectAuthError, selectIsLoggedIn } from '../../store/auth.selectors';
+import { selectAuthLoading, selectAuthError, selectIsLoggedIn, selectUserRole } from '../../store/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { take } from 'rxjs';
 
@@ -37,13 +37,30 @@ export class LoginFormComponent implements OnInit {
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
   isLoggedIn$ = this.store.select(selectIsLoggedIn);
+  userRole$ = this.store.select(selectUserRole);
 
   ngOnInit(): void {
     this.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
-      if (isLoggedIn) {
-        this.router.navigate(['/employee-dashboard']);
+      if (!isLoggedIn) {
+        return;
       }
+
+      this.userRole$.pipe(take(1)).subscribe((role) => {
+        if (role === 'guest') {
+          // Guest sessions shouldn't block a real login; clear it and stay on the login page.
+          this.store.dispatch(AuthActions.logout());
+          return;
+        }
+
+        this.router.navigate([this.getDashboardRoute(role)]);
+      });
     });
+  }
+
+  private getDashboardRoute(role: string | null): string {
+    if (role === 'admin') return '/admin-dashboard';
+    if (role === 'guest') return '/guest-dashboard';
+    return '/employee-dashboard';
   }
 
   isEmailDomainValid(): boolean {
