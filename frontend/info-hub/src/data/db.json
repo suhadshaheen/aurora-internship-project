@@ -338,39 +338,28 @@
   ],
   "categories": [
     {
-      "catId": "1",
+      "id": "1",
       "catName": "HR & Policies",
       "userId": "3",
-      "dateCreated": "2025-02-08T00:00:00.000Z",
-      "id": "2b8ECuXAjkU"
+      "dateCreated": "2025-02-08T00:00:00.000Z"
     },
     {
-      "catId": "2",
+      "id": "2",
       "catName": "Finance",
       "userId": "4",
-      "dateCreated": "2025-06-16T00:00:00.000Z",
-      "id": "Hat6Y6b_6Go"
+      "dateCreated": "2025-06-16T00:00:00.000Z"
     },
     {
-      "catId": "3",
+      "id": "3",
       "catName": "IT & Security",
       "userId": "1",
-      "dateCreated": "2025-01-19T00:00:00.000Z",
-      "id": "k5SnKz9iMKI"
+      "dateCreated": "2025-01-19T00:00:00.000Z"
     },
     {
-      "catId": "4",
+      "id": "4",
       "catName": "Marketing",
       "userId": "5",
-      "dateCreated": "2025-01-25T00:00:00.000Z",
-      "id": "GG4OFH8AITQ"
-    },
-    {
-      "catId": "5",
-      "catName": "Product & Projects",
-      "userId": "3",
-      "dateCreated": "2025-05-30T00:00:00.000Z",
-      "id": "fcgHwpWWfhI"
+      "dateCreated": "2025-01-25T00:00:00.000Z"
     }
   ],
   "sections": [
