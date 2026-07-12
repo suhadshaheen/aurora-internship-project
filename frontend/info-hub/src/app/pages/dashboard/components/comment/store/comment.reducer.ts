@@ -26,9 +26,12 @@ export const commentReducer = createReducer(
     error: null,
   })),
 
-  on(CommentActions.loadCommentsSuccess, (state, { comments }) => ({
+  on(CommentActions.loadCommentsSuccess, (state, { sectionId, comments }) => ({
     ...state,
-    comments,
+    comments: [
+      ...state.comments.filter((comment) => comment.sectionId !== sectionId),
+      ...comments,
+    ],
     loading: false,
     error: null,
   })),

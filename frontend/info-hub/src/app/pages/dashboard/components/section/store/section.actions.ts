@@ -9,10 +9,10 @@ export const SectionActions = {
   ),
   loadSectionsFailure: createAction('[Section] Load Sections Failure', props<{ error: string }>()),
 
-  addSection: createAction(
-    '[Section] Add Section',
-    props<{ section: Omit<ISection, 'sectionId' | 'dateCreated'> }>(),
-  ),
+addSection: createAction(
+  '[Section] Add Section',
+  props<{ section: ISection }>(),
+),
   addSectionSuccess: createAction('[Section] Add Section Success', props<{ section: ISection }>()),
   addSectionFailure: createAction('[Section] Add Section Failure', props<{ error: string }>()),
 

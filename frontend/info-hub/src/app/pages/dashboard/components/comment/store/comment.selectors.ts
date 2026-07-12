@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CommentState } from './comment.reducer';
 
 export const selectCommentState =
-  createFeatureSelector<CommentState>("comments");
+  createFeatureSelector<CommentState>("comment");
 
 export const selectAllComments = createSelector(
   selectCommentState,
