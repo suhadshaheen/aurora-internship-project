@@ -37,12 +37,13 @@ export class CategoryEffects {
     ),
   );
 
+  // TODO(TEMP-ID-RENAME): رجّع catId مكان id بكل هاد الـ effect
   deleteCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CategoryActions.deleteCategory),
-      mergeMap(({ catId }) =>
-        this.categoryService.delete(catId).pipe(
-          map(() => CategoryActions.deleteCategorySuccess({ catId })),
+      mergeMap(({ id }) =>
+        this.categoryService.delete(id).pipe(
+          map(() => CategoryActions.deleteCategorySuccess({ id })),
           catchError((error) =>
             of(CategoryActions.deleteCategoryFailure({ error: error.message })),
           ),

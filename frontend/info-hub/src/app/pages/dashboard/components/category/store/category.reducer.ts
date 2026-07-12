@@ -54,9 +54,10 @@ export const categoryReducer = createReducer(
     loading: true,
     error: null,
   })),
-  on(CategoryActions.CategoryActions.deleteCategorySuccess, (state, { catId }) => ({
+  // TODO(TEMP-ID-RENAME): رجّع catId مكان id بالسطرين تحت
+  on(CategoryActions.CategoryActions.deleteCategorySuccess, (state, { id }) => ({
     ...state,
-    categories: state.categories.filter((category) => category.catId !== catId),
+    categories: state.categories.filter((category) => category.id !== id),
     loading: false,
     error: null,
   })),

@@ -15,14 +15,20 @@ export class CategoryService {
   }
 
   getCategoryById(id: string) {
-    return this.http.get<ICategory>(`${this.baseUrl}${id}`);
+    return this.http.get<ICategory>(`${this.baseUrl}/${id}`);
   }
 
-  create(category: Omit<ICategory, 'catId' | 'dateCreated'>): Observable<ICategory> {
-    return this.http.post<ICategory>(this.baseUrl, category);
+  // TODO(TEMP-ID-RENAME): رجّع 'id' لـ 'catId' جوا الـ Omit
+  create(category: Omit<ICategory, 'id' | 'dateCreated'>): Observable<ICategory> {
+    const payload = {
+      ...category,
+      dateCreated: new Date().toISOString(),
+    };
+    return this.http.post<ICategory>(this.baseUrl, payload);
   }
 
-  delete(catId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${catId}`);
+  // TODO(TEMP-ID-RENAME): رجّع catId مكان id
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

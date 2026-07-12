@@ -29,7 +29,7 @@ export class NavBarComponent {
 
       if (catParam) {
         this.categories$.subscribe((categories) => {
-          const category = categories.find((item) => item.catId === catParam);
+          const category = categories.find((item) => item.id === catParam);
           this.currentPageTitle.set(category?.catName ?? 'Category');
         });
       } else if (mine) {

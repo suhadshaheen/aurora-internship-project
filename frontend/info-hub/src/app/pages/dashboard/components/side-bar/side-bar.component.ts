@@ -65,12 +65,14 @@ export class SideBarComponent implements OnInit {
   constructor() {
     this.store.dispatch(CategoryActions.loadCategories());
   }
+
   getDashboardRoute(): string {
     const role = this.userRole();
     if (role === USER_ROLES.admin) return SIDEBAR_ROUTES.adminDashboard;
     if (role === USER_ROLES.guest) return SIDEBAR_ROUTES.guestDashboard;
     return SIDEBAR_ROUTES.employeeDashboard;
   }
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       const catParam = params.get(QUERY_PARAMS.catId);
@@ -95,9 +97,11 @@ export class SideBarComponent implements OnInit {
       queryParams: { [QUERY_PARAMS.mine]: true },
     });
   }
-  onCategoryClick(catId: string): void {
+
+  onCategoryClick(id: string): void {
+    // TODO(TEMP-ID-RENAME): اسم البارامتر اختياري بس - القيمة هي id الكاتيجوري
     this.router.navigate([this.getDashboardRoute()], {
-      queryParams: { [QUERY_PARAMS.catId]: catId },
+      queryParams: { [QUERY_PARAMS.catId]: id },
     });
   }
 
@@ -114,6 +118,8 @@ export class SideBarComponent implements OnInit {
     const name = this.newCategoryName.trim();
     if (!name) return;
 
+    // TODO(TEMP-ID-RENAME): ما عاد محتاجين نولد id يدوياً - json-server عم يولده
+    // تلقائياً بما إنه الحقل الوحيد للـ identity هلق اسمه "id" فعلياً
     this.store.dispatch(
       CategoryActions.addCategory({
         category: {
@@ -127,8 +133,9 @@ export class SideBarComponent implements OnInit {
     this.newCategoryName = '';
   }
 
-  onDeleteCategory(catId: string): void {
-    this.store.dispatch(CategoryActions.deleteCategory({ catId }));
+  onDeleteCategory(id: string): void {
+    // TODO(TEMP-ID-RENAME): رجّع catId مكان id
+    this.store.dispatch(CategoryActions.deleteCategory({ id }));
   }
 
   onLogout(event: Event): void {
@@ -154,6 +161,7 @@ export class SideBarComponent implements OnInit {
       },
     });
   }
+
   onBackToHome(): void {
     this.router.navigate(['/']);
   }

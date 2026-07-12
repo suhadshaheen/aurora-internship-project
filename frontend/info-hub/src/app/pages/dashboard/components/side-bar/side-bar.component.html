@@ -101,9 +101,10 @@
           </li>
         }
 
-        @for (cat of categories(); track cat.catId) {
-          <li class="sidebar__subitem" [class.sidebar__item--active]="activeCatId() === cat.catId">
-            <div pRipple class="sidebar__link" (click)="onCategoryClick(cat.catId)">
+        <!-- TODO(TEMP-ID-RENAME): رجّع cat.catId مكان cat.id بالأربع أسطر تحت -->
+        @for (cat of categories(); track cat.id) {
+          <li class="sidebar__subitem" [class.sidebar__item--active]="activeCatId() === cat.id">
+            <div pRipple class="sidebar__link" (click)="onCategoryClick(cat.id)">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -117,7 +118,7 @@
               <span>{{ cat.catName }}</span>
             </div>
             @if (isAdmin()) {
-              <button class="sidebar__delete-btn" (click)="onDeleteCategory(cat.catId)">
+              <button class="sidebar__delete-btn" (click)="onDeleteCategory(cat.id)">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
