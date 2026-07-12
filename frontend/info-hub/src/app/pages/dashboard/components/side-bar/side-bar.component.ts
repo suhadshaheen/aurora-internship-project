@@ -163,6 +163,7 @@ export class SideBarComponent implements OnInit {
   }
 
   onBackToHome(): void {
+    this.store.dispatch(AuthActions.logout());
     this.router.navigate(['/']);
   }
 }

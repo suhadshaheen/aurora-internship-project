@@ -18,6 +18,7 @@ import { CategoryEffects } from './pages/dashboard/components/category/store/cat
 import { SectionEffects } from './pages/dashboard/components/section/store/section.effects';
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
