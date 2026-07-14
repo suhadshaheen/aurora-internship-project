@@ -1,1 +1,209 @@
-<p>comment.component works!</p>
+<div class="comments-wrapper">
+  @let currentUser = (currentUser$ | async);
+
+  <h4 class="comments-title">
+    <i class="pi pi-comments"></i>
+    Comments
+  </h4>
+
+  @if (loading$ | async) {
+    <p class="comments-status">Loading comments...</p>
+  }
+
+  @if (error$ | async; as error) {
+    <p class="comments-status comments-status--error">{{ error }}</p>
+  }
+
+  @if (comments$ | async; as comments) {
+    @if (comments.length === 0) {
+      <p class="comments-status">No comments yet.</p>
+    }
+
+    <div class="comments-list">
+      @for (comment of comments; track comment.id) {
+        <div class="comment-item">
+          <div class="comment-header">
+            <span class="comment-author">{{ comment.authorLabel }}</span>
+            <span class="comment-date">{{ comment.dateCreated | date: 'medium' }}</span>
+          </div>
+
+          @if (editingCommentId === comment.id) {
+            <div class="comment-edit-form">
+              <textarea
+                pTextarea
+                [(ngModel)]="editContent"
+                rows="2"
+                placeholder="Edit your comment..."
+                class="comment-textarea"
+              ></textarea>
+
+              <div class="comment-edit-actions">
+                <button
+                  pButton
+                  type="button"
+                  label="Save"
+                  class="comment-submit-btn"
+                  (click)="submitEdit(comment.id)"
+                ></button>
+
+                <button
+                  type="button"
+                  class="comment-cancel-btn"
+                  (click)="cancelEdit()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          } @else {
+            <p class="comment-content">{{ comment.content }}</p>
+          }
+
+          <div class="comment-actions">
+            @if (canComment$ | async) {
+              <button
+                type="button"
+                class="comment-reply-toggle"
+                (click)="startReply(comment.commentId)"
+              >
+                <i class="pi pi-reply"></i>
+                Reply
+              </button>
+            }
+
+            @if (comment.canModify && editingCommentId !== comment.id) {
+              <button
+                type="button"
+                class="comment-edit-toggle"
+                (click)="startEdit(comment)"
+              >
+                <i class="pi pi-pencil"></i>
+                Edit
+              </button>
+
+              <button
+                type="button"
+                class="comment-delete-toggle"
+                (click)="deleteComment(comment.id)"
+              >
+                <i class="pi pi-trash"></i>
+                Delete
+              </button>
+            }
+          </div>
+
+          @if (activeReplyId === comment.commentId) {
+            <div class="comment-reply-form">
+              <textarea
+                pTextarea
+                [(ngModel)]="replyContent"
+                rows="2"
+                placeholder="Write a reply..."
+                class="comment-textarea"
+              ></textarea>
+
+              <button
+                pButton
+                type="button"
+                label="Post reply"
+                class="comment-submit-btn"
+                (click)="submitReply(currentUser, comment.commentId)"
+              ></button>
+            </div>
+          }
+
+          @if (comment.replies.length > 0) {
+            <div class="comment-replies">
+              @for (reply of comment.replies; track reply.id) {
+                <div class="comment-item comment-item--reply">
+                  <div class="comment-header">
+                    <span class="comment-author">{{ reply.authorLabel }}</span>
+                    <span class="comment-date">{{ reply.dateCreated | date: 'medium' }}</span>
+                  </div>
+
+                  @if (editingCommentId === reply.id) {
+                    <div class="comment-edit-form">
+                      <textarea
+                        pTextarea
+                        [(ngModel)]="editContent"
+                        rows="2"
+                        placeholder="Edit your reply..."
+                        class="comment-textarea"
+                      ></textarea>
+
+                      <div class="comment-edit-actions">
+                        <button
+                          pButton
+                          type="button"
+                          label="Save"
+                          class="comment-submit-btn"
+                          (click)="submitEdit(reply.id)"
+                        ></button>
+
+                        <button
+                          type="button"
+                          class="comment-cancel-btn"
+                          (click)="cancelEdit()"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  } @else {
+                    <p class="comment-content">{{ reply.content }}</p>
+                  }
+
+                  @if (reply.canModify && editingCommentId !== reply.id) {
+                    <div class="comment-actions">
+                      <button
+                        type="button"
+                        class="comment-edit-toggle"
+                        (click)="startEdit(reply)"
+                      >
+                        <i class="pi pi-pencil"></i>
+                        Edit
+                      </button>
+
+                      <button
+                        type="button"
+                        class="comment-delete-toggle"
+                        (click)="deleteComment(reply.id)"
+                      >
+                        <i class="pi pi-trash"></i>
+                        Delete
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  @if (canComment$ | async) {
+    <div class="comment-form">
+      <textarea
+        pTextarea
+        [(ngModel)]="newCommentContent"
+        rows="2"
+        placeholder="Add a comment..."
+        class="comment-textarea"
+      ></textarea>
+
+      <button
+        pButton
+        type="button"
+        label="Post comment"
+        class="comment-submit-btn"
+        (click)="submitComment(currentUser)"
+      ></button>
+    </div>
+  } @else {
+    <p class="comments-status comments-status--muted">
+      Guests cannot post comments.
+    </p>
+  }
+</div>

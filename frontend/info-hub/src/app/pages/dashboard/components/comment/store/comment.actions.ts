@@ -5,7 +5,7 @@ export const CommentActions = createActionGroup({
   source: 'Comment',
   events: {
     'Load Comments': props<{ sectionId: string }>(),
-    'Load Comments Success': props<{ comments: IComment[] }>(),
+    'Load Comments Success': props<{ sectionId: string; comments: IComment[] }>(),
     'Load Comments Failure': props<{ error: string }>(),
 
     'Add Comment': props<{

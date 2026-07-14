@@ -360,11 +360,6 @@
       "catName": "Marketing",
       "userId": "5",
       "dateCreated": "2025-01-25T00:00:00.000Z"
-    },
-    {
-      "catName": "QA",
-      "userId": "1",
-      "id": "gInEHBkyQFc"
     }
   ],
   "sections": [
@@ -599,6 +594,24 @@
       "catId": "4",
       "visibility": true,
       "id": "PuvUYBKV9BE"
+    },
+    {
+      "title": "edit test",
+      "content": "<p>sdf</p>",
+      "userId": "current-user",
+      "catId": "2",
+      "visibility": true,
+      "id": "j1bhojTHN8g"
+    },
+    {
+      "id": "MDeP-O3MVKE",
+      "sectionId": "2f2fcaa5-5a70-424b-aafa-127ace4ae704",
+      "title": "test4",
+      "content": "<p>dfgh</p>",
+      "userId": "6",
+      "catId": "3asdfh",
+      "visibility": true,
+      "dateCreated": "2026-07-12T10:10:54.235Z"
     }
   ],
   "comments": [
@@ -781,6 +794,69 @@
       "sectionId": "8",
       "dateCreated": "2025-04-22T05:00:00.000Z",
       "id": "UCdCBnaXFJ4"
+    },
+    {
+      "commentId": "9bfb84db-117b-4db0-b53a-7c2026f32b03",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "",
+      "content": "test",
+      "dateCreated": "2026-07-12T07:32:54.997Z",
+      "id": "FEwyeS0TjLQ"
+    },
+    {
+      "commentId": "009a004c-3550-4088-be6f-7c63f227b273",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "9bfb84db-117b-4db0-b53a-7c2026f32b03",
+      "content": "test2",
+      "dateCreated": "2026-07-12T07:33:04.124Z",
+      "id": "zDXNWfHkI94"
+    },
+    {
+      "commentId": "b3d4c2cb-af4c-4e4d-bb09-676fe3f1d81d",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "",
+      "content": "test",
+      "dateCreated": "2026-07-12T07:36:56.001Z",
+      "id": "vAR1r_qZHCE"
+    },
+    {
+      "commentId": "3156093a-95b9-418a-b407-b8c853a93112",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "",
+      "content": "test",
+      "dateCreated": "2026-07-12T07:38:33.486Z",
+      "id": "adxUWfOIqMQ"
+    },
+    {
+      "commentId": "a009ee2e-1355-49c6-b6f4-9ea54dc81f20",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "",
+      "content": "repro-test-comment-1",
+      "dateCreated": "2026-07-12T07:50:11.648Z",
+      "id": "x4svKV3flgg"
+    },
+    {
+      "commentId": "efa8ddb3-d39f-4a53-8724-1e7bfb23af7f",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "",
+      "content": "sana",
+      "dateCreated": "2026-07-12T08:00:30.101Z",
+      "id": "vH-69JFVFeE"
+    },
+    {
+      "commentId": "2f3fca94-7ca7-44dc-9918-a1380511228c",
+      "sectionId": "1",
+      "userId": "6",
+      "parentCommentId": "",
+      "content": "sana",
+      "dateCreated": "2026-07-12T09:43:34.421Z",
+      "id": "kdyFfyKHTqA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

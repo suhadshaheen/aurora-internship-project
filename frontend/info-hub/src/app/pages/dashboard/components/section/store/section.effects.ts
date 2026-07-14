@@ -45,15 +45,17 @@ export class SectionEffects {
     ),
   );
 
-  deleteSection$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SectionActions.deleteSection),
-      mergeMap(({ sectionId }) =>
-        this.sectionsService.delete(sectionId).pipe(
-          map(() => SectionActions.deleteSectionSuccess({ sectionId })),
-          catchError((error) => of(SectionActions.deleteSectionFailure({ error: error.message }))),
-        ),
-      ),
-    ),
-  );
+deleteSection$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(SectionActions.deleteSection),
+    mergeMap(({ sectionId }) =>
+      this.sectionsService.delete(sectionId).pipe(
+        map(() => SectionActions.deleteSectionSuccess({ sectionId })),
+        catchError((error) =>
+          of(SectionActions.deleteSectionFailure({ error: error.message }))
+        )
+      )
+    )
+  )
+);
 }

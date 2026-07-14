@@ -62,16 +62,16 @@
       <div class="flex gap-2">
         <p-button
           label="Visible"
-          [outlined]="!visibility"
-          [severity]="visibility ? 'success' : 'secondary'"
-          (onClick)="visibility = true">
+          [outlined]="!visible"
+          [severity]="visible ? 'success' : 'secondary'"
+          (onClick)="visible = true">
         </p-button>
 
         <p-button
           label="Hidden"
-          [outlined]="visibility"
-          [severity]="visibility ? 'secondary' : 'warn'"
-          (onClick)="visibility = false">
+          [outlined]="visible"
+          [severity]="visible ? 'secondary' : 'warn'"
+          (onClick)="visible = false">
         </p-button>
       </div>
     </div>

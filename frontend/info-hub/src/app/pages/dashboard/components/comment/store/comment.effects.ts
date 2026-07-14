@@ -16,7 +16,7 @@ export class CommentEffects {
       mergeMap(({ sectionId }) =>
         this.commentService.getCommentsBySectionId(sectionId).pipe(
           map((comments) =>
-            CommentActions.loadCommentsSuccess({ comments })
+            CommentActions.loadCommentsSuccess({ sectionId, comments })
           ),
           catchError((error) =>
             of(
@@ -34,16 +34,17 @@ export class CommentEffects {
     this.actions$.pipe(
       ofType(CommentActions.addComment),
       mergeMap(({ sectionId, userId, parentCommentId, content , dateCreated}) => {
-        const commentId = crypto.randomUUID();
+       const id = crypto.randomUUID();
 
-        const newComment: IComment = {
-          commentId: commentId,
-          sectionId,
-          userId,
-          parentCommentId,
-          content,
-          dateCreated,
-        };
+const newComment: IComment = {
+  id,
+  commentId: id,
+  sectionId,
+  userId,
+  parentCommentId,
+  content,
+  dateCreated,
+};
 
         return this.commentService.addComment(newComment).pipe(
           map((comment) =>
@@ -81,25 +82,25 @@ export class CommentEffects {
     )
   );
 
-  deleteComment$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CommentActions.deleteComment),
-      mergeMap(({ commentId }) =>
-        this.commentService.deleteComment(commentId).pipe(
-          map(() =>
-            CommentActions.deleteCommentSuccess({ commentId })
-          ),
-          catchError((error) =>
-            of(
-              CommentActions.deleteCommentFailure({
-                error: error.message || 'Failed to delete comment',
-              })
-            )
+deleteComment$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(CommentActions.deleteComment),
+    mergeMap(({ commentId }) =>
+      this.commentService.deleteComment(commentId).pipe(
+        map(() =>
+          CommentActions.deleteCommentSuccess({ commentId })
+        ),
+        catchError((error) =>
+          of(
+            CommentActions.deleteCommentFailure({
+              error: error.message || 'Delete comment failed'
+            })
           )
         )
       )
     )
-  );
+  )
+);
 
   
 }

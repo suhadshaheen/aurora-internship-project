@@ -22,15 +22,18 @@ export class SectionsService {
     return this.http.get<ISection>(`${this.baseUrl}${id}`);
   }
 
-  create(section: Omit<ISection, 'sectionId' | 'dateCreated'>): Observable<ISection> {
-    return this.http.post<ISection>(this.baseUrl, section);
-  }
+create(section: ISection): Observable<ISection> {
+  return this.http.post<ISection>(this.baseUrl, section);
+}
 
-  update(section: ISection): Observable<ISection> {
-    return this.http.put<ISection>(`${this.baseUrl}/${section.sectionId}`, section);
-  }
+ update(section: ISection): Observable<ISection> {
+  return this.http.put<ISection>(
+    `${this.baseUrl}/${section.id}`,
+    section
+  );
+}
 
-  delete(sectionId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${sectionId}`);
-  }
+ delete(id: string): Observable<void> {
+  return this.http.delete<void>(`${this.baseUrl}/${id}`);
+}
 }
