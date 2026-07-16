@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { email, form, FormField, pattern, required, submit } from '@angular/forms/signals';
+import { email, form, FormField, pattern, required } from '@angular/forms/signals';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -11,21 +11,19 @@ import { AuthService } from '../../../../shared/services/auth.services';
 
 @Component({
   selector: 'app-forgot-password-card',
-  standalone: true,
   imports: [MessageModule, ToastModule, ButtonModule, InputTextModule, FormField, RouterModule],
   templateUrl: './forgot-password-card.component.html',
   styleUrl: './forgot-password-card.component.css',
 })
 export class ForgotPasswordCard {
-  messageService = inject(MessageService);
-  authService = inject(AuthService);
-  router = inject(Router);
-  isLoading = false;
-  constants = FORGOT_PASSWORD_CONSTANTS;
+ private readonly messageService = inject(MessageService);
+private readonly authService = inject(AuthService);
+private readonly router = inject(Router);
+protected readonly isLoading = signal(false);
+protected readonly constants = FORGOT_PASSWORD_CONSTANTS;
+protected readonly model = signal({ email: '' });
 
-  model = signal({ email: '' });
-
-  forgotForm = form(this.model, (path) => {
+  protected readonly forgotForm  = form(this.model, (path) => {
     required(path.email, {
       when: ({ state }) => state.dirty(),
       message: 'Email is required.',
@@ -43,11 +41,11 @@ export class ForgotPasswordCard {
 
     if (this.forgotForm.email().invalid()) return;
 
-    this.isLoading = true;
+    this.isLoading.set(true);
 
     this.authService.sendResetLink(this.forgotForm.email().value() ?? '').subscribe({
       next: () => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.messageService.add({
           severity: 'success',
           summary: 'Email Sent!',
@@ -57,11 +55,11 @@ export class ForgotPasswordCard {
         setTimeout(() => this.router.navigate(['/reset-password']), 3000);
       },
       error: (err) => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err.message,
+         detail: err.error?.message ?? 'Something went wrong. Please try again.',
           life: 3000,
         });
       },

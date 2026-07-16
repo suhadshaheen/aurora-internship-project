@@ -1,42 +1,47 @@
 import { Routes } from '@angular/router';
-import { LandingPage } from './pages/landing-page/landingPage.component';
-import { LoginPageComponent } from './pages/login-page.component/login-page.component';
-import { ForgotPasswordPage } from './pages/forgot-password/forgot-password-page/forgot-password-page.component';
-import { ResetPasswordPageComponent } from './pages/reset-password/reset-password-page.component/reset-password-page.component';
-import { EmployeeDashboardComponent } from './pages/dashboard/employee-dashboard/employee-dashboard.component';
 import { authGuard } from '../guards/auth.guard';
-import { AdminDashboardComponent } from './pages/dashboard/admin-dashboard/admin-dashboard.component';
-import { GuestDashboardComponent } from './pages/dashboard/guest-dashboard.component/guest-dashboard.component';
+
 export const routes: Routes = [
   {
     path: '',
-    component: LandingPage,
+    loadComponent: () => import('./pages/landing-page/landingPage.component').then((m) => m.LandingPage),
   },
   {
     path: 'login',
-    component: LoginPageComponent,
+    loadComponent: () => import('./pages/login-page.component/login-page.component').then((m) => m.LoginPageComponent),
   },
   {
     path: 'forgot-password',
-    component: ForgotPasswordPage,
+    loadComponent: () =>
+      import('./pages/forgot-password/forgot-password-page/forgot-password-page.component').then(
+        (m) => m.ForgotPasswordPage,
+      ),
   },
   {
     path: 'reset-password',
-    component: ResetPasswordPageComponent,
+    loadComponent: () =>
+      import('./pages/reset-password/reset-password-page.component/reset-password-page.component').then(
+        (m) => m.ResetPasswordPageComponent,
+      ),
   },
   {
     path: 'employee-dashboard',
-    component: EmployeeDashboardComponent,
+    loadComponent: () =>
+      import('./pages/dashboard/employee-dashboard/employee-dashboard.component').then(
+        (m) => m.EmployeeDashboardComponent,
+      ),
     canActivate: [authGuard],
   },
   {
     path: 'admin-dashboard',
-    component: AdminDashboardComponent,
+    loadComponent: () =>
+      import('./pages/dashboard/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent),
     canActivate: [authGuard],
   },
   {
     path: 'guest-dashboard',
-    component: GuestDashboardComponent,
+    loadComponent: () =>
+      import('./pages/dashboard/guest-dashboard.component/guest-dashboard.component').then((m) => m.GuestDashboardComponent),
     canActivate: [authGuard],
   },
 ];
