@@ -1,4 +1,5 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, computed, signal } from '@angular/core';
+import { form, required, pattern } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -11,56 +12,48 @@ import { AuthService } from '../../../../shared/services/auth.services';
 
 @Component({
   selector: 'app-reset-password-card',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, PasswordModule, ButtonModule, MessageModule, ToastModule, RouterModule],
+  imports: [PasswordModule, ButtonModule, MessageModule, ToastModule, RouterModule, FormsModule],
   templateUrl: './reset-password-card.component.html',
   styleUrl: './reset-password-card.component.css',
 })
 export class ResetPasswordCardComponent {
-  messageService = inject(MessageService);
-  authService = inject(AuthService);
-  router = inject(Router);
-  constants = RESET_PASSWORD_CONSTANTS;
-  isLoading = false;
+  private readonly messageService = inject(MessageService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  newPassword: string = '';
-  confirmPassword: string = '';
+  protected readonly constants = RESET_PASSWORD_CONSTANTS;
+  protected readonly isLoading = signal(false);
 
-  get passwordErrors(): string[] {
-    const errors: string[] = [];
-    const p = this.newPassword;
-    if (p.length === 0) return errors;
-    if (p.length < 8) errors.push('At least 8 characters.');
-    if (!/[A-Z]/.test(p)) errors.push('At least one uppercase letter.');
-    if (!/[a-z]/.test(p)) errors.push('At least one lowercase letter.');
-    if (!/[0-9]/.test(p)) errors.push('At least one number.');
-    return errors;
-  }
+  protected readonly model = signal({ newPassword: '', confirmPassword: '' });
 
-  get passwordMismatch(): boolean {
-    return this.confirmPassword.length > 0 && this.newPassword !== this.confirmPassword;
-  }
+  protected readonly resetForm = form(this.model, (path) => {
+    required(path.newPassword, { message: 'Password is required.' });
+    pattern(path.newPassword, /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
+      message: 'Must be 8+ characters with uppercase, lowercase, and a number.',
+    });
+    required(path.confirmPassword, { message: 'Please confirm your password.' });
+  });
 
-  get isFormValid(): boolean {
-    return (
-      this.newPassword.length > 0 &&
-      this.confirmPassword.length > 0 &&
-      this.passwordErrors.length === 0 &&
-      !this.passwordMismatch
-    );
-  }
+  protected readonly passwordMismatch = computed(() => {
+    const { newPassword, confirmPassword } = this.model();
+    return confirmPassword.length > 0 && newPassword !== confirmPassword;
+  });
 
-  onSubmit(event: Event): void {
+  protected readonly isFormValid = computed(() => {
+    return this.resetForm().valid() && !this.passwordMismatch();
+  });
+
+  protected onSubmit(event: Event): void {
     event.preventDefault();
-    if (!this.isFormValid) return;
+    if (!this.isFormValid()) return;
 
-    this.isLoading = true;
+    this.isLoading.set(true);
     const email = localStorage.getItem('resetEmail') ?? '';
 
-    this.authService.resetPassword(email, this.newPassword).subscribe({
+    this.authService.resetPassword(email, this.model().newPassword).subscribe({
       next: () => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         localStorage.removeItem('resetEmail');
         this.messageService.add({
           severity: 'success',
@@ -71,11 +64,11 @@ export class ResetPasswordCardComponent {
         setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: (err) => {
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err.message,
+          detail: err.error?.message ?? 'Something went wrong. Please try again.',
           life: 3000,
         });
       },

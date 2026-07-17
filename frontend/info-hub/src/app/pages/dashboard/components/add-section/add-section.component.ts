@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SectionActions } from '../section/store/section.actions';
 import { Store } from '@ngrx/store';
-import { selectCurrentUser } from '../../../login-page.component/store/auth.selectors';
+import { selectCurrentUser } from '../../../login-page/store/auth.selectors';
 import { take } from 'rxjs';
 
 @Component({

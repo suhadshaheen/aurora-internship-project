@@ -19,9 +19,9 @@ import {
   selectSectionsByCategoryId,
   selectSectionsByUserId,
 } from '../section/store/section.selectors';
-import { selectCurrentUser, selectUserRole } from '../../../login-page.component/store/auth.selectors';
+import { selectCurrentUser, selectUserRole } from '../../../login-page/store/auth.selectors';
 import { ISection } from '../../../../../models/section.interface';
-import { AuthUser } from '../../../login-page.component/store/auth.state';
+import { AuthUser } from '../../../login-page/store/auth.state';
 
 interface DisplaySection extends ISection {
   isOwn: boolean;

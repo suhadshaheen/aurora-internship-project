@@ -9,8 +9,8 @@ import { TextareaModule } from 'primeng/textarea';
 
 import { CommentActions } from './store/comment.actions';
 import { selectCommentsBySectionId, selectCommentError, selectCommentLoading } from './store/comment.selectors';
-import { selectCurrentUser, selectUserRole } from '../../../login-page.component/store/auth.selectors';
-import { AuthUser } from '../../../login-page.component/store/auth.state';
+import { selectCurrentUser, selectUserRole } from '../../../login-page/store/auth.selectors';
+import { AuthUser } from '../../../login-page/store/auth.state';
 import { IComment } from '../../../../../models/comment.interface';
 
 interface DisplayComment extends IComment {

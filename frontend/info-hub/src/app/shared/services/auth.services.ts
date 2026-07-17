@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, throwError } from 'rxjs';
-import { AuthUser } from '../../pages/login-page.component/store/auth.state';
+import { AuthUser } from '../../pages/login-page/store/auth.state';
 
 interface AuthApiUser extends AuthUser {
   password?: string;

@@ -12,8 +12,8 @@ import { categoryReducer } from './pages/dashboard/components/category/store/cat
 import { provideHttpClient } from '@angular/common/http';
 import {  commentReducer } from './pages/dashboard/components/comment/store/comment.reducer';
 import { CommentEffects } from './pages/dashboard/components/comment/store/comment.effects';
-import { AuthEffects } from './pages/login-page.component/store/auth.effects';
-import {  authReducer } from './pages/login-page.component/store/auth.reducer';
+import { AuthEffects } from './pages/login-page/store/auth.effects';
+import {  authReducer } from './pages/login-page/store/auth.reducer';
 import { CategoryEffects } from './pages/dashboard/components/category/store/category.effects';
 import { SectionEffects } from './pages/dashboard/components/section/store/section.effects';
 export const appConfig: ApplicationConfig = {
