@@ -34,7 +34,8 @@ export class CommentEffects {
     this.actions$.pipe(
       ofType(CommentActions.addComment),
       mergeMap(({ sectionId, userId, parentCommentId, content , dateCreated}) => {
-       const id = crypto.randomUUID();
+       const id = Math.floor(Math.random() * 1_000_000_000);
+
 
 const newComment: IComment = {
   id,

@@ -27,12 +27,13 @@ export class NavBarComponent {
       const catParam = params.get('catId');
       const mine = params.get('mine') === 'true';
 
-      if (catParam) {
-        this.categories$.subscribe((categories) => {
-          const category = categories.find((item) => item.id === catParam);
-          this.currentPageTitle.set(category?.catName ?? 'Category');
-        });
-      } else if (mine) {
+    if (catParam) {
+  const catId = Number(catParam);
+  this.categories$.subscribe((categories) => {
+    const category = categories.find((item) => item.id === catId);
+    this.currentPageTitle.set(category?.catName ?? 'Category');
+  });
+   }else if (mine) {
         this.currentPageTitle.set('My Sections');
       } else {
         this.currentPageTitle.set('Dashboard');

@@ -1,6 +1,17 @@
 import { Routes } from '@angular/router';
+<<<<<<< HEAD
 import { authGuard } from '../guards/auth.guard';
 
+=======
+import { LandingPage } from './pages/landing-page/landing-page.component';
+import { LoginPageComponent } from './pages/login-page.component/login-page.component';
+import { ForgotPasswordPage } from './pages/forgot-password/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordPageComponent } from './pages/reset-password/reset-password-page.component/reset-password-page.component';
+import { EmployeeDashboardComponent } from './pages/dashboard/employee-dashboard/employee-dashboard.component';
+import { authGuard } from '../guards/auth.guard';
+import { AdminDashboardComponent } from './pages/dashboard/admin-dashboard/admin-dashboard.component';
+import { GuestDashboardComponent } from './pages/dashboard/guest-dashboard/guest-dashboard.component';
+>>>>>>> 6b8f4cc1b2c3483df9634a0579dd448ddb671c1c
 export const routes: Routes = [
   {
     path: '',

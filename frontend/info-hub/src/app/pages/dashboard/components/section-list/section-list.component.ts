@@ -53,7 +53,7 @@ export class SectionListComponent implements OnInit {
 
   sections$ = combineLatest([this.route.queryParamMap, this.currentUser$]).pipe(
     switchMap(([params, user]) => {
-      const catId = params.get('catId');
+      const catId = Number(params.get('catId'));
       const mine = params.get('mine') === 'true';
 
       if (catId) {
@@ -75,7 +75,7 @@ export class SectionListComponent implements OnInit {
   loading$ = this.store.select(selectSectionLoading);
   error$ = this.store.select(selectSectionError);
 
-  editingSectionId: string | null = null;
+  editingSectionId: number | null = null;
   editTitle = '';
   editContent = '';
 
@@ -117,7 +117,7 @@ export class SectionListComponent implements OnInit {
     this.editContent = '';
   }
 
-deleteSection(id: string): void {
+deleteSection(id: number): void {
   this.store.dispatch(
     SectionActions.deleteSection({ sectionId: id })
   );
@@ -135,7 +135,7 @@ deleteSection(id: string): void {
     return sections
       .filter((section) => section.visibility === true || canSeeHidden)
       .map((section) => {
-        const isOwn = !!user && String(user.id) === section.userId;
+        const isOwn = !!user && user.id === section.userId;
         return {
           ...section,
           isOwn,

@@ -1,9 +1,9 @@
 export interface IComment {
-  id: string; // Optional ID for comments that may not have a database-generated ID yet
-  commentId: string;
+  id: number; // Optional ID for comments that may not have a database-generated ID yet
+  commentId: number;
   content: string;
-  parentCommentId: string | null;
-  userId: string;
-  sectionId: string;
+  parentCommentId: number | null;
+  userId: number;
+  sectionId: number;
   dateCreated: Date;
 }

@@ -55,7 +55,7 @@ export class SideBarComponent implements OnInit {
   isGuest = computed(() => this.userRole() === USER_ROLES.guest);
   categoriesOpen = signal(false);
 
-  activeCatId = signal<string | null>(null);
+  activeCatId = signal<number | null>(null);
   isMineActive = signal(false);
   isDashboardActive = signal(false);
 
@@ -78,7 +78,7 @@ export class SideBarComponent implements OnInit {
       const catParam = params.get(QUERY_PARAMS.catId);
       const mineParam = params.get(QUERY_PARAMS.mine) === 'true';
 
-      this.activeCatId.set(catParam ? catParam : null);
+      this.activeCatId.set(catParam ? Number(catParam) : null);
       this.isMineActive.set(mineParam);
       this.isDashboardActive.set(!catParam && !mineParam);
     });
@@ -98,7 +98,7 @@ export class SideBarComponent implements OnInit {
     });
   }
 
-  onCategoryClick(id: string): void {
+  onCategoryClick(id: number): void  {
     // TODO(TEMP-ID-RENAME): اسم البارامتر اختياري بس - القيمة هي id الكاتيجوري
     this.router.navigate([this.getDashboardRoute()], {
       queryParams: { [QUERY_PARAMS.catId]: id },
@@ -133,7 +133,7 @@ export class SideBarComponent implements OnInit {
     this.newCategoryName = '';
   }
 
-  onDeleteCategory(id: string): void {
+  onDeleteCategory(id: number): void {
     // TODO(TEMP-ID-RENAME): رجّع catId مكان id
     this.store.dispatch(CategoryActions.deleteCategory({ id }));
   }

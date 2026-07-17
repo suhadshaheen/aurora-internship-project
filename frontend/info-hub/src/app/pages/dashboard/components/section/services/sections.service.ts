@@ -14,11 +14,11 @@ export class SectionsService {
   getAll(): Observable<ISection[]> {
     return this.http.get<ISection[]>(this.baseUrl);
   }
-  getByCategoryId(catId: string): Observable<ISection[]> {
+  getByCategoryId(catId: number): Observable<ISection[]> {
     return this.http.get<ISection[]>(`${this.baseUrl}?catId=${catId}`);
   }
 
-  getSectionById(id: string) {
+  getSectionById(id: number) {
     return this.http.get<ISection>(`${this.baseUrl}${id}`);
   }
 
@@ -33,7 +33,7 @@ create(section: ISection): Observable<ISection> {
   );
 }
 
- delete(id: string): Observable<void> {
+ delete(id: number): Observable<void> {
   return this.http.delete<void>(`${this.baseUrl}/${id}`);
 }
 }
