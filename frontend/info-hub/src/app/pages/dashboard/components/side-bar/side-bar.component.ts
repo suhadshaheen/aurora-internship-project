@@ -16,8 +16,8 @@ import { CommonModule } from '@angular/common';
 import {
   selectCurrentUser,
   selectUserRole,
-} from '../../../../pages/login-page.component/store/auth.selectors';
-import { AuthActions } from '../../../../pages/login-page.component/store/auth.actions';
+} from '../../../../pages/login-page/store/auth.selectors';
+import { AuthActions } from '../../../../pages/login-page/store/auth.actions';
 import { CategoryActions } from '../category/store/category.actions';
 import { selectCategories } from '../category/store/category.selectors';
 import { SIDEBAR_ROUTES, QUERY_PARAMS, USER_ROLES } from '../side-bar/Sidebar.constants';

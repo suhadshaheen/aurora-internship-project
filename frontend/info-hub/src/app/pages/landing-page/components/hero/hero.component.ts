@@ -2,7 +2,7 @@ import { Component ,inject} from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { RouterLink , Router} from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthActions } from '../../../login-page.component/store/auth.actions';
+import { AuthActions } from '../../../login-page/store/auth.actions';
 
 @Component({
   selector: 'app-hero',

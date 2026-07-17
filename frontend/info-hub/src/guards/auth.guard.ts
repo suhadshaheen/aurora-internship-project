@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, take } from 'rxjs';
 
-import { selectCurrentUser } from '../app/pages/login-page.component/store/auth.selectors';
+import { selectCurrentUser } from '../app/pages/login-page/store/auth.selectors';
 
 export const authGuard: CanActivateFn = () => {
   const store = inject(Store);

@@ -4,7 +4,7 @@ import { SideBarComponent } from '../components/side-bar/side-bar.component';
 import { SectionListComponent } from '../components/section-list/section-list.component';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { AuthActions } from '../../login-page.component/store/auth.actions';
+import { AuthActions } from '../../login-page/store/auth.actions';
 @Component({
   selector: 'app-guest-dashboard.component',
   imports: [NavBarComponent, SideBarComponent, SectionListComponent],
