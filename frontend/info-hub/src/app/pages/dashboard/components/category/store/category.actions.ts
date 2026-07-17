@@ -24,10 +24,10 @@ export const CategoryActions = {
   addCategoryFailure: createAction('[Category] Add Category Failure', props<{ error: string }>()),
 
   // TODO(TEMP-ID-RENAME): رجّع catId مكان id
-  deleteCategory: createAction('[Category] Delete Category', props<{ id: string }>()),
+  deleteCategory: createAction('[Category] Delete Category', props<{ id: number }>()),
   deleteCategorySuccess: createAction(
     '[Category] Delete Category Success',
-    props<{ id: string }>(),
+    props<{ id: number }>(),
   ),
   deleteCategoryFailure: createAction(
     '[Category] Delete Category Failure',

@@ -26,10 +26,10 @@ addSection: createAction(
     props<{ error: string }>(),
   ),
 
-  deleteSection: createAction('[Section] Delete Section', props<{ sectionId: string }>()),
+  deleteSection: createAction('[Section] Delete Section', props<{ sectionId: number }>()),
   deleteSectionSuccess: createAction(
     '[Section] Delete Section Success',
-    props<{ sectionId: string }>(),
+    props<{ sectionId: number }>(),
   ),
   deleteSectionFailure: createAction(
     '[Section] Delete Section Failure',

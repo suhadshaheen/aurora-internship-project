@@ -23,7 +23,7 @@ export class AddSectionComponent {
 
   title: string = '';
   content: string = '';
-  catId: string = '';
+  catId: number | null = null;
 
   showDialog(): void {
     this.visible = true;
@@ -43,7 +43,8 @@ export class AddSectionComponent {
       return;
     }
 
-    const id = crypto.randomUUID();
+    const id = Math.floor(Math.random() * 1_000_000_000);
+
 
     this.store.dispatch(
       SectionActions.addSection({
@@ -52,8 +53,8 @@ export class AddSectionComponent {
           sectionId: id,
           title: this.title.trim(),
           content: this.content,
-          userId: String(user.id),
-          catId: this.catId.trim() || 'general',
+          userId: user.id,
+          catId: this.catId ?? 0,
           visibility: true,
             dateCreated: new Date(),
         },
@@ -62,7 +63,7 @@ export class AddSectionComponent {
 
     this.title = '';
     this.content = '';
-    this.catId = '';
+    this.catId = null;
     this.visible = false;
   });
 }

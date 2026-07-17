@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CommentState } from './comment.reducer';
+import { NumberValueAccessor } from '@angular/forms';
 
 export const selectCommentState =
   createFeatureSelector<CommentState>("comment");
@@ -24,32 +25,32 @@ export const selectCommentError = createSelector(
   (state) => state.error
 );
 
-export const selectCommentsBySectionId = (sectionId: string) =>
+export const selectCommentsBySectionId = (sectionId: number) =>
   createSelector(
     selectAllComments,
     (comments) =>
       comments.filter((comment) => comment.sectionId === sectionId)
   );
 
-export const selectCommentById = (commentId: string) =>
+export const selectCommentById = (commentId: number) =>
   createSelector(
     selectAllComments,
     (comments) =>
       comments.find((comment) => comment.commentId === commentId) ?? null
   );
 
-export const selectMainCommentsBySectionId = (sectionId: string) =>
+export const selectMainCommentsBySectionId = (sectionId: number) =>
   createSelector(
     selectAllComments,
     (comments) =>
       comments.filter(
         (comment) =>
           comment.sectionId === sectionId &&
-          comment.parentCommentId === ''
+          comment.parentCommentId === null
       )
   );
 
-export const selectRepliesByParentCommentId = (parentCommentId: string) =>
+export const selectRepliesByParentCommentId = (parentCommentId: number) =>
   createSelector(
     selectAllComments,
     (comments) =>

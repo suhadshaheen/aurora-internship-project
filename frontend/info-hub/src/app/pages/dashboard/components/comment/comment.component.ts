@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NumberSymbol } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, Observable } from 'rxjs';
@@ -22,13 +22,12 @@ interface DisplayComment extends IComment {
 
 @Component({
   selector: 'app-comment',
-  standalone: true,
   imports: [AsyncPipe, DatePipe, FormsModule, ButtonModule, TextareaModule],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
 })
 export class CommentComponent implements OnInit {
-  @Input({ required: true }) sectionId!: string;
+  @Input({ required: true }) sectionId!: number;
 
   private store = inject(Store);
 
@@ -48,8 +47,8 @@ export class CommentComponent implements OnInit {
 
   newCommentContent = '';
   replyContent = '';
-  activeReplyId: string | null = null;
-  editingCommentId: string | null = null;
+  activeReplyId: number | null = null;
+  editingCommentId: number | null = null;
   editContent = '';
 
   ngOnInit(): void {
@@ -71,8 +70,8 @@ export class CommentComponent implements OnInit {
     this.store.dispatch(
       CommentActions.addComment({
         sectionId: this.sectionId,
-        userId: String(user.id),
-        parentCommentId: '',
+        userId: user.id,
+        parentCommentId: null,
         content,
         dateCreated: new Date(),
       }),
@@ -81,12 +80,12 @@ export class CommentComponent implements OnInit {
     this.newCommentContent = '';
   }
 
-  startReply(commentId: string): void {
+  startReply(commentId: number): void {
     this.activeReplyId = this.activeReplyId === commentId ? null : commentId;
     this.replyContent = '';
   }
 
-  submitReply(user: AuthUser | null, parentCommentId: string): void {
+  submitReply(user: AuthUser | null, parentCommentId: number): void {
     const content = this.replyContent.trim();
     if (!user || !content) {
       return;
@@ -95,7 +94,7 @@ export class CommentComponent implements OnInit {
     this.store.dispatch(
       CommentActions.addComment({
         sectionId: this.sectionId,
-        userId: String(user.id),
+        userId: (user.id),
         parentCommentId,
         content,
         dateCreated: new Date(),
@@ -115,7 +114,7 @@ export class CommentComponent implements OnInit {
     this.editingCommentId = null;
     this.editContent = '';
   }
-submitEdit(id: string): void {
+submitEdit(id: number): void {
   const content = this.editContent.trim();
   if (!content) {
     return;
@@ -131,7 +130,7 @@ submitEdit(id: string): void {
   this.editingCommentId = null;
   this.editContent = '';
 }
- deleteComment(id: string): void {
+ deleteComment(id: number): void {
   this.store.dispatch(
     CommentActions.deleteComment({
       commentId: id
@@ -147,7 +146,7 @@ submitEdit(id: string): void {
     const isAdmin = role?.toLowerCase() === 'admin';
 
     const toDisplay = (comment: IComment): DisplayComment => {
-      const isOwn = !!user && String(user.id) === comment.userId;
+      const isOwn = !!user && user.id === comment.userId;
       return {
         ...comment,
         replies: [],
@@ -160,7 +159,7 @@ submitEdit(id: string): void {
     const byDate = (a: IComment, b: IComment) =>
       new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime();
 
-    const repliesMap = new Map<string, IComment[]>();
+    const repliesMap = new Map<number, IComment[]>();
     comments.forEach((comment) => {
       if (comment.parentCommentId) {
         const list = repliesMap.get(comment.parentCommentId) ?? [];

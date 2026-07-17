@@ -11,7 +11,7 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
-  getCommentsBySectionId(sectionId: string): Observable<IComment[]> {
+  getCommentsBySectionId(sectionId: number): Observable<IComment[]> {
     return this.http.get<IComment[]>(`${this.apiUrl}?sectionId=${sectionId}`);
   }
 
@@ -19,13 +19,13 @@ export class CommentService {
     return this.http.post<IComment>(this.apiUrl, comment);
   }
 
-  updateComment(commentId: string, content: string): Observable<IComment> {
+  updateComment(commentId: number, content: string): Observable<IComment> {
     return this.http.patch<IComment>(`${this.apiUrl}/${commentId}`, {
       content,
     });
   }
 
-  deleteComment(id: string): Observable<void> {
+  deleteComment(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

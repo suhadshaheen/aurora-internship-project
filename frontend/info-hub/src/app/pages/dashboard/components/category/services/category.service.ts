@@ -28,7 +28,7 @@ export class CategoryService {
   }
 
   // TODO(TEMP-ID-RENAME): رجّع catId مكان id
-  delete(id: string): Observable<void> {
+  delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }
