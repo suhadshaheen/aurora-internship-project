@@ -1,4 +1,4 @@
-package com.aurora.info_hub.repositry;
+package com.aurora.info_hub.repository;
 
 public class SectionRepositry {
     
