@@ -1,7 +1,6 @@
 package com.aurora.info_hub.entity;
 
 import java.time.LocalDateTime;
-import java.util.Locale.Category;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

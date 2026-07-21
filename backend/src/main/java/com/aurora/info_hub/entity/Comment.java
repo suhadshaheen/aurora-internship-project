@@ -1,6 +1,7 @@
 package com.aurora.info_hub.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,12 @@ public class Comment {
     private Long id;
     @Column(nullable = false)
     private String content;
-    @OneToMany
-    @JoinColumn(name = "parent_comment_id", nullable = true)
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id")
     private Comment parentComment;
+
+    @OneToMany(mappedBy = "parentComment")
+    private List<Comment> children;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User createdBy;
@@ -31,9 +35,9 @@ public class Comment {
     @PrePersist
     protected void onCreate() {
         this.dateCreated = LocalDateTime.now();
-    } 
-    @OneToMany
-    @JoinColumn(name = "section_id",nullable = false)
+    }
+    @ManyToOne
+    @JoinColumn(name = "section_id", nullable = false)
     private Section createdIn;
 
 
