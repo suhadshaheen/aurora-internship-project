@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ForgotPasswordCard } from '../components/forgot-password-card/forgot-password-card.component';
-import { LoginCardComponent } from '../../../shared/components/login-card.component/login-card.component';
+import { LoginCardComponent } from '../../../shared/components/login-card/login-card.component';
 
 @Component({
   selector: 'app-forgot-password-page',

@@ -11,7 +11,6 @@ import { take } from 'rxjs';
 
 @Component({
   selector: 'app-add-section',
-  standalone: true,
   imports: [FormsModule, EditorModule, DialogModule, ButtonModule, InputTextModule],
   templateUrl: './add-section.component.html',
   styleUrl: './add-section.component.css',

@@ -30,7 +30,6 @@ interface DisplaySection extends ISection {
 
 @Component({
   selector: 'app-section-list',
-  standalone: true,
   imports: [
     AsyncPipe,
     DatePipe,

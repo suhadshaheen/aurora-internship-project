@@ -22,7 +22,7 @@ export const routes: Routes = [
   {
     path: 'reset-password',
     loadComponent: () =>
-      import('./pages/reset-password/reset-password-page.component/reset-password-page.component').then(
+      import('./pages/reset-password/reset-password-page/reset-password-page.component').then(
         (m) => m.ResetPasswordPageComponent,
       ),
   },

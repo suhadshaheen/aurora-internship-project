@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
+
 @Component({
   selector: 'app-login-card',
   imports: [CardModule],
@@ -7,8 +8,8 @@ import { CardModule } from 'primeng/card';
   styleUrl: './login-card.component.css',
 })
 export class LoginCardComponent {
-  @Input() title1 = '';
-  @Input() description1 = '';
-  @Input() title2 = '';
-  @Input() description2 = '';
+ formTitle = input<string>('');
+ formDescription = input<string>('');
+ cardTitle = input<string>('');
+ cardDescription = input<string>('');
 }

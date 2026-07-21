@@ -19,13 +19,13 @@
 
   @if (emailInput.invalid && emailInput.dirty) {
     <small class="error-message">
-      Please enter a valid email.
+      {{inValidErrorMassage}}
     </small>
   }
 
   @if (emailInput.valid && email && !isEmailDomainValid()) {
     <small class="error-message">
-      Email must end with {{ allowedDomain }}
+      {{ domainErrorMassage}}
     </small>
   }
 <p-floatlabel variant="in" class="field-wrapper">
@@ -47,7 +47,7 @@
 
   @if (passwordInput.invalid && passwordInput.dirty) {
     <small class="error-message">
-      Password is required.
+      {{PasswordError}}
     </small>
   }
 

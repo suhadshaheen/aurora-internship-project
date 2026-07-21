@@ -2,8 +2,8 @@
   <div class="login-card-content">
 
     <div class="login-left">
-      <h1>{{ title1 }}</h1>
-      <p>{{ description1 }}</p>
+      <h1>{{ formTitle()}}</h1>
+      <p>{{ formDescription() }}</p>
      <ng-content select="[left-content]"></ng-content>
 
     </div>
@@ -16,11 +16,11 @@
 
       <div class="right-text">
         <h2>
-          {{ title2 }}
+          {{ cardTitle() }}
         </h2>
 
         <p>
-          {{ description2 }}
+          {{ cardDescription() }}
         </p>
       </div>
     </div>

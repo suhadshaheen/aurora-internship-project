@@ -24,7 +24,6 @@ import { SIDEBAR_ROUTES, QUERY_PARAMS, USER_ROLES } from '../side-bar/Sidebar.co
 
 @Component({
   selector: 'app-side-bar',
-  standalone: true,
   imports: [
     DrawerModule,
     ButtonModule,

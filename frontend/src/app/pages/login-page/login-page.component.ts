@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LoginCardComponent } from '../../shared/components/login-card.component/login-card.component';
+import { LoginCardComponent } from '../../shared/components/login-card/login-card.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { PasswordModule } from 'primeng/password';
 
