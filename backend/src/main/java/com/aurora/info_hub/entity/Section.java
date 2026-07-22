@@ -31,7 +31,7 @@ public class Section {
     @JoinColumn(name = "cat_id", nullable = false)
     private Category category;
 
-    private boolean visibility;
+    private Boolean visibility;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
