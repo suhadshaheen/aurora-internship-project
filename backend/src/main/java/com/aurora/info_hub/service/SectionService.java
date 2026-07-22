@@ -16,7 +16,7 @@ public class SectionService {
     public List<Section> getAllSections() {
         return sectionRepositry.findAll();
     }
-public  Section getSectionById(long id) {
+public  Section getSectionById(Long id) {
         sectionRepositry.findById(id).orElseThrow(()->new RuntimeException("Section Not Found!"));
         return sectionRepositry.findById(id).get();
 }
