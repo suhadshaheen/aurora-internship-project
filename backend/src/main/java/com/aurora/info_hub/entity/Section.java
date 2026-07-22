@@ -28,7 +28,7 @@ public class Section {
     private User createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cat_id", nullable = false)
+    @JoinColumn(name="cat_id", nullable=true)
     private Category category;
 
     private Boolean visibility;
@@ -39,5 +39,9 @@ public class Section {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    } 
+    }
+
+    public Boolean isVisible() {
+        return visibility;
+    }
 }

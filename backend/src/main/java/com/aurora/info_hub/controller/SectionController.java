@@ -25,5 +25,23 @@ public class SectionController {
 public Section addSection(@RequestBody Section section) {
         return sectionService.createSection(section);
 }
+@PutMapping("/{id}")
+    public Section updateSection(
+            @PathVariable Long id,
+            @RequestBody Section section
+    ){
+        return sectionService.updateSection(id, section);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteSection(@PathVariable Long id) {
+        sectionService.deleteSection(id);
 
+    }
+    @PatchMapping("/{id}")
+    public Section patchSection(
+            @PathVariable Long id,
+            @RequestBody Section section
+    ){
+        return sectionService.patchSection(id, section);
+    }
 }

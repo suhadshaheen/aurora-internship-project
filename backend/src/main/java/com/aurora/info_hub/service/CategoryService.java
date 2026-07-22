@@ -8,18 +8,32 @@ import java.util.List;
 
 @Service
 public class CategoryService {
-    private  final CaregoryRepository caregoryRepository;
+    private  final CaregoryRepository categoryRepository;
     public CategoryService(CaregoryRepository caregoryRepository) {
-        this.caregoryRepository = caregoryRepository;
+        this.categoryRepository = caregoryRepository;
     }
    public List<Category> getAllCategories(){
-        return caregoryRepository.findAll();
+        return categoryRepository.findAll();
    }
    public Category getCategoryById(Long id){
-        return caregoryRepository.findById(id).get();
+        return categoryRepository.findById(id).get();
    }
    public Category createCategory(Category category){
-       return caregoryRepository.save(category);
+       return categoryRepository.save(category);
    }
+    public Category updateCategory(Long id, Category category){
+
+        Category existingCategory = getCategoryById(id);
+
+        existingCategory.setCatName(category.getCatName());
+        existingCategory.setCreatedBy(category.getCreatedBy());
+
+        return categoryRepository.save(existingCategory);
+    }
+    public void deleteCategory(Long id){
+
+        categoryRepository.deleteById(id);
+
+    }
 
 }
