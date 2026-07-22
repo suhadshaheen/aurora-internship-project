@@ -1,5 +1,11 @@
 package com.aurora.info_hub.repository;
 
-public class SectionRepositry {
-    
+import com.aurora.info_hub.entity.Section;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+public interface SectionRepositry extends JpaRepository<Section, Long>,
+        JpaSpecificationExecutor {
+
+
 }
