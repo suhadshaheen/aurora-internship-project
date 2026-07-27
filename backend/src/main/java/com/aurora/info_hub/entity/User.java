@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,4 +25,6 @@ public class User{
     @Column(nullable = false, unique = true)
     String email;
     String role;
+    @OneToMany(mappedBy = "createdBy")
+    private List<User> user;
 }

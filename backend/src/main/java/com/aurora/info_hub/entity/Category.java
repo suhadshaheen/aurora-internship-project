@@ -1,6 +1,7 @@
 package com.aurora.info_hub.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,9 @@ public class Category {
     protected void onCreate() {
         this.dateCreated = LocalDateTime.now();
     } 
-    
+
+    @OneToMany(mappedBy = "category")
+    private List<Section> sections;
 
 
 
