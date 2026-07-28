@@ -23,24 +23,25 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
-    String userName;
+    String userHandle;
     @Column(nullable = false)
     String password;
     @Column(nullable = false, unique = true)
     String email;
     String role;
     @OneToMany(mappedBy = "createdBy")
-    private List<Section> section;
+    private List<Section> sections;
     @OneToMany(mappedBy = "createdBy")
-    private List<Category> category;
+    private List<Category>  categories;
     @OneToMany(mappedBy = "createdBy")
-    private List<Comment> comment;
+    private List<Comment> comments;
     @Override
         public Collection<? extends GrantedAuthority> getAuthorities(){ 
-            return List.of( new SimpleGrantedAuthority(role) ); }
+            return List.of( new SimpleGrantedAuthority("ROLE_"+role) ); }
     @Override
         public String getUsername(){
-            return email; }
+            return email;
+    }
     @Override
         public boolean isAccountNonExpired(){
             return true; } 
@@ -53,4 +54,5 @@ public class User implements UserDetails{
     @Override
         public boolean isEnabled(){ 
             return true; }
+
 }
