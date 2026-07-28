@@ -1,4 +1,5 @@
 package com.aurora.info_hub.security;
+import com.aurora.info_hub.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,8 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.context.annotation.Bean;
 public class securityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private  final CachingUserDetailsService customUserDetailsService;
-    public securityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CachingUserDetailsService customUserDetailsService) {
+    private  final CustomUserDetailsService customUserDetailsService;
+    public securityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailsService customUserDetailsService) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customUserDetailsService = customUserDetailsService;
     }
