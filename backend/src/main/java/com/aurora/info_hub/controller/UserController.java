@@ -55,26 +55,6 @@ public class UserController {
 
 
     
-    @PutMapping("/{id}")
-    public User updateUser(
-            @PathVariable Long id,
-            @RequestBody User user
-    ){
-
-        return userService.updateUser(id,user);
-    }
-
-
-
-    
-    @PatchMapping("/{id}")
-    public User patchUser(
-            @PathVariable Long id,
-            @RequestBody User user
-    ){
-
-        return userService.patchUser(id,user);
-    }
 
 
 
