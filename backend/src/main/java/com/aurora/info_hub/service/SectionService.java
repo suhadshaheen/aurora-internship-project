@@ -1,15 +1,15 @@
 package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.entity.Section;
-import com.aurora.info_hub.repository.SectionRepositry;
+import com.aurora.info_hub.repository.SectionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class SectionService {
-    private final SectionRepositry sectionRepository;
-    public SectionService(SectionRepositry sectionRepositry) {
+    private final SectionRepository sectionRepository;
+    public SectionService(SectionRepository sectionRepositry) {
         this.sectionRepository = sectionRepositry;
     }
 

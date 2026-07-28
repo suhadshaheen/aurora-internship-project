@@ -1,9 +1,12 @@
 package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.entity.Comment;
+import com.aurora.info_hub.entity.Section;
+import com.aurora.info_hub.entity.User;
 import com.aurora.info_hub.repository.CommentRepository;
+import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
+import com.aurora.info_hub.repository.SectionRepository;
 import java.util.List;
 
 @Service
@@ -11,11 +14,15 @@ public class CommentService {
 
 
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final SectionRepository sectionRepository;
 
-
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, UserRepository userRepository, SectionRepository sectionRepository) {
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
+        this.sectionRepository = sectionRepository;
     }
+   
 
 
  
@@ -40,11 +47,22 @@ public class CommentService {
     // POST add comment
     public Comment createComment(Comment comment){
 
-        return commentRepository.save(comment);
-    }
+        if(comment.getContent() == null || comment.getContent().isBlank()){
+    throw new RuntimeException("Comment content cannot be empty");
+}
+     userRepository.findById(
+        comment.getCreatedBy().getId()
+     ).orElseThrow(() ->
+        new RuntimeException("User not found"));
+       
 
+       sectionRepository.findById(
+        comment.getCreatedIn().getId()
+).orElseThrow(() ->
+        new RuntimeException("Section not found"));
 
-
+         return commentRepository.save(comment);
+}
     // PUT update comment
     public Comment updateComment(Long id, Comment comment){
 
