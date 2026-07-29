@@ -35,6 +35,8 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Section> sections;
 
+  
+    
 
 
 }

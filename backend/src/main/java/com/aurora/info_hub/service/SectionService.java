@@ -14,6 +14,16 @@ import java.util.List;
 
 @Service
 public class SectionService {
+    private static final List<String> ALLOWED_DOCUMENT_TYPES = List.of(
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "text/plain"
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+);
     private  final SectionDocsRepository sectionDocsRepository;
     private final SectionImageRepository sectionImageRepository;
     private final FileStorageService fileStorageService;
@@ -33,16 +43,31 @@ public  Section getSectionById(Long id) {
         return sectionRepository.findById(id).get();
 }
     public Section createSection(String title, String content, List<MultipartFile> images, List<MultipartFile> documents) {
-
+     
         Section section = Section.builder()
                 .title(title)
                 .content(content)
                 .build();
+         if (content == null || content.isBlank()) {
+         throw new RuntimeException("Content is required");
+}
 
         Section savedSection = sectionRepository.save(section);
 
         if (images != null) {
             for (MultipartFile image : images) {
+                 String type = image.getContentType();
+
+                 if (!List.of(
+                       "image/jpeg",
+                      "image/png",
+                  "image/webp"
+                 ).contains(type)) {
+
+             throw new RuntimeException(
+                "Only JPEG, PNG and WEBP images are allowed"
+        );
+    }
                 String url = fileStorageService.storeFile(image);
                 SectionImage sectionImage = SectionImage.builder()
                         .imageUrl(url)
@@ -51,9 +76,14 @@ public  Section getSectionById(Long id) {
                 sectionImageRepository.save(sectionImage);
             }
         }
-
+    
         if (documents != null) {
             for (MultipartFile document : documents) {
+                if (!ALLOWED_DOCUMENT_TYPES.contains(document.getContentType())) {
+                   throw new RuntimeException(
+                    "Unsupported document type: " + document.getContentType()
+            );
+        }
                 String url = fileStorageService.storeFile(document);
                 SectionDocs sectionDoc = SectionDocs.builder()
                         .fileName(document.getOriginalFilename())
@@ -63,6 +93,7 @@ public  Section getSectionById(Long id) {
                 sectionDocsRepository.save(sectionDoc);
             }
         }
+    
 
         return savedSection;
     }
