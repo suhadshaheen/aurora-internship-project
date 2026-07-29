@@ -1,12 +1,13 @@
 package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.FileStorageService;
-import com.aurora.info_hub.entity.Section;
-import com.aurora.info_hub.entity.SectionDocs;
-import com.aurora.info_hub.entity.SectionImage;
+import com.aurora.info_hub.entity.*;
+import com.aurora.info_hub.repository.CaregoryRepository;
 import com.aurora.info_hub.repository.SectionDocsRepository;
 import com.aurora.info_hub.repository.SectionImageRepository;
 import com.aurora.info_hub.repository.SectionRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,11 +15,13 @@ import java.util.List;
 
 @Service
 public class SectionService {
+    private final CaregoryRepository categoryRepository;
     private  final SectionDocsRepository sectionDocsRepository;
     private final SectionImageRepository sectionImageRepository;
     private final FileStorageService fileStorageService;
     private final SectionRepository sectionRepository;
-    public SectionService(SectionDocsRepository sectionDocsRepository, SectionImageRepository sectionImageRepository, FileStorageService fileStorageService, SectionRepository sectionRepositry) {
+    public SectionService( CaregoryRepository categoryRepository, SectionDocsRepository sectionDocsRepository, SectionImageRepository sectionImageRepository, FileStorageService fileStorageService, SectionRepository sectionRepositry) {
+        this.categoryRepository = categoryRepository;
         this.sectionDocsRepository = sectionDocsRepository;
         this.sectionImageRepository = sectionImageRepository;
         this.fileStorageService = fileStorageService;
@@ -32,11 +35,19 @@ public  Section getSectionById(Long id) {
     sectionRepository.findById(id).orElseThrow(()->new RuntimeException("Section Not Found!"));
         return sectionRepository.findById(id).get();
 }
-    public Section createSection(String title, String content, List<MultipartFile> images, List<MultipartFile> documents) {
+    public Section createSection(String title, String content, Long categoryId,
+                                 List<MultipartFile> images, List<MultipartFile> documents) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category Not Found!"));
 
         Section section = Section.builder()
                 .title(title)
                 .content(content)
+                .category(category)
+                .createdBy(user)
+                .visibility(true)
                 .build();
 
         Section savedSection = sectionRepository.save(section);

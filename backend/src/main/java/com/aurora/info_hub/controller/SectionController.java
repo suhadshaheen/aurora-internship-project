@@ -27,10 +27,11 @@ public class SectionController {
     public Section addSection(
             @RequestParam("title") String title,
             @RequestParam("content") String content,
+            @RequestParam("categoryId") Long categoryId,
             @RequestParam(value = "images", required = false) List<MultipartFile> images,
             @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ) {
-        return sectionService.createSection(title, content, images, documents);
+        return sectionService.createSection(title, content,categoryId, images, documents);
     }
 @PutMapping("/{id}")
     public Section updateSection(
