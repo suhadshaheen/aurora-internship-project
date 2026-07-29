@@ -18,13 +18,13 @@ import javax.management.remote.JMXAuthenticator;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthContoller {
+public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private JwtService jwtService;
     private UserService userService;
 
-    public AuthContoller(AuthenticationManager authenticationManager, JwtService jwtService, UserService userService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userService = userService;
