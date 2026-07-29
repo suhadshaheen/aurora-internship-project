@@ -31,7 +31,7 @@ public Section createSection(Section section) {
 
         existingSection.setTitle(section.getTitle());
         existingSection.setContent(section.getContent());
-        existingSection.setVisibility(section.isVisible());
+        existingSection.setVisibility(section.getVisibility());
         existingSection.setCategory(section.getCategory());
 
 
