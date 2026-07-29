@@ -20,9 +20,8 @@ public class SectionService {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "application/vnd.ms-excel",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "text/plain"
-        "application/vnd.ms-powerpoint",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "text/plain",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 );
     private  final SectionDocsRepository sectionDocsRepository;
     private final SectionImageRepository sectionImageRepository;
