@@ -3,6 +3,7 @@ package com.aurora.info_hub.service;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.repository.SectionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -62,4 +63,6 @@ public Section createSection(Section section) {
 
         return sectionRepository.save(existingSection);
     }
+
+
 }

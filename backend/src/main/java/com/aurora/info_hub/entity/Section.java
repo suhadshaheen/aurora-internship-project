@@ -1,6 +1,7 @@
 package com.aurora.info_hub.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,7 +42,7 @@ public class Section {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Boolean isVisible() {
-        return visibility;
-    }
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SectionImage> images;
 }

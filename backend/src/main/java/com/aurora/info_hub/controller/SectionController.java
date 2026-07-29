@@ -3,6 +3,7 @@ package com.aurora.info_hub.controller;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.service.SectionService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,17 +19,23 @@ public class SectionController {
         return sectionService.getAllSections();
     }
     @GetMapping("/{id}")
-    public Section getCategoryById(@PathVariable Long id) {
+    public Section getSectionById(@PathVariable Long id)  {
         return sectionService.getSectionById(id);
     }
-@PostMapping
-public Section addSection(@RequestBody Section section) {
-        return sectionService.createSection(section);
-}
+//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public Section addSection(
+//            @RequestParam("title") String title,
+//            @RequestParam("content") String content,
+//            @RequestParam(value = "images", required = false) List<MultipartFile> images,
+//            @RequestParam(value = "documents", required = false) List<MultipartFile> documents
+//    ) {
+//        return sectionService.createSection(title, content, images, documents);
+//    }
 @PutMapping("/{id}")
     public Section updateSection(
             @PathVariable Long id,
             @RequestBody Section section
+
     ){
         return sectionService.updateSection(id, section);
     }
