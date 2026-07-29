@@ -19,7 +19,11 @@ public class CategoryService {
         return categoryRepository.findById(id).get();
    }
    public Category createCategory(Category category){
+    if (categoryRepository.existsByName(category.getCatName())) {
+    throw new RuntimeException("Category already exists");
+}
        return categoryRepository.save(category);
+
    }
     public Category updateCategory(Long id, Category category){
 
