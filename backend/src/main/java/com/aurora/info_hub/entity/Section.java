@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 
 @Entity
@@ -36,6 +37,9 @@ public class Section {
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "section")
+    private List<SectionDocs> sectionDocs;
 
     @PrePersist
     protected void onCreate() {
