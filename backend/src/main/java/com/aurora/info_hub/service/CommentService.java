@@ -1,8 +1,7 @@
 package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.entity.Comment;
-import com.aurora.info_hub.entity.Section;
-import com.aurora.info_hub.entity.User;
+
 import com.aurora.info_hub.repository.CommentRepository;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.stereotype.Service;
