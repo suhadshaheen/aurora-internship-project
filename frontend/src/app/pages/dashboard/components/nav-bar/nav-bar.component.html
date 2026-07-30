@@ -1,0 +1,51 @@
+<p-toolbar class="app-navbar">
+  <ng-template pTemplate="start">
+    <div class="brand">
+      <div class="brand-logo">
+         <img src="assets/logo-4.png" alt="Info Hub Logo" class="navbar_logo" />
+      </div>
+      <span class="brand-name"> Info Hub</span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="center">
+    <div class="nav-page-label">
+      <span class="page-label">{{ currentPageTitle() }}</span>
+    </div>
+  </ng-template>
+
+ <ng-template pTemplate="end">
+  @if (user$ | async; as user) {
+    <div class="user-box">
+      <p-avatar
+        [label]="user.userName.charAt(0).toUpperCase()"
+        shape="circle"
+        styleClass="user-avatar">
+      </p-avatar>
+
+      <div class="user-info">
+        <span class="user-name">
+          {{ user.userName }}
+        </span>
+
+        <small>
+          {{ user.role }}
+        </small>
+      </div>
+    </div>
+  } @else {
+    <div class="user-box">
+      <p-avatar
+        label="U"
+        shape="circle"
+        styleClass="user-avatar">
+      </p-avatar>
+
+      <div class="user-info">
+        <span class="user-name">User</span>
+        <small>Not loaded</small>
+      </div>
+    </div>
+  }
+</ng-template>
+</p-toolbar>

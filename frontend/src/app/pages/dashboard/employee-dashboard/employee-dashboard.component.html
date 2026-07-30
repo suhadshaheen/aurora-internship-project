@@ -1,0 +1,18 @@
+<div class="dashboard-layout">
+  <app-side-bar></app-side-bar>
+
+  <div class="dashboard-layout__content">
+    <app-nav-bar></app-nav-bar>
+    
+    <main class="dashboard-layout__main">
+      <app-add-section></app-add-section>
+      @defer (on viewport) {
+        <app-section-list></app-section-list>
+      } @placeholder {
+        <div class="sections-placeholder">Sections will load when you scroll down...</div>
+      } @loading {
+        <div class="sections-placeholder">Loading sections...</div>
+      }
+    </main>
+  </div>
+</div>

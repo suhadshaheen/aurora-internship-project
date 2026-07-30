@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  width: 100%;
+}
+.navbar_logo {
+  width: 39px;
+  height: 39px;
+  object-fit: cover;
+}
+
+
+::ng-deep .app-navbar {
+  margin: 1rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(17, 24, 39, 0.75) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+
+
+.brand-name {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.nav-page-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.page-label {
+  color: #f9fafb;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+::ng-deep .user-avatar {
+  background: #2563eb;
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.user-name {
+  color: white;
+  font-weight: 700;
+}
+
+.user-info small {
+  color: #9ca3af;
+}

@@ -1,0 +1,124 @@
+<section class="section-list-wrapper">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">
+        Sections
+        <span class="section-count">
+          {{ sectionCount$ | async }}
+        </span>
+      </h2>
+    </div>
+  </div>
+
+  @if (loading$ | async) {
+    <p class="loading-text">Loading sections...</p>
+  }
+
+  @if (error$ | async; as error) {
+    <p class="error-text">{{ error }}</p>
+  }
+
+  @if (visibleSections$ | async; as sections) {
+    @if (sections.length > 0) {
+      <div class="sections-list">
+        @for (section of sections; track section.sectionId) {
+          <article class="section-item">
+            <div class="section-icon">
+              <i class="pi pi-folder"></i>
+            </div>
+
+            <div class="section-main">
+              @if (editingSectionId === section.sectionId) {
+                <div class="section-edit-form">
+                  <input
+                    type="text"
+                    pInputText
+                    name="editTitle"
+                    [(ngModel)]="editTitle"
+                    class="w-full"
+                  />
+
+                  <p-editor
+                    name="editContent"
+                    [(ngModel)]="editContent"
+                    [style]="{ height: '200px' }"
+                  ></p-editor>
+
+                  <div class="section-edit-actions">
+                    <button
+                      type="button"
+                      pButton
+                      severity="secondary"
+                      label="Cancel"
+                      (click)="cancelEdit()"
+                    ></button>
+                    <button
+                      type="button"
+                      pButton
+                      label="Save"
+                      (click)="submitEdit(section)"
+                    ></button>
+                  </div>
+                </div>
+              } @else {
+                <div class="section-top">
+                  <div>
+                    <h3>{{ section.title }}</h3>
+
+                    <div
+                      class="section-content"
+                      [innerHTML]="section.content">
+                    </div>
+                  </div>
+
+                  <div class="section-top-actions">
+                    @if (section.visibility) {
+                      <p-tag value="Visible" severity="success"></p-tag>
+                    } @else {
+                      <p-tag value="Hidden" severity="danger"></p-tag>
+                    }
+
+                    @if (section.canModify) {
+                      <button
+                        type="button"
+                        pButton
+                        icon="pi pi-pencil"
+                        severity="secondary"
+                        [text]="true"
+                        (click)="startEdit(section)"
+                      ></button>
+                      <button
+                        type="button"
+                        pButton
+                        icon="pi pi-trash"
+                        severity="danger"
+                        [text]="true"
+                        (click)="deleteSection(section.id)"
+                      ></button>
+                    }
+                  </div>
+                </div>
+
+                <div class="section-meta">
+                  <span>
+                    <i class="pi pi-tag"></i>
+                    Category: {{ section.catId }}
+                  </span>
+
+                  <span>
+                    <i class="pi pi-calendar"></i>
+                    {{ section.dateCreated | date:'mediumDate' }}
+                  </span>
+                </div>
+
+                <app-comment [sectionId]="section.sectionId"></app-comment>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <p class="empty-text">No sections found.</p>
+    }
+  }
+</section>
