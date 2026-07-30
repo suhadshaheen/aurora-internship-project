@@ -1,7 +1,7 @@
 package com.aurora.info_hub.controller;
 
-
-import com.aurora.info_hub.entity.User;
+import com.aurora.info_hub.dto.user.UserRequest;
+import com.aurora.info_hub.dto.user.UserResponse;
 import com.aurora.info_hub.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,46 +24,31 @@ public class UserController {
 
 
     
-    @GetMapping
-    public List<User> getAllUsers(){
-
+      @GetMapping
+    public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
     }
 
 
-
     
-    @GetMapping("/{id}")
-    public User getUserById(
-            @PathVariable Long id
-    ){
-
+   @GetMapping("/{id}")
+    public UserResponse getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
 
 
     
-    @PostMapping
-    public User addUser(
-            @RequestBody User user
-    ){
-
-        return userService.createUser(user);
+   @PostMapping
+    public UserResponse addUser(@RequestBody UserRequest request) {
+        return userService.createUser(request);
     }
 
 
 
     
-
-
-
-    
     @DeleteMapping("/{id}")
-    public void deleteUser(
-            @PathVariable Long id
-    ){
-
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 
