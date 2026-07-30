@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, throwError } from 'rxjs';
 import { AuthUser } from '../../pages/login-page/store/auth.state';
+import { environment } from '../../../environments/environment';
 
 interface AuthApiUser extends AuthUser {
   password?: string;
@@ -16,7 +17,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3000/users';
+  private readonly apiUrl = environment.apiUrl + '/users';
 
   constructor(private http: HttpClient) {}
 
