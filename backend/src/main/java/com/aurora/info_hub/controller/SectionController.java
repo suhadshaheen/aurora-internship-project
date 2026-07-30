@@ -1,5 +1,6 @@
 package com.aurora.info_hub.controller;
 
+import com.aurora.info_hub.dto.section.SectionRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.service.SectionService;
@@ -37,10 +38,10 @@ public class SectionController {
 @PutMapping("/{id}")
     public SectionResponse updateSection(
             @PathVariable Long id,
-            @RequestBody Section section
+            @RequestBody SectionRequest request
 
     ){
-        return sectionService.updateSection(id, section);
+        return sectionService.updateSection(id, request);
     }
     @DeleteMapping("/{id}")
     public void deleteSection(@PathVariable Long id) {
