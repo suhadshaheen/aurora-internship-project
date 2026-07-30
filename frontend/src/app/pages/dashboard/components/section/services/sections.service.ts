@@ -3,37 +3,35 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ISection } from '../../../../../../models/section.interface';
 import { Observable } from 'rxjs/internal/Observable';
+import { environment } from '../../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SectionsService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000/sections';
+  private apiUrl = `${environment.apiUrl}/sections`;
 
   getAll(): Observable<ISection[]> {
-    return this.http.get<ISection[]>(this.baseUrl);
+    return this.http.get<ISection[]>(this.apiUrl);
   }
   getByCategoryId(catId: number): Observable<ISection[]> {
-    return this.http.get<ISection[]>(`${this.baseUrl}?catId=${catId}`);
+    return this.http.get<ISection[]>(`${this.apiUrl}?catId=${catId}`);
   }
 
   getSectionById(id: number) {
-    return this.http.get<ISection>(`${this.baseUrl}${id}`);
+    return this.http.get<ISection>(`${this.apiUrl}${id}`);
   }
 
-create(section: ISection): Observable<ISection> {
-  return this.http.post<ISection>(this.baseUrl, section);
-}
+  create(section: ISection): Observable<ISection> {
+    return this.http.post<ISection>(this.apiUrl, section);
+  }
 
- update(section: ISection): Observable<ISection> {
-  return this.http.put<ISection>(
-    `${this.baseUrl}/${section.id}`,
-    section
-  );
-}
+  update(section: ISection): Observable<ISection> {
+    return this.http.put<ISection>(`${this.apiUrl}/${section.id}`, section);
+  }
 
- delete(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.baseUrl}/${id}`);
-}
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
