@@ -1,6 +1,7 @@
 package com.aurora.info_hub.controller;
 
-import com.aurora.info_hub.entity.Category;
+import com.aurora.info_hub.dto.category.CategoryRequest;
+import com.aurora.info_hub.dto.category.CategoryResponse;
 import com.aurora.info_hub.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,24 +17,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
     @GetMapping
-    public List<Category> getAllCategories(){
+    public List<CategoryResponse> getAllCategories(){
         return categoryService.getAllCategories();
     }
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id){
+    public CategoryResponse  getCategoryById(@PathVariable Long id){
         return categoryService.getCategoryById(id);
 
     }
     @PostMapping
-    public Category createCategory(@RequestBody Category category){
-        return categoryService.createCategory(category);
+    public CategoryResponse createCategory(@RequestBody CategoryRequest request){
+        return categoryService.createCategory(request);
     }
 
-@PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category){
-        return categoryService.updateCategory(id, category);
-
-}
 @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id){
         categoryService.deleteCategory(id);

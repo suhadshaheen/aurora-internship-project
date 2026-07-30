@@ -115,14 +115,16 @@ public class SectionService {
     }
 
     @Transactional
-    public SectionResponse updateSection(Long id, Section section){
+    public SectionResponse updateSection(Long id, SectionRequest  request){
 
         Section existingSection = getSectionEntity(id);
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category Not Found!"));
 
-        existingSection.setTitle(section.getTitle());
-        existingSection.setContent(section.getContent());
-        existingSection.setVisibility(section.getVisibility());
-        existingSection.setCategory(section.getCategory());
+        existingSection.setTitle(request.getTitle());
+        existingSection.setContent(request.getContent());
+        existingSection.setVisibility(request.getVisibility());
+        existingSection.setCategory(category);
 
 
         return toResponse(sectionRepository.save(existingSection));
