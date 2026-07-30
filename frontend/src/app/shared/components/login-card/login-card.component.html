@@ -1,0 +1,29 @@
+<p-card styleClass="login-card">
+  <div class="login-card-content">
+
+    <div class="login-left">
+      <h1>{{ formTitle()}}</h1>
+      <p>{{ formDescription() }}</p>
+     <ng-content select="[left-content]"></ng-content>
+
+    </div>
+
+    <div class="login-right">
+      <div class="right-top">
+        <img src="/assets/Aurora%20(logo)-01.png" alt="Aurora logo" class="aurora-logo" />
+        <ng-content select="[right-content]"></ng-content>
+      </div>
+
+      <div class="right-text">
+        <h2>
+          {{ cardTitle() }}
+        </h2>
+
+        <p>
+          {{ cardDescription() }}
+        </p>
+      </div>
+    </div>
+
+  </div>
+</p-card>
