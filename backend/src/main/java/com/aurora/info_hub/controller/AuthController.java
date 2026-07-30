@@ -1,7 +1,7 @@
 package com.aurora.info_hub.controller;
 
-import com.aurora.info_hub.dto.LoginRequest;
-import com.aurora.info_hub.dto.LoginResponse;
+import com.aurora.info_hub.dto.auth.LoginRequest;
+import com.aurora.info_hub.dto.auth.LoginResponse;
 import com.aurora.info_hub.service.JwtService;
 import com.aurora.info_hub.service.UserService;
 import org.springframework.http.ResponseEntity;

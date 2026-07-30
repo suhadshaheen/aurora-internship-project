@@ -1,5 +1,6 @@
 package com.aurora.info_hub.controller;
 
+import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.service.SectionService;
 import org.springframework.http.MediaType;
@@ -16,15 +17,15 @@ public class SectionController {
         this.sectionService = sectionService;
     }
     @GetMapping
-    public List<Section> getSections() {
+    public List<SectionResponse> getSections() {
         return sectionService.getAllSections();
     }
     @GetMapping("/{id}")
-    public Section getSectionById(@PathVariable Long id)  {
+    public SectionResponse getSectionById(@PathVariable Long id)  {
         return sectionService.getSectionById(id);
     }
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Section addSection(
+    public SectionResponse addSection(
             @RequestParam("title") String title,
             @RequestParam("content") String content,
             @RequestParam("categoryId") Long categoryId,
@@ -34,7 +35,7 @@ public class SectionController {
         return sectionService.createSection(title, content,categoryId, images, documents);
     }
 @PutMapping("/{id}")
-    public Section updateSection(
+    public SectionResponse updateSection(
             @PathVariable Long id,
             @RequestBody Section section
 

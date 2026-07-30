@@ -1,4 +1,4 @@
-package com.aurora.info_hub.dto;
+package com.aurora.info_hub.dto.auth;
 
 import lombok.Data;
 

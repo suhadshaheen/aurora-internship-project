@@ -1,16 +1,16 @@
 package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.entity.Category;
-import com.aurora.info_hub.repository.CaregoryRepository;
+import com.aurora.info_hub.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CategoryService {
-    private  final CaregoryRepository categoryRepository;
-    public CategoryService(CaregoryRepository caregoryRepository) {
-        this.categoryRepository = caregoryRepository;
+    private  final CategoryRepository categoryRepository;
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
    public List<Category> getAllCategories(){
         return categoryRepository.findAll();
@@ -19,7 +19,7 @@ public class CategoryService {
         return categoryRepository.findById(id).get();
    }
    public Category createCategory(Category category){
-    if (categoryRepository.existsByName(category.getCatName())) {
+    if (categoryRepository.existsByCatName(category.getCatName())) {
     throw new RuntimeException("Category already exists");
 }
        return categoryRepository.save(category);

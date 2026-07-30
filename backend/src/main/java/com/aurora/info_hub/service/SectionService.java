@@ -1,11 +1,13 @@
 package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.FileStorageService;
+import com.aurora.info_hub.dto.section.*;
 import com.aurora.info_hub.entity.*;
-import com.aurora.info_hub.repository.CaregoryRepository;
+import com.aurora.info_hub.repository.CategoryRepository;
 import com.aurora.info_hub.repository.SectionDocsRepository;
 import com.aurora.info_hub.repository.SectionImageRepository;
 import com.aurora.info_hub.repository.SectionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ import java.util.List;
 @Service
 public class SectionService {
 
-    private final CaregoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     private static final List<String> ALLOWED_DOCUMENT_TYPES = List.of(
         "application/pdf",
@@ -32,7 +34,7 @@ public class SectionService {
     private final SectionImageRepository sectionImageRepository;
     private final FileStorageService fileStorageService;
     private final SectionRepository sectionRepository;
-    public SectionService( CaregoryRepository categoryRepository, SectionDocsRepository sectionDocsRepository, SectionImageRepository sectionImageRepository, FileStorageService fileStorageService, SectionRepository sectionRepositry) {
+    public SectionService(CategoryRepository categoryRepository, SectionDocsRepository sectionDocsRepository, SectionImageRepository sectionImageRepository, FileStorageService fileStorageService, SectionRepository sectionRepositry) {
         this.categoryRepository = categoryRepository;
         this.sectionDocsRepository = sectionDocsRepository;
         this.sectionImageRepository = sectionImageRepository;
@@ -40,20 +42,28 @@ public class SectionService {
         this.sectionRepository = sectionRepositry;
     }
 
-    public List<Section> getAllSections() {
-        return sectionRepository.findAll();
-    }
-public  Section getSectionById(Long id) {
-    sectionRepository.findById(id).orElseThrow(()->new RuntimeException("Section Not Found!"));
-        return sectionRepository.findById(id).get();
-}
+    public List<SectionResponse> getAllSections() {
 
-    public Section createSection(String title, String content, Long categoryId,
-                                 List<MultipartFile> images, List<MultipartFile> documents) {
+        return sectionRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+    public SectionResponse getSectionById(Long id) {
+        return toResponse(getSectionEntity(id));
+    }
+
+    @Transactional
+    public SectionResponse createSection(String title, String content, Long categoryId, List<MultipartFile> images, List<MultipartFile> documents) {
+        if (title == null || title.isBlank()) {
+            throw new RuntimeException("Title is required");
+        }
+        if (content == null || content.isBlank()) {
+            throw new RuntimeException("Content is required");
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category Not Found!"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category Not Found!"));
 
 
         Section section = Section.builder()
@@ -63,32 +73,24 @@ public  Section getSectionById(Long id) {
                 .createdBy(user)
                 .visibility(true)
                 .build();
-         if (content == null || content.isBlank()) {
-         throw new RuntimeException("Content is required");
-}
 
         Section savedSection = sectionRepository.save(section);
 
         if (images != null) {
             for (MultipartFile image : images) {
-                 String type = image.getContentType();
+                String type = image.getContentType();
 
-                 if (!List.of(
-                       "image/jpeg",
-                      "image/png",
-                  "image/webp"
-                 ).contains(type)) {
+                if (!List.of("image/jpeg", "image/png", "image/webp").contains(type)) {
 
-             throw new RuntimeException(
-                "Only JPEG, PNG and WEBP images are allowed"
-        );
-    }
+                    throw new RuntimeException("Only JPEG, PNG and WEBP images are allowed");
+                }
                 String url = fileStorageService.storeFile(image);
-                SectionImage sectionImage = SectionImage.builder()
-                        .imageUrl(url)
-                        .section(savedSection)
-                        .build();
+                SectionImage sectionImage = SectionImage.builder().imageUrl(url).section(savedSection).build();
+
                 sectionImageRepository.save(sectionImage);
+
+
+                savedSection.getImages().add(sectionImage);
             }
         }
     
@@ -100,22 +102,22 @@ public  Section getSectionById(Long id) {
             );
         }
                 String url = fileStorageService.storeFile(document);
-                SectionDocs sectionDoc = SectionDocs.builder()
-                        .fileName(document.getOriginalFilename())
-                        .fileUrl(url)
-                        .section(savedSection)
-                        .build();
+                SectionDocs sectionDoc = SectionDocs.builder().fileName(document.getOriginalFilename()).fileUrl(url).section(savedSection).build();
+
                 sectionDocsRepository.save(sectionDoc);
+
+                savedSection.getSectionDocs().add(sectionDoc);
             }
         }
-    
 
-        return savedSection;
+
+        return toResponse(sectionRepository.findById(savedSection.getId()).orElseThrow(() -> new RuntimeException("Section Not Found")));
     }
 
-    public Section updateSection(Long id, Section section){
+    @Transactional
+    public SectionResponse updateSection(Long id, Section section){
 
-        Section existingSection = getSectionById(id);
+        Section existingSection = getSectionEntity(id);
 
         existingSection.setTitle(section.getTitle());
         existingSection.setContent(section.getContent());
@@ -123,15 +125,16 @@ public  Section getSectionById(Long id) {
         existingSection.setCategory(section.getCategory());
 
 
-        return sectionRepository.save(existingSection);
+        return toResponse(sectionRepository.save(existingSection));
     }
     public void  deleteSection(Long id){
 
         sectionRepository.deleteById(id);
     }
+    @Transactional
     public Section patchSection(Long id, Section section){
 
-        Section existingSection = getSectionById(id);
+        Section existingSection = getSectionEntity(id);
 
         if(section.getTitle() != null){
             existingSection.setTitle(section.getTitle());
@@ -152,5 +155,74 @@ public  Section getSectionById(Long id) {
         return sectionRepository.save(existingSection);
     }
 
+    private SectionResponse toResponse(Section section) {
 
+        return SectionResponse.builder()
+                .id(section.getId())
+                .title(section.getTitle())
+                .content(section.getContent())
+                .visibility(section.getVisibility())
+                .createdAt(section.getCreatedAt())
+
+                .category(toSectionCategoryResponse(section.getCategory()))
+                .createdBy(toSectionUserResponse(section.getCreatedBy()))
+
+                .images(
+                        section.getImages() == null
+                                ? List.of()
+                                : section.getImages()
+                                .stream()
+                                .map(this::toImageResponse)
+                                .toList()
+                )
+
+                .documents(
+                        section.getSectionDocs() == null
+                                ? List.of()
+                                : section.getSectionDocs()
+                                .stream()
+                                .map(this::toDocumentResponse)
+                                .toList()
+                )
+
+                .build();
+    }
+
+    private SectionUserResponse toSectionUserResponse(User createdBy) {
+        if(createdBy == null){
+            return null;
+        }
+        return SectionUserResponse.builder().id(createdBy.getId()).userHandle(createdBy.getUserHandle()).role(createdBy.getRole()).build();
+    }
+
+    private SectionCategoryResponse toSectionCategoryResponse(Category category) {
+        if(category == null){
+            return null;
+        }
+        return SectionCategoryResponse.builder().id(category.getId()).catName(category.getCatName()).build();
+    }
+
+
+    private SectionImageResponse toImageResponse(SectionImage image) {
+
+        if (image == null) {
+            return null;
+        }
+
+        return SectionImageResponse.builder().id(image.getId()).imageUrl(image.getImageUrl()).build();
+    }
+    private SectionDocResponse toDocumentResponse(SectionDocs document) {
+
+        if (document == null) {
+            return null;
+        }
+
+        return SectionDocResponse.builder().id(document.getId()).fileName(document.getFileName()).fileUrl(document.getFileUrl()).build();
+    }
+    private Section getSectionEntity(Long id) {
+
+        return sectionRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Section Not Found"));
+    }
 }

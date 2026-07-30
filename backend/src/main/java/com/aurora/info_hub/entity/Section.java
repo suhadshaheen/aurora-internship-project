@@ -1,6 +1,7 @@
 package com.aurora.info_hub.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -38,7 +39,8 @@ public class Section {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SectionDocs> sectionDocs;
+    @Builder.Default
+    private List<SectionDocs> sectionDocs = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
@@ -47,5 +49,6 @@ public class Section {
 
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SectionImage> images;
+    @Builder.Default
+    private List<SectionImage> images = new ArrayList<>();
 }
