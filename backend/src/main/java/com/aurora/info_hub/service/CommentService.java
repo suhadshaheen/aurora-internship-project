@@ -1,13 +1,18 @@
 package com.aurora.info_hub.service;
 
+import com.aurora.info_hub.dto.comment.CommentRequest;
+import com.aurora.info_hub.dto.comment.CommentResponse;
 import com.aurora.info_hub.entity.Comment;
-
+import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.repository.CommentRepository;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import com.aurora.info_hub.repository.SectionRepository;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.aurora.info_hub.entity.User;
 @Service
 public class CommentService {
 
@@ -26,65 +31,113 @@ public class CommentService {
 
  
     // GET all comments
-    public List<Comment> getAllComments(){
-
-        return commentRepository.findAll();
-    }
+    public List<CommentResponse> getAllComments() {
+    return commentRepository.findAll()
+            .stream()
+            .map(this::mapToResponse)
+            .toList();
+}
 
 
 
     // GET comment by id
-    public Comment getCommentById(Long id){
+   public CommentResponse getCommentById(Long id) {
 
-        return commentRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Comment not found"));
-    }
+    Comment comment = commentRepository.findById(id)
+            .orElseThrow(() ->
+                    new RuntimeException("Comment not found"));
+
+    return mapToResponse(comment);
+}
 
 
 
     // POST add comment
-    public Comment createComment(Comment comment){
+   public CommentResponse createComment(CommentRequest request) {
+    Authentication authentication =
+        SecurityContextHolder.getContext().getAuthentication();
 
-        if(comment.getContent() == null || comment.getContent().isBlank()){
-    throw new RuntimeException("Comment content cannot be empty");
-}
-     userRepository.findById(
-        comment.getCreatedBy().getId()
-     ).orElseThrow(() ->
-        new RuntimeException("User not found"));
-       
+    String email = authentication.getName();
 
-       sectionRepository.findById(
-        comment.getCreatedIn().getId()
-).orElseThrow(() ->
-        new RuntimeException("Section not found"));
+    User currentUser = userRepository.findByEmail(email)
+        .orElseThrow(() ->
+                new RuntimeException("User not found"));
 
-         return commentRepository.save(comment);
+    if (request.getContent() == null || request.getContent().isBlank()) {
+        throw new RuntimeException("Comment content cannot be empty");
+    }
+
+    Comment comment = new Comment();
+
+    comment.setContent(request.getContent());
+
+    Section section = sectionRepository.findById(request.getSectionId())
+            .orElseThrow(() ->
+                    new RuntimeException("Section not found"));
+
+    comment.setCreatedBy(currentUser);
+    comment.setCreatedIn(section);
+
+    if (request.getParentCommentId() != null) {
+
+        Comment parent = commentRepository.findById(
+                request.getParentCommentId()
+        ).orElseThrow(() ->
+                new RuntimeException("Parent comment not found"));
+
+        comment.setParentComment(parent);
+    }
+
+    Comment savedComment = commentRepository.save(comment);
+
+    return mapToResponse(savedComment);
 }
     // PUT update comment
-    public Comment updateComment(Long id, Comment comment){
+  public CommentResponse updateComment(Long id, CommentRequest request) {
 
+    Comment comment = getCommentEntity(id);
 
-        Comment existingComment = getCommentById(id);
+    comment.setContent(request.getContent());
 
-    existingComment.setContent(comment.getContent());
-    existingComment.setParentComment(comment.getParentComment());
-    existingComment.setCreatedBy(comment.getCreatedBy());
-    existingComment.setCreatedIn(comment.getCreatedIn());
+    Comment updated = commentRepository.save(comment);
 
-
-        return commentRepository.save(existingComment);
-    }
+    return mapToResponse(updated);
+}
 
 
 
     
     public void deleteComment(Long id){
 
-        Comment comment = getCommentById(id);
+    Comment comment = getCommentEntity(id);
 
-        commentRepository.delete(comment);
-    }
+    commentRepository.delete(comment);
+}
+
+    private Comment getCommentEntity(Long id) {
+
+    return commentRepository.findById(id)
+            .orElseThrow(() ->
+                    new RuntimeException("Comment not found"));
+}
+
+    private CommentResponse mapToResponse(Comment comment) {
+    return CommentResponse.builder()
+            .id(comment.getId())
+            .content(comment.getContent())
+            .createdById(comment.getCreatedBy().getId())
+            .createdByName(comment.getCreatedBy().getUserHandle()) // أو getUsername()
+            .sectionId(comment.getCreatedIn().getId())
+            .dateCreated(comment.getDateCreated())
+            .children(
+                    comment.getChildren() == null
+                            ? List.of()
+                            : comment.getChildren()
+                                    .stream()
+                                    .map(this::mapToResponse)
+                                    .toList()
+            )
+            .build();
+}
 
 }

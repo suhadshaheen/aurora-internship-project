@@ -1,4 +1,6 @@
 package com.aurora.info_hub.controller;
+import com.aurora.info_hub.dto.comment.CommentRequest;
+import com.aurora.info_hub.dto.comment.CommentResponse;
 
 
 import com.aurora.info_hub.entity.Comment;
@@ -25,7 +27,7 @@ public class CommentController {
 
     
     @GetMapping
-    public List<Comment> getAllComments(){
+   public List<CommentResponse> getAllComments(){
 
         return commentService.getAllComments();
     }
@@ -34,35 +36,30 @@ public class CommentController {
 
    
     @GetMapping("/{id}")
-    public Comment getCommentById(
-            @PathVariable Long id
-    ){
-
-        return commentService.getCommentById(id);
-    }
+public CommentResponse getCommentById(@PathVariable Long id) {
+    return commentService.getCommentById(id);
+}
 
 
 
     
     @PostMapping
-    public Comment addComment(
-            @RequestBody Comment comment
-    ){
-
-        return commentService.createComment(comment);
-    }
+public CommentResponse addComment(
+        @RequestBody CommentRequest request
+) {
+    return commentService.createComment(request);
+}
 
 
 
    
     @PutMapping("/{id}")
-    public Comment updateComment(
-            @PathVariable Long id,
-            @RequestBody Comment comment
-    ){
-
-        return commentService.updateComment(id, comment);
-    }
+public CommentResponse updateComment(
+        @PathVariable Long id,
+        @RequestBody CommentRequest request
+) {
+    return commentService.updateComment(id, request);
+}
 
 
 
