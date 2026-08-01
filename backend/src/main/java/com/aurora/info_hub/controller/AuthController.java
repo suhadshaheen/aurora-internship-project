@@ -3,6 +3,7 @@ package com.aurora.info_hub.controller;
 import com.aurora.info_hub.dto.auth.LoginRequest;
 import com.aurora.info_hub.dto.auth.LoginResponse;
 import com.aurora.info_hub.service.JwtService;
+import com.aurora.info_hub.service.PasswordResetService;
 import com.aurora.info_hub.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,13 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private JwtService jwtService;
+    private  final JwtService jwtService;
+    private final PasswordResetService passwordResetService;
     
 
-    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, UserService userService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, PasswordResetService passwordResetService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
 
+        this.passwordResetService = passwordResetService;
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
