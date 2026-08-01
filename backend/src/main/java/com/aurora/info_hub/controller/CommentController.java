@@ -3,7 +3,6 @@ import com.aurora.info_hub.dto.comment.CommentRequest;
 import com.aurora.info_hub.dto.comment.CommentResponse;
 
 
-import com.aurora.info_hub.entity.Comment;
 import com.aurora.info_hub.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
