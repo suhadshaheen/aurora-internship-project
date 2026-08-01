@@ -123,7 +123,7 @@ export class SideBarComponent implements OnInit {
       CategoryActions.addCategory({
         category: {
           catName: name,
-          userId: this.currentUser()?.id ?? '',
+          userId: this.currentUser()?.id ?? 0,
         },
       }),
     );
