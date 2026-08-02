@@ -4,6 +4,7 @@ import com.aurora.info_hub.dto.comment.CommentResponse;
 
 
 import com.aurora.info_hub.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public CommentResponse getCommentById(@PathVariable Long id) {
     
     @PostMapping
 public CommentResponse addComment(
-        @RequestBody CommentRequest request
+        @Valid @RequestBody CommentRequest request
 ) {
     return commentService.createComment(request);
 }
@@ -55,7 +56,7 @@ public CommentResponse addComment(
     @PutMapping("/{id}")
 public CommentResponse updateComment(
         @PathVariable Long id,
-        @RequestBody CommentRequest request
+        @Valid @RequestBody CommentRequest request
 ) {
     return commentService.updateComment(id, request);
 }

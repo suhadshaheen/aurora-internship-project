@@ -38,9 +38,6 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponse createCategory(CategoryRequest request) {
-        if (request.getCatName() == null || request.getCatName().isBlank()) {
-            throw new IllegalArgumentException("Category name is required");
-        }
         if (categoryRepository.existsByCatName(request.getCatName())) {
             throw new ConflictException("Category already exists");
         }

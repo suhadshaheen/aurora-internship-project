@@ -3,6 +3,7 @@ package com.aurora.info_hub.controller;
 import com.aurora.info_hub.dto.auth.ForgotPasswordRequest;
 import com.aurora.info_hub.dto.auth.ResetPasswordRequest;
 import com.aurora.info_hub.service.PasswordResetService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +18,13 @@ public class PasswordResetController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         passwordResetService.requestPasswordReset(request.getEmail());
         return ResponseEntity.ok("If this email is registered, a reset link has been sent.");
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
         passwordResetService.resetPassword(
                 request.getToken(),
                 request.getNewPassword(),

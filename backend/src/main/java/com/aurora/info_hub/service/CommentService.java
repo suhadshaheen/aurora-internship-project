@@ -64,10 +64,6 @@ public class CommentService {
         .orElseThrow(() ->
                 new NotFoundException("User not found"));
 
-    if (request.getContent() == null || request.getContent().isBlank()) {
-        throw new IllegalArgumentException("Comment content cannot be empty");
-    }
-
     Comment comment = new Comment();
 
     comment.setContent(request.getContent());
