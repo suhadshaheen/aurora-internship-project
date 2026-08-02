@@ -31,6 +31,7 @@ public class SectionController {
             @RequestParam("content") String content,
             @RequestParam("categoryId") Long categoryId,
             @RequestParam(value = "images", required = false) List<MultipartFile> images,
+            @RequestParam(value = "visibility", required = false, defaultValue = "true") Boolean visibility,
             @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ) {
         return sectionService.createSection(title, content,categoryId, images, documents);
