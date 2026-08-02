@@ -54,7 +54,7 @@ public class SectionService {
     }
 
     @Transactional
-    public SectionResponse createSection(String title, String content, Long categoryId, List<MultipartFile> images, List<MultipartFile> documents) {
+    public SectionResponse createSection(String title, String content, Long categoryId, Boolean visibility, List<MultipartFile> images, List<MultipartFile> documents) {
         if (title == null || title.isBlank()) {
             throw new RuntimeException("Title is required");
         }
@@ -71,7 +71,7 @@ public class SectionService {
                 .content(content)
                 .category(category)
                 .createdBy(user)
-                .visibility(true)
+                .visibility(visibility != null ? visibility : true)
                 .build();
 
         Section savedSection = sectionRepository.save(section);
