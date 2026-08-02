@@ -145,11 +145,11 @@
 
     <div class="sidebar__user">
       <p-avatar
-        [label]="currentUser()?.userName?.charAt(0) ?? 'U'"
+        [label]="currentUser()?.userHandle?.charAt(0) ?? 'U'"
         shape="circle"
         class="sidebar__avatar"
       />
-      <span class="sidebar__username">{{ currentUser()?.userName ?? 'Guest' }}</span>
+      <span class="sidebar__username">{{ currentUser()?.userHandle ?? 'Guest' }}</span>
     </div>
 
     @if (!isGuest()) {

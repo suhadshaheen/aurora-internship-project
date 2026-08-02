@@ -152,7 +152,7 @@ submitEdit(id: number): void {
         replies: [],
         isOwn,
         canModify: isOwn || isAdmin,
-        authorLabel: isOwn ? user!.userName : `User ${comment.userId}`,
+        authorLabel: isOwn ? user!.userHandle : `User ${comment.userId}`,
       };
     };
 

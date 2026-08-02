@@ -4,24 +4,34 @@ import { AuthActions } from './auth.actions';
 import { AuthService } from '../../../shared/services/auth.services';
 import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthUser } from './auth.state';
+
+@Injectable()
 export class AuthEffects {
 
-   private actions$ = inject(Actions);
+  private actions$ = inject(Actions);
   private authService = inject(AuthService);
-private router = inject(Router);
+  private router = inject(Router);
 
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.login),
       mergeMap(({ email, password }) =>
         this.authService.login(email, password).pipe(
-          map(({ user, token }) =>
-            AuthActions.loginSuccess({ user, token })
-          ),
+          map((response) => {
+            const user: AuthUser = {
+              id: response.id,
+              userHandle: response.userHandle,
+              email: response.email,
+              role: response.role,
+            };
+
+            return AuthActions.loginSuccess({ user, token: response.token });
+          }),
           catchError((error) =>
             of(
               AuthActions.loginFailure({
-                error: error.message || 'Login failed'
+                error: error?.error?.message || error.message || 'Login failed'
               })
             )
           )
@@ -54,9 +64,10 @@ private router = inject(Router);
       ),
     { dispatch: false }
   );
-  private getDashboardRoute(role: string): string {
-    if (role === 'admin') return '/admin-dashboard';
-    if (role === 'guest') return '/guest-dashboard';
+
+  private getDashboardRoute(role: AuthUser['role']): string {
+    if (role === 'ADMIN') return '/admin-dashboard';
+    if (role === 'GUEST') return '/guest-dashboard';
     return '/employee-dashboard';
   }
 }

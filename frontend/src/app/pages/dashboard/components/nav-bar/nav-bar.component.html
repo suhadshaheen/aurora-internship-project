@@ -18,14 +18,14 @@
   @if (user$ | async; as user) {
     <div class="user-box">
       <p-avatar
-        [label]="user.userName.charAt(0).toUpperCase()"
+        [label]="user.userHandle.charAt(0).toUpperCase()"
         shape="circle"
         styleClass="user-avatar">
       </p-avatar>
 
       <div class="user-info">
         <span class="user-name">
-          {{ user.userName }}
+          {{ user.userHandle }}
         </span>
 
         <small>
