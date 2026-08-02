@@ -227,4 +227,9 @@ public class SectionService {
                 .orElseThrow(() ->
                         new RuntimeException("Section Not Found"));
     }
+
+    public List<SectionResponse> getSectionsByCategory(Long categoryId) {
+        return sectionRepository.findByCategoryId(categoryId)
+                .stream().map(this::toResponse).toList();
+    }
 }

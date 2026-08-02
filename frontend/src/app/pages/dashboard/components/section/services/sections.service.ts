@@ -4,6 +4,7 @@ import { inject } from '@angular/core';
 import { ISection } from '../../../../../../models/section.interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../../../environments/environment';
+import { ISectionRequest } from '../../../../../../models/SectionRequest.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,21 +17,20 @@ export class SectionsService {
     return this.http.get<ISection[]>(this.apiUrl);
   }
   getByCategoryId(catId: number): Observable<ISection[]> {
-    return this.http.get<ISection[]>(`${this.apiUrl}?catId=${catId}`);
+    return this.http.get<ISection[]>(`${this.apiUrl}/by-category/${catId}`);
   }
 
   getSectionById(id: number) {
-    return this.http.get<ISection>(`${this.apiUrl}${id}`);
+    return this.http.get<ISection>(`${this.apiUrl}/${id}`);
   }
 
-  create(section: ISection): Observable<ISection> {
-    return this.http.post<ISection>(this.apiUrl, section);
+  create(formData: FormData): Observable<ISection> {
+    return this.http.post<ISection>(this.apiUrl, formData);
   }
 
-  update(section: ISection): Observable<ISection> {
-    return this.http.put<ISection>(`${this.apiUrl}/${section.id}`, section);
+  update(id: number, request: ISectionRequest): Observable<ISection> {
+    return this.http.put<ISection>(`${this.apiUrl}/${id}`, request);
   }
-
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

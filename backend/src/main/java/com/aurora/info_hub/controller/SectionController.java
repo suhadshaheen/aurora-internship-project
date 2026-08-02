@@ -55,4 +55,8 @@ public class SectionController {
     ){
         return sectionService.patchSection(id, section);
     }
+    @GetMapping("/by-category/{categoryId}")
+    public List<SectionResponse> getSectionsByCategory(@PathVariable Long categoryId) {
+        return sectionService.getSectionsByCategory(categoryId);
+    }
 }

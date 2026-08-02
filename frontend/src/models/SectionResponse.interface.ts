@@ -3,7 +3,7 @@ import { ISectionDocResponse } from './SectionDocResponse.interface';
 import { ISectionImageResponse } from './SectionImageResponse.interface';
 import { ISectionUserResponse } from './SectionUserResponse.interface';
 
-export interface ISection {
+export interface ISectionResponse {
   id: number;
   title: string;
   content: string;
