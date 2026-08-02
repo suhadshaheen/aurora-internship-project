@@ -23,7 +23,7 @@ export class AuthEffects {
               id: response.id,
               userHandle: response.userHandle,
               email: response.email,
-              role: response.role,
+              role: response.role?.trim().toUpperCase(),
             };
 
             return AuthActions.loginSuccess({ user, token: response.token });

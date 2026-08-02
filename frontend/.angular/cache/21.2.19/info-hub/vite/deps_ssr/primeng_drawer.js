@@ -12,7 +12,7 @@ import {
 } from "./chunk-YTBD46SE.js";
 import {
   Button
-} from "./chunk-B6HIAKLN.js";
+} from "./chunk-X2EUHEGD.js";
 import {
   blockBodyScroll,
   unblockBodyScroll
@@ -30,12 +30,12 @@ import {
   BaseStyle
 } from "./chunk-CGSHO6EJ.js";
 import {
-  Bind
-} from "./chunk-ULA7JNR4.js";
-import {
   PrimeTemplate,
   SharedModule
 } from "./chunk-O5HS52LB.js";
+import {
+  Bind
+} from "./chunk-ULA7JNR4.js";
 import {
   M,
   P,

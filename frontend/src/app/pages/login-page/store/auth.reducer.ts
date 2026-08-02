@@ -59,7 +59,7 @@ on(AuthActions.continueAsGuest, (state) => ({
     id: 0,
     email: 'guest@auroratech.ps',
     userHandle: 'Guest',
-    role: 'guest'
+    role: 'GUEST'
   },
   token: 'guest-token',
   isLoggedIn: true,

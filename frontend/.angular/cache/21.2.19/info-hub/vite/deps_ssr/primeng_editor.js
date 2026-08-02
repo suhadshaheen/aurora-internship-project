@@ -10,14 +10,14 @@ import {
   BaseStyle
 } from "./chunk-CGSHO6EJ.js";
 import {
-  Bind,
-  BindModule
-} from "./chunk-ULA7JNR4.js";
-import {
   Header,
   PrimeTemplate,
   SharedModule
 } from "./chunk-O5HS52LB.js";
+import {
+  Bind,
+  BindModule
+} from "./chunk-ULA7JNR4.js";
 import {
   Z
 } from "./chunk-7Z2FSXAM.js";
@@ -436,7 +436,7 @@ var Editor = class _Editor extends BaseEditableHolder {
       return;
     }
     if (!this.dynamicQuill) {
-      import("./quill-OA7IHE55.js").then((quillModule) => {
+      import("./quill-ERWXOGP6.js").then((quillModule) => {
         this.dynamicQuill = quillModule.default;
         this.createQuillEditor();
       }).catch((e) => console.error(e.message));
