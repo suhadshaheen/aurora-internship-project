@@ -34,7 +34,7 @@ public class SectionController {
             @RequestParam(value = "visibility", required = false, defaultValue = "true") Boolean visibility,
             @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ) {
-        return sectionService.createSection(title, content,categoryId, images, documents);
+        return sectionService.createSection(title, content,categoryId, visibility, images, documents);
     }
 @PutMapping("/{id}")
     public SectionResponse updateSection(
