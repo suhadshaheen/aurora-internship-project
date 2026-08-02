@@ -17,36 +17,19 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = environment.apiUrl + '/users';
+  private readonly apiUrl = environment.apiUrl + '/auth';
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.get<AuthApiUser[]>(`${this.apiUrl}?email=${email}`).pipe(
-      map((users) => {
-        const user = users[0];
-
-        if (!user) {
-          throw new Error('Email not found');
-        }
-
-        if (user.role === 'guest') {
-          throw new Error('Guest users cannot login with password');
-        }
-
-        if (user.password !== password) {
-          throw new Error('Invalid password');
-        }
-
-        const { password: _password, ...authUser } = user;
-
-        return {
-          user: authUser,
-          token: this.generateFakeToken(authUser),
-        };
-      }),
-    );
-  }
+  login(email: string, password: string) {
+  return this.http.post(
+    `${this.apiUrl}/login`,
+    {
+      email,
+      password
+    }
+  )};
+  
   sendResetLink(email: string): Observable<void> {
     return this.http.get<AuthApiUser[]>(`${this.apiUrl}?email=${email}`).pipe(
       map((users) => {
