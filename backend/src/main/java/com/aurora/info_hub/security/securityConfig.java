@@ -61,6 +61,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration c
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/sections/**").permitAll()
