@@ -41,6 +41,10 @@ public class PasswordResetService {
         if (user == null) {
             return;
         }
+        tokenRepository.findByUser(user)
+                .ifPresent(tokenRepository::delete);
+
+        tokenRepository.flush();
         tokenRepository.deleteByUser(user);
         String token = UUID.randomUUID().toString();
 
