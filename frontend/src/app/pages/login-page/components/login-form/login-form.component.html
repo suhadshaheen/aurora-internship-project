@@ -19,13 +19,21 @@
 
   @if (emailInput.invalid && emailInput.dirty) {
     <small class="error-message">
+<<<<<<< HEAD
       {{loginConstants.inValidErrorMassage}}
+=======
+      {{constants.inValidErrorMassage}}
+>>>>>>> 36572b75af69e7c387020f7cef90c90e657216de
     </small>
   }
 
   @if (emailInput.valid && email && !isEmailDomainValid()) {
     <small class="error-message">
+<<<<<<< HEAD
       {{ loginConstants.domainErrorMassage}}
+=======
+    {{constants.domainErrorMassage}}
+>>>>>>> 36572b75af69e7c387020f7cef90c90e657216de
     </small>
   }
 <p-floatlabel variant="in" class="field-wrapper">
@@ -47,7 +55,11 @@
 
   @if (passwordInput.invalid && passwordInput.dirty) {
     <small class="error-message">
+<<<<<<< HEAD
       {{loginConstants.PasswordError}}
+=======
+      {{constants.PasswordError}}
+>>>>>>> 36572b75af69e7c387020f7cef90c90e657216de
     </small>
   }
 

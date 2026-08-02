@@ -20,7 +20,7 @@ import {LOGIN_FORM_CONSTANTS} from '../login-form.constants';
     ButtonModule,
     FloatLabelModule,
     RouterLink,
-    AsyncPipe
+    AsyncPipe,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
