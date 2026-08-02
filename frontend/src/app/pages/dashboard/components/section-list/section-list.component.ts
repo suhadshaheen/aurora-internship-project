@@ -83,7 +83,7 @@ export class SectionListComponent implements OnInit {
   }
 
   startEdit(section: DisplaySection): void {
-    this.editingSectionId = section.sectionId;
+    this.editingSectionId = section.id;
     this.editTitle = section.title;
     this.editContent = section.content;
   }
@@ -134,7 +134,7 @@ deleteSection(id: number): void {
     return sections
       .filter((section) => section.visibility === true || canSeeHidden)
       .map((section) => {
-        const isOwn = !!user && user.id === section.userId;
+        const isOwn = !!user && user.id === section.createdBy.id;
         return {
           ...section,
           isOwn,

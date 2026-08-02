@@ -36,7 +36,7 @@ export const selectCommentById = (commentId: number) =>
   createSelector(
     selectAllComments,
     (comments) =>
-      comments.find((comment) => comment.commentId === commentId) ?? null
+      comments.find((comment) => comment.id === commentId) ?? null
   );
 
 export const selectMainCommentsBySectionId = (sectionId: number) =>

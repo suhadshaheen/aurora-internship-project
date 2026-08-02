@@ -64,7 +64,7 @@
               <button
                 type="button"
                 class="comment-reply-toggle"
-                (click)="startReply(comment.commentId)"
+                (click)="startReply(comment.id)"
               >
                 <i class="pi pi-reply"></i>
                 Reply
@@ -92,7 +92,7 @@
             }
           </div>
 
-          @if (activeReplyId === comment.commentId) {
+          @if (activeReplyId === comment.id) {
             <div class="comment-reply-form">
               <textarea
                 pTextarea
@@ -107,7 +107,7 @@
                 type="button"
                 label="Post reply"
                 class="comment-submit-btn"
-                (click)="submitReply(currentUser, comment.commentId)"
+                (click)="submitReply(currentUser, comment.id)"
               ></button>
             </div>
           }

@@ -49,11 +49,10 @@ export class AddSectionComponent {
       SectionActions.addSection({
         section: {
           id,
-          sectionId: id,
           title: this.title.trim(),
           content: this.content,
-          userId: user.id,
-          catId: this.catId ?? 0,
+          createdBy: user,
+          category: { id: this.catId ?? 0 },
           visibility: true,
             dateCreated: new Date(),
         },

@@ -70,7 +70,7 @@ export const commentReducer = createReducer(
   on(CommentActions.updateCommentSuccess, (state, { comment }) => ({
     ...state,
     comments: state.comments.map((oldComment) =>
-      oldComment.commentId === comment.commentId ? comment : oldComment
+      oldComment.id === comment.id ? comment : oldComment
     ),
     selectedComment: null,
     loading: false,
@@ -92,7 +92,7 @@ export const commentReducer = createReducer(
   on(CommentActions.deleteCommentSuccess, (state, { commentId }) => ({
     ...state,
     comments: state.comments.filter(
-      (comment) => comment.commentId !== commentId
+      (comment) => comment.id !== commentId
     ),
     loading: false,
     error: null,
