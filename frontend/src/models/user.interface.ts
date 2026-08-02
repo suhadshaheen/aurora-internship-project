@@ -1,7 +1,7 @@
 export interface IUser {
   id:  number;
   email: string;
-  userName: string;
+  userHandle: string;
   role: string;
   password?: string;
 }
@@ -9,6 +9,6 @@ export interface IUser {
 // export const user: User = {
 //   id: '',
 //   email: '',
-//   user_name: '',
+//   userHandle: '',
 //   role: ''
 // };
