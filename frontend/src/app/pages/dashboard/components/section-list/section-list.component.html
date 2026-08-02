@@ -21,14 +21,14 @@
   @if (visibleSections$ | async; as sections) {
     @if (sections.length > 0) {
       <div class="sections-list">
-        @for (section of sections; track section.sectionId) {
+        @for (section of sections; track section.id) {
           <article class="section-item">
             <div class="section-icon">
               <i class="pi pi-folder"></i>
             </div>
 
             <div class="section-main">
-              @if (editingSectionId === section.sectionId) {
+              @if (editingSectionId === section.id) {
                 <div class="section-edit-form">
                   <input
                     type="text"

@@ -39,7 +39,6 @@ export class CommentEffects {
 
 const newComment: IComment = {
   id,
-  commentId: id,
   sectionId,
   userId,
   parentCommentId,
