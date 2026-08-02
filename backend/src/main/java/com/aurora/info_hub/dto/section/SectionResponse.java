@@ -1,7 +1,5 @@
 package com.aurora.info_hub.dto.section;
 
-import com.aurora.info_hub.dto.category.CategoryResponse;
-import com.aurora.info_hub.dto.user.UserResponse;
 import lombok.Builder;
 import lombok.Data;
 
