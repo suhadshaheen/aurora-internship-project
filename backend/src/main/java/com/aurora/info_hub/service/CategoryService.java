@@ -5,6 +5,8 @@ import com.aurora.info_hub.dto.category.CategoryResponse;
 import com.aurora.info_hub.dto.category.CategoryUserResponse;
 import com.aurora.info_hub.entity.Category;
 import com.aurora.info_hub.entity.User;
+import com.aurora.info_hub.exception.ConflictException;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
@@ -37,10 +39,10 @@ public class CategoryService {
     @Transactional
     public CategoryResponse createCategory(CategoryRequest request) {
         if (request.getCatName() == null || request.getCatName().isBlank()) {
-            throw new RuntimeException("Category name is required");
+            throw new IllegalArgumentException("Category name is required");
         }
         if (categoryRepository.existsByCatName(request.getCatName())) {
-            throw new RuntimeException("Category already exists");
+            throw new ConflictException("Category already exists");
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
@@ -49,9 +51,6 @@ public class CategoryService {
                 .createdBy(user)
                 .build();
 
-        if (categoryRepository.existsByCatName(request.getCatName())) {
-            throw new RuntimeException("Category already exists");
-        }
         categoryRepository.save(category);
         return toResponse(category);
 
@@ -61,7 +60,7 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         Category category = getCategoryEntity(id);
         if (category.getSections() != null && !category.getSections().isEmpty()) {
-            throw new RuntimeException("Cannot delete category: it still has sections linked to it");
+            throw new ConflictException("Cannot delete category: it still has sections linked to it");
         }
         categoryRepository.deleteById(id);
     }
@@ -87,5 +86,5 @@ public class CategoryService {
     private Category getCategoryEntity(Long id) {
 
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category Not Found"));    }
+                .orElseThrow(() -> new NotFoundException("Category Not Found"));    }
 }

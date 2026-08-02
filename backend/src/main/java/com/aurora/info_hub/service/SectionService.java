@@ -3,6 +3,7 @@ package com.aurora.info_hub.service;
 import com.aurora.info_hub.FileStorageService;
 import com.aurora.info_hub.dto.section.*;
 import com.aurora.info_hub.entity.*;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.CategoryRepository;
 import com.aurora.info_hub.repository.SectionDocsRepository;
 import com.aurora.info_hub.repository.SectionImageRepository;
@@ -56,14 +57,14 @@ public class SectionService {
     @Transactional
     public SectionResponse createSection(String title, String content, Long categoryId, Boolean visibility, List<MultipartFile> images, List<MultipartFile> documents) {
         if (title == null || title.isBlank()) {
-            throw new RuntimeException("Title is required");
+            throw new IllegalArgumentException("Title is required");
         }
         if (content == null || content.isBlank()) {
-            throw new RuntimeException("Content is required");
+            throw new IllegalArgumentException("Content is required");
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category Not Found!"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException("Category Not Found!"));
 
 
         Section section = Section.builder()
@@ -82,7 +83,7 @@ public class SectionService {
 
                 if (!List.of("image/jpeg", "image/png", "image/webp").contains(type)) {
 
-                    throw new RuntimeException("Only JPEG, PNG and WEBP images are allowed");
+                    throw new IllegalArgumentException("Only JPEG, PNG and WEBP images are allowed");
                 }
                 String url = fileStorageService.storeFile(image);
                 SectionImage sectionImage = SectionImage.builder().imageUrl(url).section(savedSection).build();
@@ -97,7 +98,7 @@ public class SectionService {
         if (documents != null) {
             for (MultipartFile document : documents) {
                 if (!ALLOWED_DOCUMENT_TYPES.contains(document.getContentType())) {
-                   throw new RuntimeException(
+                   throw new IllegalArgumentException(
                     "Unsupported document type: " + document.getContentType()
             );
         }
@@ -111,7 +112,7 @@ public class SectionService {
         }
 
 
-        return toResponse(sectionRepository.findById(savedSection.getId()).orElseThrow(() -> new RuntimeException("Section Not Found")));
+        return toResponse(sectionRepository.findById(savedSection.getId()).orElseThrow(() -> new NotFoundException("Section Not Found")));
     }
 
     @Transactional
@@ -119,7 +120,7 @@ public class SectionService {
 
         Section existingSection = getSectionEntity(id);
         Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category Not Found!"));
+                .orElseThrow(() -> new NotFoundException("Category Not Found!"));
 
         existingSection.setTitle(request.getTitle());
         existingSection.setContent(request.getContent());
@@ -225,6 +226,6 @@ public class SectionService {
 
         return sectionRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Section Not Found"));
+                        new NotFoundException("Section Not Found"));
     }
 }

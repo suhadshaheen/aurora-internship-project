@@ -3,6 +3,7 @@ package com.aurora.info_hub.service;
 import com.aurora.info_hub.dto.user.UserRequest;
 import com.aurora.info_hub.dto.user.UserResponse;
 import com.aurora.info_hub.entity.User;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -82,7 +83,7 @@ public class UserService {
 
     private User findUserEntityById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     private UserResponse mapToResponse(User user) {
