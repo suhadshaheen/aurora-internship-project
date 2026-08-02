@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ICategory } from '../../../../../../models/category.interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../../../environments/environment';
+import { ICategoryRequest } from '../../../../../../models/ICategoryRequest.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,16 +20,10 @@ export class CategoryService {
     return this.http.get<ICategory>(`${this.apiUrl}/${id}`);
   }
 
-  // TODO(TEMP-ID-RENAME): رجّع 'id' لـ 'catId' جوا الـ Omit
-  create(category: Omit<ICategory, 'id' | 'dateCreated'>): Observable<ICategory> {
-    const payload = {
-      ...category,
-      dateCreated: new Date().toISOString(),
-    };
-    return this.http.post<ICategory>(this.apiUrl, payload);
+  create(category: ICategoryRequest): Observable<ICategory> {
+    return this.http.post<ICategory>(this.apiUrl, category);
   }
 
-  // TODO(TEMP-ID-RENAME): رجّع catId مكان id
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

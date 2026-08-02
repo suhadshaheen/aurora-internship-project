@@ -173,7 +173,7 @@ submitEdit(id: number): void {
       .sort(byDate)
       .map((comment) => ({
         ...toDisplay(comment),
-        replies: (repliesMap.get(comment.commentId) ?? []).sort(byDate).map(toDisplay),
+        replies: (repliesMap.get(comment.id) ?? []).sort(byDate).map(toDisplay),
       }));
   }
 }

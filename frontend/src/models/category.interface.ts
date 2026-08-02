@@ -1,7 +1,8 @@
+import { ICategoryUserResponse } from './CategoryUserResponse.interface';
+
 export interface ICategory {
-  // catId: string;
   id: number;
   catName: string;
-  userId:  number;
-  dateCreated: Date;
+  dateCreated: string; // LocalDateTime بيوصل كـ ISO string، مش Date
+  createdBy: ICategoryUserResponse;
 }

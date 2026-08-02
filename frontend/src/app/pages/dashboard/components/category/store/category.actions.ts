@@ -1,6 +1,6 @@
 import { ICategory } from '../../../../../../models/category.interface';
 import { createAction, props } from '@ngrx/store';
-
+import { ICategoryRequest } from '../../../../../../models/CategoryRequest.interface';
 export const CategoryActions = {
   loadCategories: createAction('[Category] Load Categories'),
   loadCategoriesSuccess: createAction(
@@ -12,18 +12,13 @@ export const CategoryActions = {
     props<{ error: string }>(),
   ),
 
-  // TODO(TEMP-ID-RENAME): رجّع 'id' لـ 'catId' جوا الـ Omit
-  addCategory: createAction(
-    '[Category] Add Category',
-    props<{ category: Omit<ICategory, 'id' | 'dateCreated'> }>(),
-  ),
+  addCategory: createAction('[Category] Add Category', props<{ category: ICategoryRequest }>()),
   addCategorySuccess: createAction(
     '[Category] Add Category Success',
     props<{ category: ICategory }>(),
   ),
   addCategoryFailure: createAction('[Category] Add Category Failure', props<{ error: string }>()),
 
-  // TODO(TEMP-ID-RENAME): رجّع catId مكان id
   deleteCategory: createAction('[Category] Delete Category', props<{ id: number }>()),
   deleteCategorySuccess: createAction(
     '[Category] Delete Category Success',
