@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ISection } from '../../../../../../models/section.interface';
+import { ISectionRequest } from '../../../../../../models/SectionRequest.interface';
 
 export const SectionActions = {
   loadSections: createAction('[Section] Load Sections'),
@@ -9,14 +10,24 @@ export const SectionActions = {
   ),
   loadSectionsFailure: createAction('[Section] Load Sections Failure', props<{ error: string }>()),
 
-addSection: createAction(
-  '[Section] Add Section',
-  props<{ section: ISection }>(),
-),
+  addSection: createAction(
+    '[Section] Add Section',
+    props<{
+      title: string;
+      content: string;
+      categoryId: number;
+      visibility: boolean;
+      images?: File[];
+      documents?: File[];
+    }>(),
+  ),
   addSectionSuccess: createAction('[Section] Add Section Success', props<{ section: ISection }>()),
   addSectionFailure: createAction('[Section] Add Section Failure', props<{ error: string }>()),
 
-  updateSection: createAction('[Section] Update Section', props<{ section: ISection }>()),
+  updateSection: createAction(
+    '[Section] Update Section',
+    props<{ id: number; request: ISectionRequest }>(),
+  ),
   updateSectionSuccess: createAction(
     '[Section] Update Section Success',
     props<{ section: ISection }>(),

@@ -6,8 +6,6 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SectionActions } from '../section/store/section.actions';
 import { Store } from '@ngrx/store';
-import { selectCurrentUser } from '../../../login-page/store/auth.selectors';
-import { take } from 'rxjs';
 
 @Component({
   selector: 'app-add-section',
@@ -23,6 +21,7 @@ export class AddSectionComponent {
   title: string = '';
   content: string = '';
   catId: number | null = null;
+  sectionVisibility: boolean = true;
 
   showDialog(): void {
     this.visible = true;
@@ -32,37 +31,24 @@ export class AddSectionComponent {
     this.visible = false;
   }
 
- addSection(): void {
-  if (!this.title.trim() || !this.content.trim()) {
-    return;
-  }
-
-  this.store.select(selectCurrentUser).pipe(take(1)).subscribe((user) => {
-    if (!user) {
+  addSection(): void {
+    if (!this.title.trim() || !this.content.trim() || !this.catId) {
       return;
     }
 
-    const id = Math.floor(Math.random() * 1_000_000_000);
-
-
     this.store.dispatch(
       SectionActions.addSection({
-        section: {
-          id,
-          title: this.title.trim(),
-          content: this.content,
-          createdBy: user,
-          category: { id: this.catId ?? 0 },
-          visibility: true,
-            dateCreated: new Date(),
-        },
+        title: this.title.trim(),
+        content: this.content,
+        categoryId: this.catId!,
+        visibility: this.sectionVisibility,
       }),
     );
 
     this.title = '';
     this.content = '';
     this.catId = null;
+    this.sectionVisibility = true;
     this.visible = false;
-  });
-}
+  }
 }

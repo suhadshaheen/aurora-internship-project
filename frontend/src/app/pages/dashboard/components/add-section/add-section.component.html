@@ -1,8 +1,4 @@
-<button
-  type="button"
-  class="add-section-trigger"
-  (click)="showDialog()">
-
+<button type="button" class="add-section-trigger" (click)="showDialog()">
   <span class="add-icon">
     <i class="pi pi-plus"></i>
   </span>
@@ -15,8 +11,8 @@
   [modal]="true"
   [(visible)]="visible"
   [style]="{ width: '45rem' }"
-  styleClass="add-section-dialog">
-
+  styleClass="add-section-dialog"
+>
   <div class="add-section-form">
     <div class="flex align-items-center gap-3 mb-3">
       <label for="title" class="font-semibold w-8rem">Title</label>
@@ -39,6 +35,7 @@
         pInputText
         id="catId"
         name="catId"
+        type="number"
         class="flex-auto form-input"
         [(ngModel)]="catId"
         autocomplete="off"
@@ -49,11 +46,7 @@
     <div class="mb-3">
       <label class="font-semibold block mb-2">Content</label>
 
-      <p-editor
-        name="content"
-        [(ngModel)]="content"
-        [style]="{ height: '320px' }">
-      </p-editor>
+      <p-editor name="content" [(ngModel)]="content" [style]="{ height: '320px' }"> </p-editor>
     </div>
 
     <div class="flex align-items-center gap-3 mb-3">
@@ -62,16 +55,18 @@
       <div class="flex gap-2">
         <p-button
           label="Visible"
-          [outlined]="!visible"
-          [severity]="visible ? 'success' : 'secondary'"
-          (onClick)="visible = true">
+          [outlined]="!sectionVisibility"
+          [severity]="sectionVisibility ? 'success' : 'secondary'"
+          (onClick)="sectionVisibility = true"
+        >
         </p-button>
 
         <p-button
           label="Hidden"
-          [outlined]="visible"
-          [severity]="visible ? 'secondary' : 'warn'"
-          (onClick)="visible = false">
+          [outlined]="sectionVisibility"
+          [severity]="sectionVisibility ? 'secondary' : 'warn'"
+          (onClick)="sectionVisibility = false"
+        >
         </p-button>
       </div>
     </div>
@@ -81,14 +76,11 @@
         label="Cancel"
         severity="secondary"
         styleClass="cancel-btn"
-        (onClick)="closeDialog()">
+        (onClick)="closeDialog()"
+      >
       </p-button>
 
-      <p-button
-        label="Add"
-        styleClass="save-btn"
-        (onClick)="addSection()">
-      </p-button>
+      <p-button label="Add" styleClass="save-btn" (onClick)="addSection()"> </p-button>
     </div>
   </div>
 </p-dialog>

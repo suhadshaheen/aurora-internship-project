@@ -65,10 +65,7 @@
                   <div>
                     <h3>{{ section.title }}</h3>
 
-                    <div
-                      class="section-content"
-                      [innerHTML]="section.content">
-                    </div>
+                    <div class="section-content" [innerHTML]="section.content"></div>
                   </div>
 
                   <div class="section-top-actions">
@@ -102,16 +99,16 @@
                 <div class="section-meta">
                   <span>
                     <i class="pi pi-tag"></i>
-                    Category: {{ section.catId }}
+                    Category: {{ section.category.catName }}
                   </span>
 
                   <span>
                     <i class="pi pi-calendar"></i>
-                    {{ section.dateCreated | date:'mediumDate' }}
+                    {{ section.createdAt | date: 'mediumDate' }}
                   </span>
                 </div>
 
-                <app-comment [sectionId]="section.sectionId"></app-comment>
+                <app-comment [sectionId]="section.id"></app-comment>
               }
             </div>
           </article>
