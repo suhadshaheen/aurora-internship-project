@@ -24,38 +24,43 @@ export class SectionEffects {
   addSection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SectionActions.addSection),
-      mergeMap(({ section }) =>
-        this.sectionsService.create(section).pipe(
+      mergeMap(({ title, content, categoryId, visibility, images, documents }) => {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        formData.append('categoryId', categoryId.toString());
+        formData.append('visibility', visibility.toString());
+        images?.forEach((file) => formData.append('images', file));
+        documents?.forEach((file) => formData.append('documents', file));
+
+        return this.sectionsService.create(formData).pipe(
           map((createdSection) => SectionActions.addSectionSuccess({ section: createdSection })),
           catchError((error) => of(SectionActions.addSectionFailure({ error: error.message }))),
-        ),
-      ),
+        );
+      }),
     ),
   );
 
   updateSection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SectionActions.updateSection),
-      mergeMap(({ section }) =>
-        this.sectionsService.update(section).pipe(
+      mergeMap(({ id, request }) =>
+        this.sectionsService.update(id, request).pipe(
           map((updatedSection) => SectionActions.updateSectionSuccess({ section: updatedSection })),
           catchError((error) => of(SectionActions.updateSectionFailure({ error: error.message }))),
         ),
       ),
     ),
   );
-
-deleteSection$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(SectionActions.deleteSection),
-    mergeMap(({ sectionId }) =>
-      this.sectionsService.delete(sectionId).pipe(
-        map(() => SectionActions.deleteSectionSuccess({ sectionId })),
-        catchError((error) =>
-          of(SectionActions.deleteSectionFailure({ error: error.message }))
-        )
-      )
-    )
-  )
-);
+  deleteSection$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SectionActions.deleteSection),
+      mergeMap(({ sectionId }) =>
+        this.sectionsService.delete(sectionId).pipe(
+          map(() => SectionActions.deleteSectionSuccess({ sectionId })),
+          catchError((error) => of(SectionActions.deleteSectionFailure({ error: error.message }))),
+        ),
+      ),
+    ),
+  );
 }

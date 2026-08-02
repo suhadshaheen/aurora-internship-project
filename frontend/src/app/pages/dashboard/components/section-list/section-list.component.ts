@@ -103,10 +103,12 @@ export class SectionListComponent implements OnInit {
 
     this.store.dispatch(
       SectionActions.updateSection({
-        section: {
-          ...section,
+        id: section.id,
+        request: {
           title,
           content,
+          categoryId: section.category.id,
+          visibility: section.visibility,
         },
       }),
     );
@@ -116,11 +118,9 @@ export class SectionListComponent implements OnInit {
     this.editContent = '';
   }
 
-deleteSection(id: number): void {
-  this.store.dispatch(
-    SectionActions.deleteSection({ sectionId: id })
-  );
-}
+  deleteSection(id: number): void {
+    this.store.dispatch(SectionActions.deleteSection({ sectionId: id }));
+  }
 
   private buildDisplaySections(
     sections: ISection[],
