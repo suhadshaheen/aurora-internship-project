@@ -19,13 +19,13 @@
 
   @if (emailInput.invalid && emailInput.dirty) {
     <small class="error-message">
-      {{inValidErrorMassage}}
+      {{loginConstants.inValidErrorMassage}}
     </small>
   }
 
   @if (emailInput.valid && email && !isEmailDomainValid()) {
     <small class="error-message">
-      {{ domainErrorMassage}}
+      {{ loginConstants.domainErrorMassage}}
     </small>
   }
 <p-floatlabel variant="in" class="field-wrapper">
@@ -47,7 +47,7 @@
 
   @if (passwordInput.invalid && passwordInput.dirty) {
     <small class="error-message">
-      {{PasswordError}}
+      {{loginConstants.PasswordError}}
     </small>
   }
 

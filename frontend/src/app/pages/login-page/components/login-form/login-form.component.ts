@@ -10,7 +10,7 @@ import { AuthActions } from '../../store/auth.actions';
 import { selectAuthLoading, selectAuthError, selectIsLoggedIn, selectUserRole } from '../../store/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { take } from 'rxjs';
-
+import {LOGIN_FORM_CONSTANTS} from '../login-form.constants';
 @Component({
   selector: 'app-login-form',
   imports: [
@@ -28,6 +28,8 @@ import { take } from 'rxjs';
 export class LoginFormComponent implements OnInit {
   private router = inject(Router);
   private store = inject(Store);
+
+  readonly loginConstants = LOGIN_FORM_CONSTANTS;
 
   email: string = '';
   password: string = '';
