@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ICategory } from '../../../../../../models/category.interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../../../environments/environment';
-import { ICategoryRequest } from '../../../../../../models/ICategoryRequest.interface';
+import { ICategoryRequest } from '../../../../../../models/CategoryRequest.interface';
 
 @Injectable({
   providedIn: 'root',
