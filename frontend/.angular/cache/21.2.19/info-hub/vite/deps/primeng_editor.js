@@ -6,10 +6,6 @@ import {
   PARENT_INSTANCE
 } from "./chunk-7TKGCS4H.js";
 import {
-  Bind,
-  BindModule
-} from "./chunk-53VGIMAU.js";
-import {
   BaseStyle
 } from "./chunk-KB5HQYJJ.js";
 import {
@@ -17,6 +13,10 @@ import {
   PrimeTemplate,
   SharedModule
 } from "./chunk-4INVUH6Y.js";
+import {
+  Bind,
+  BindModule
+} from "./chunk-53VGIMAU.js";
 import {
   Z
 } from "./chunk-YM355AYV.js";
@@ -435,7 +435,7 @@ var Editor = class _Editor extends BaseEditableHolder {
       return;
     }
     if (!this.dynamicQuill) {
-      import("./quill-JKMNJGVR.js").then((quillModule) => {
+      import("./quill-JWWMRHMP.js").then((quillModule) => {
         this.dynamicQuill = quillModule.default;
         this.createQuillEditor();
       }).catch((e) => console.error(e.message));

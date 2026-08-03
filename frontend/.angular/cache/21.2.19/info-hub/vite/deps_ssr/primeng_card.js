@@ -7,15 +7,15 @@ import {
   BaseStyle
 } from "./chunk-CGSHO6EJ.js";
 import {
-  Bind,
-  BindModule
-} from "./chunk-ULA7JNR4.js";
-import {
   Footer,
   Header,
   PrimeTemplate,
   SharedModule
 } from "./chunk-O5HS52LB.js";
+import {
+  Bind,
+  BindModule
+} from "./chunk-ULA7JNR4.js";
 import {
   k
 } from "./chunk-7Z2FSXAM.js";

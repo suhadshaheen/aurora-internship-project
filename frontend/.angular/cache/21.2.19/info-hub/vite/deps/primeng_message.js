@@ -1,19 +1,16 @@
 import {
   MotionModule
-} from "./chunk-OGQ25DKQ.js";
-import {
-  Ripple
-} from "./chunk-PIJEOSJB.js";
+} from "./chunk-N7ZXBFV7.js";
 import {
   TimesIcon
 } from "./chunk-DRCUQHNX.js";
 import {
+  Ripple
+} from "./chunk-PIJEOSJB.js";
+import {
   BaseComponent,
   PARENT_INSTANCE
 } from "./chunk-7TKGCS4H.js";
-import {
-  Bind
-} from "./chunk-53VGIMAU.js";
 import {
   BaseStyle
 } from "./chunk-KB5HQYJJ.js";
@@ -21,6 +18,9 @@ import {
   PrimeTemplate,
   SharedModule
 } from "./chunk-4INVUH6Y.js";
+import {
+  Bind
+} from "./chunk-53VGIMAU.js";
 import "./chunk-YM355AYV.js";
 import {
   CommonModule,

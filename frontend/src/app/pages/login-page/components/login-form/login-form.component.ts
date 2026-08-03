@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
       }
 
       this.userRole$.pipe(take(1)).subscribe((role) => {
-        if (role === 'guest') {
+        if (role === 'GUEST') {
           // Guest sessions shouldn't block a real login; clear it and stay on the login page.
           this.store.dispatch(AuthActions.logout());
           return;
@@ -60,8 +60,8 @@ export class LoginFormComponent implements OnInit {
   }
 
   private getDashboardRoute(role: string | null): string {
-    if (role === 'admin') return '/admin-dashboard';
-    if (role === 'guest') return '/guest-dashboard';
+    if (role === 'ADMIN') return '/admin-dashboard';
+    if (role === 'GUEST') return '/guest-dashboard';
     return '/employee-dashboard';
   }
 

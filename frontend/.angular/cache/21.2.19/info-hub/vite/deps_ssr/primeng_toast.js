@@ -21,13 +21,13 @@ import {
   BaseStyle
 } from "./chunk-CGSHO6EJ.js";
 import {
-  Bind
-} from "./chunk-ULA7JNR4.js";
-import {
   MessageService,
   PrimeTemplate,
   SharedModule
 } from "./chunk-O5HS52LB.js";
+import {
+  Bind
+} from "./chunk-ULA7JNR4.js";
 import {
   l,
   s2 as s,

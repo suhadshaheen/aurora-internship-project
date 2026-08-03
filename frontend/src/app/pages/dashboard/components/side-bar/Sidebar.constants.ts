@@ -11,7 +11,7 @@ export const QUERY_PARAMS = {
 } as const;
 
 export const USER_ROLES = {
-  admin: 'admin',
-  employee: 'employee',
-  guest: 'guest',
+  admin: 'ADMIN',
+  employee: 'EMPLOYEE',
+  guest: 'GUEST',
 } as const;

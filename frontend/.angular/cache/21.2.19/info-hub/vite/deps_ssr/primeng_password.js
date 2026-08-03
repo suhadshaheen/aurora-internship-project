@@ -35,15 +35,15 @@ import {
   BaseStyle
 } from "./chunk-CGSHO6EJ.js";
 import {
-  Bind,
-  BindModule
-} from "./chunk-ULA7JNR4.js";
-import {
   OverlayService,
   PrimeTemplate,
   SharedModule,
   TranslationKeys
 } from "./chunk-O5HS52LB.js";
+import {
+  Bind,
+  BindModule
+} from "./chunk-ULA7JNR4.js";
 import {
   C,
   M,

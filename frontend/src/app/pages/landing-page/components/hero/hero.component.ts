@@ -30,7 +30,7 @@ export class Hero {
     id: 0,
     email: 'guest@auroratech.ps',
     userName: 'Guest',
-    role: 'guest'
+    role: 'GUEST'
   };
 
   localStorage.setItem('token', 'guest-token');
