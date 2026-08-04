@@ -18,10 +18,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
-public class securityConfig {
+public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private  final CustomUserDetailsService customUserDetailsService;
-    public securityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailsService customUserDetailsService) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customUserDetailsService = customUserDetailsService;
     }

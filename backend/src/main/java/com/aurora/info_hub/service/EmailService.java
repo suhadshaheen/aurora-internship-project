@@ -21,7 +21,7 @@ public class EmailService {
         message.setTo(toEmail);
         message.setSubject("Password Reset Request - Info Hub");
         message.setText("Click the link below to reset your password:\n\n" + resetLink
-                + "\n\nThis link will expire in 30 minutes.\nIf you did not request this, please ignore this email.");
+                + "\n\nThis link will expire in 15 minutes.\nIf you did not request this, please ignore this email.");
 
         mailSender.send(message);
     }

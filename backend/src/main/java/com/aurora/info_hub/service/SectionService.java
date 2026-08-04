@@ -9,6 +9,7 @@ import com.aurora.info_hub.repository.SectionDocsRepository;
 import com.aurora.info_hub.repository.SectionImageRepository;
 import com.aurora.info_hub.repository.SectionRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -42,16 +43,28 @@ public class SectionService {
         this.fileStorageService = fileStorageService;
         this.sectionRepository = sectionRepositry;
     }
-
     public List<SectionResponse> getAllSections() {
+        boolean isAnonymous = isAnonymousUser();
 
         return sectionRepository.findAll()
                 .stream()
+                .filter(section -> !isAnonymous || Boolean.TRUE.equals(section.getVisibility()))
                 .map(this::toResponse)
                 .toList();
     }
     public SectionResponse getSectionById(Long id) {
-        return toResponse(getSectionEntity(id));
+        Section section = getSectionEntity(id);
+
+        if (isAnonymousUser() && !Boolean.TRUE.equals(section.getVisibility())) {
+            throw new RuntimeException("Section Not Found"); // نفس رسالة 404 العادية، ما منكشف وجودها
+        }
+
+        return toResponse(section);
+    }
+
+    private boolean isAnonymousUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
 
     @Transactional
