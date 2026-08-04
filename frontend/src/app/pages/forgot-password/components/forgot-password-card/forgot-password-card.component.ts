@@ -16,14 +16,14 @@ import { AuthService } from '../../../../shared/services/auth.services';
   styleUrl: './forgot-password-card.component.css',
 })
 export class ForgotPasswordCard {
- private readonly messageService = inject(MessageService);
-private readonly authService = inject(AuthService);
-private readonly router = inject(Router);
-protected readonly isLoading = signal(false);
-protected readonly constants = FORGOT_PASSWORD_CONSTANTS;
-protected readonly model = signal({ email: '' });
+  private readonly messageService = inject(MessageService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  protected readonly isLoading = signal(false);
+  protected readonly constants = FORGOT_PASSWORD_CONSTANTS;
+  protected readonly model = signal({ email: '' });
 
-  protected readonly forgotForm  = form(this.model, (path) => {
+  protected readonly forgotForm = form(this.model, (path) => {
     required(path.email, {
       when: ({ state }) => state.dirty(),
       message: 'Email is required.',
@@ -43,23 +43,23 @@ protected readonly model = signal({ email: '' });
 
     this.isLoading.set(true);
 
-    this.authService.sendResetLink(this.forgotForm.email().value() ?? '').subscribe({
-      next: () => {
+    this.authService.forgotPassword(this.forgotForm.email().value() ?? '').subscribe({
+      next: (response) => {
         this.isLoading.set(false);
         this.messageService.add({
           severity: 'success',
-          summary: 'Email Sent!',
-          detail: 'Check your inbox for the reset link.',
-          life: 3000,
+          summary: 'Check your email',
+          detail: response.message,
+          life: 5000,
         });
-        setTimeout(() => this.router.navigate(['/reset-password']), 3000);
+        setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: (err) => {
         this.isLoading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-         detail: err.error?.message ?? 'Something went wrong. Please try again.',
+          detail: err.error?.message ?? 'Something went wrong. Please try again.',
           life: 3000,
         });
       },

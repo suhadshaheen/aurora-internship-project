@@ -57,7 +57,7 @@ export class SideBarComponent implements OnInit {
   activeCatId = signal<number | null>(null);
   isMineActive = signal(false);
   isDashboardActive = signal(false);
-
+  isUsersViewActive = signal(false);
   showAddCategoryDialog = false;
   newCategoryName = '';
 
@@ -76,10 +76,12 @@ export class SideBarComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       const catParam = params.get(QUERY_PARAMS.catId);
       const mineParam = params.get(QUERY_PARAMS.mine) === 'true';
+      const viewParam = params.get(QUERY_PARAMS.view);
 
       this.activeCatId.set(catParam ? Number(catParam) : null);
       this.isMineActive.set(mineParam);
-      this.isDashboardActive.set(!catParam && !mineParam);
+      this.isUsersViewActive.set(viewParam === 'users');
+      this.isDashboardActive.set(!catParam && !mineParam && !viewParam);
     });
   }
 
@@ -131,8 +133,8 @@ export class SideBarComponent implements OnInit {
     this.store.dispatch(CategoryActions.deleteCategory({ id }));
   }
   onAllUsersClick(): void {
-    this.router.navigate(['/admin/users']).then((success) => {
-      console.log('Navigation result:', success);
+    this.router.navigate([this.getDashboardRoute()], {
+      queryParams: { [QUERY_PARAMS.view]: 'users' },
     });
   }
   onLogout(event: Event): void {

@@ -53,9 +53,4 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
-  {
-    path: 'admin/users',
-    component: AllUsersComponent,
-    canActivate: [authGuard, adminGuard],
-  },
 ];

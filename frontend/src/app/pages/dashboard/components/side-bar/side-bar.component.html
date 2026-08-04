@@ -139,7 +139,12 @@
     </li>
     @if (isAdmin()) {
       <li class="sidebar__item">
-        <div pRipple (click)="onAllUsersClick()" class="sidebar__link">
+        <div
+          pRipple
+          (click)="onAllUsersClick()"
+          [class.sidebar__item--active]="isUsersViewActive()"
+          class="sidebar__link"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"

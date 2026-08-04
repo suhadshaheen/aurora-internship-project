@@ -2,16 +2,16 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   BaseComponent,
   PARENT_INSTANCE
-} from "./chunk-VTC6VO6Q.js";
+} from "./chunk-B4BECBKH.js";
 import {
   BaseStyle
-} from "./chunk-5HRNDVMI.js";
+} from "./chunk-FPS4AEG7.js";
 import {
   Footer,
   Header,
   PrimeTemplate,
   SharedModule
-} from "./chunk-YBTB64UZ.js";
+} from "./chunk-4DZVJAOK.js";
 import {
   Bind,
   BindModule
@@ -23,8 +23,8 @@ import {
   CommonModule,
   NgIf,
   NgTemplateOutlet
-} from "./chunk-7PVKNN26.js";
-import "./chunk-PYGFUSXG.js";
+} from "./chunk-LD73ROP3.js";
+import "./chunk-NFDSGMSP.js";
 import {
   ChangeDetectionStrategy,
   Component,
