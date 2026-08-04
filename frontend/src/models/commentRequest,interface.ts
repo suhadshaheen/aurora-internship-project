@@ -1,4 +1,4 @@
-export interface CommentRequest {
+export interface ICommentRequest {
   content: string;
   sectionId: number;
   parentCommentId?: number;
