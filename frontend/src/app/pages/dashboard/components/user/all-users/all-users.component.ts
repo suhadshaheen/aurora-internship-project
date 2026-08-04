@@ -15,9 +15,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { selectAllUsers, selectUsersLoading } from '../../../../../shared/userStore/user.selectors';
 import { IUserRequest } from '../../../../../../models/userRequest.interface';
 import { UserActions } from '../../../../../shared/userStore/user.actions';
+import { Tag } from 'primeng/tag';
 
 @Component({
-  selector: 'app-all-users.component',
+  selector: 'app-all-users',
   imports: [
     CommonModule,
     FormsModule,
@@ -28,6 +29,7 @@ import { UserActions } from '../../../../../shared/userStore/user.actions';
     PasswordModule,
     SelectModule,
     ConfirmDialogModule,
+    Tag,
   ],
   providers: [ConfirmationService],
   templateUrl: './all-users.component.html',

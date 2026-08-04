@@ -26,14 +26,17 @@ export class NavBarComponent {
     this.route.queryParamMap.subscribe((params) => {
       const catParam = params.get('catId');
       const mine = params.get('mine') === 'true';
+      const view = params.get('view');
 
-    if (catParam) {
-  const catId = Number(catParam);
-  this.categories$.subscribe((categories) => {
-    const category = categories.find((item) => item.id === catId);
-    this.currentPageTitle.set(category?.catName ?? 'Category');
-  });
-   }else if (mine) {
+      if (view === 'users') {
+        this.currentPageTitle.set('All Users');
+      } else if (catParam) {
+        const catId = Number(catParam);
+        this.categories$.subscribe((categories) => {
+          const category = categories.find((item) => item.id === catId);
+          this.currentPageTitle.set(category?.catName ?? 'Category');
+        });
+      } else if (mine) {
         this.currentPageTitle.set('My Sections');
       } else {
         this.currentPageTitle.set('Dashboard');
