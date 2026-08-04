@@ -1,9 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, map, switchMap } from 'rxjs';
+import DOMPurify from 'dompurify';
 
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
@@ -21,11 +23,15 @@ import {
 } from '../section/store/section.selectors';
 import { selectCurrentUser, selectUserRole } from '../../../login-page/store/auth.selectors';
 import { ISection } from '../../../../../models/section.interface';
+import { ISectionDocResponse } from '../../../../../models/SectionDocResponse.interface';
 import { AuthUser } from '../../../login-page/store/auth.state';
+import { environment } from '../../../../../environments/environment';
+import { quillLinkHandler } from '../../../../shared/utils/quill-link-handler';
 
 interface DisplaySection extends ISection {
   isOwn: boolean;
   canModify: boolean;
+  safeContent: SafeHtml;
 }
 
 @Component({
@@ -46,6 +52,7 @@ interface DisplaySection extends ISection {
 export class SectionListComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
+  private sanitizer = inject(DomSanitizer);
 
   currentUser$ = this.store.select(selectCurrentUser);
   role$ = this.store.select(selectUserRole);
@@ -77,21 +84,56 @@ export class SectionListComponent implements OnInit {
   editingSectionId: number | null = null;
   editTitle = '';
   editContent = '';
+  editDocuments: File[] = [];
+
+  lightboxUrl: string | null = null;
 
   ngOnInit(): void {
     this.store.dispatch(SectionActions.loadSections());
+  }
+
+  onContentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.tagName === 'IMG') {
+      this.lightboxUrl = (target as HTMLImageElement).src;
+    }
+  }
+
+  closeLightbox(): void {
+    this.lightboxUrl = null;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closeLightbox();
+  }
+
+  onEditorInit(event: { editor: any }): void {
+    event.editor.getModule('toolbar').addHandler('link', quillLinkHandler);
   }
 
   startEdit(section: DisplaySection): void {
     this.editingSectionId = section.id;
     this.editTitle = section.title;
     this.editContent = section.content;
+    this.editDocuments = [];
   }
 
   cancelEdit(): void {
     this.editingSectionId = null;
     this.editTitle = '';
     this.editContent = '';
+    this.editDocuments = [];
+  }
+
+  onEditDocumentsSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.editDocuments.push(...Array.from(input.files ?? []));
+    input.value = '';
+  }
+
+  removeEditDocument(index: number): void {
+    this.editDocuments.splice(index, 1);
   }
 
   submitEdit(section: DisplaySection): void {
@@ -104,22 +146,26 @@ export class SectionListComponent implements OnInit {
     this.store.dispatch(
       SectionActions.updateSection({
         id: section.id,
-        request: {
-          title,
-          content,
-          categoryId: section.category.id,
-          visibility: section.visibility,
-        },
+        title,
+        content,
+        categoryId: section.category.id,
+        visibility: section.visibility,
+        documents: this.editDocuments,
       }),
     );
 
     this.editingSectionId = null;
     this.editTitle = '';
     this.editContent = '';
+    this.editDocuments = [];
   }
 
   deleteSection(id: number): void {
     this.store.dispatch(SectionActions.deleteSection({ sectionId: id }));
+  }
+
+  documentUrl(document: ISectionDocResponse): string {
+    return `${environment.apiUrl}${document.fileUrl}`;
   }
 
   private buildDisplaySections(
@@ -139,7 +185,18 @@ export class SectionListComponent implements OnInit {
           ...section,
           isOwn,
           canModify: isOwn || isAdmin,
+          safeContent: this.sanitizeContent(section.content),
         };
       });
+  }
+
+  // Quill's rich-text output relies on inline `style` (color, font-family, etc.)
+  // for formatting that Angular's [innerHTML] sanitizer strips wholesale. DOMPurify
+  // keeps that formatting while still stripping genuinely dangerous markup
+  // (event handler attributes, javascript: URLs, etc.) before we tell Angular to
+  // trust the result.
+  private sanitizeContent(content: string): SafeHtml {
+    const clean = DOMPurify.sanitize(content, { ADD_ATTR: ['target'] });
+    return this.sanitizer.bypassSecurityTrustHtml(clean);
   }
 }

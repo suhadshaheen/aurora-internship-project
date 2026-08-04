@@ -44,12 +44,19 @@ export class SectionEffects {
   updateSection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SectionActions.updateSection),
-      mergeMap(({ id, request }) =>
-        this.sectionsService.update(id, request).pipe(
+      mergeMap(({ id, title, content, categoryId, visibility, documents }) => {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        formData.append('categoryId', categoryId.toString());
+        formData.append('visibility', visibility.toString());
+        documents?.forEach((file) => formData.append('documents', file));
+
+        return this.sectionsService.update(id, formData).pipe(
           map((updatedSection) => SectionActions.updateSectionSuccess({ section: updatedSection })),
           catchError((error) => of(SectionActions.updateSectionFailure({ error: error.message }))),
-        ),
-      ),
+        );
+      }),
     ),
   );
   deleteSection$ = createEffect(() =>

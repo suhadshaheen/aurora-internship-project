@@ -4,7 +4,6 @@ import { inject } from '@angular/core';
 import { ISection } from '../../../../../../models/section.interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../../../environments/environment';
-import { ISectionRequest } from '../../../../../../models/SectionRequest.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +27,8 @@ export class SectionsService {
     return this.http.post<ISection>(this.apiUrl, formData);
   }
 
-  update(id: number, request: ISectionRequest): Observable<ISection> {
-    return this.http.put<ISection>(`${this.apiUrl}/${id}`, request);
+  update(id: number, formData: FormData): Observable<ISection> {
+    return this.http.put<ISection>(`${this.apiUrl}/${id}`, formData);
   }
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

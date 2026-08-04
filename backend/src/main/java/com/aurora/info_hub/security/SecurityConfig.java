@@ -51,6 +51,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration c
                         .requestMatchers(HttpMethod.GET, "/sections/**").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sections/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/sections/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/sections/**").authenticated()

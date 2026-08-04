@@ -129,19 +129,41 @@ public class SectionService {
     }
 
     @Transactional
-    public SectionResponse updateSection(Long id, SectionRequest  request){
+    public SectionResponse updateSection(Long id, String title, String content, Long categoryId, Boolean visibility, List<MultipartFile> documents) {
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Title is required");
+        }
+        if (content == null || content.isBlank()) {
+            throw new IllegalArgumentException("Content is required");
+        }
 
         Section existingSection = getSectionEntity(id);
-        Category category = categoryRepository.findById(request.getCategoryId())
+        Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Category Not Found!"));
 
-        existingSection.setTitle(request.getTitle());
-        existingSection.setContent(request.getContent());
-        existingSection.setVisibility(request.getVisibility());
+        existingSection.setTitle(title);
+        existingSection.setContent(content);
+        existingSection.setVisibility(visibility != null ? visibility : existingSection.getVisibility());
         existingSection.setCategory(category);
 
+        Section savedSection = sectionRepository.save(existingSection);
 
-        return toResponse(sectionRepository.save(existingSection));
+        if (documents != null) {
+            for (MultipartFile document : documents) {
+                if (!ALLOWED_DOCUMENT_TYPES.contains(document.getContentType())) {
+                    throw new IllegalArgumentException(
+                            "Unsupported document type: " + document.getContentType()
+                    );
+                }
+                String url = fileStorageService.storeFile(document);
+                SectionDocs sectionDoc = SectionDocs.builder().fileName(document.getOriginalFilename()).fileUrl(url).section(savedSection).build();
+
+                sectionDocsRepository.save(sectionDoc);
+                savedSection.getSectionDocs().add(sectionDoc);
+            }
+        }
+
+        return toResponse(sectionRepository.findById(savedSection.getId()).orElseThrow(() -> new NotFoundException("Section Not Found")));
     }
     public void  deleteSection(Long id){
 

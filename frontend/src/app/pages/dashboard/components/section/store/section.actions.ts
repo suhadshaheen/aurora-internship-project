@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { ISection } from '../../../../../../models/section.interface';
-import { ISectionRequest } from '../../../../../../models/SectionRequest.interface';
 
 export const SectionActions = {
   loadSections: createAction('[Section] Load Sections'),
@@ -26,7 +25,14 @@ export const SectionActions = {
 
   updateSection: createAction(
     '[Section] Update Section',
-    props<{ id: number; request: ISectionRequest }>(),
+    props<{
+      id: number;
+      title: string;
+      content: string;
+      categoryId: number;
+      visibility: boolean;
+      documents?: File[];
+    }>(),
   ),
   updateSectionSuccess: createAction(
     '[Section] Update Section Success',

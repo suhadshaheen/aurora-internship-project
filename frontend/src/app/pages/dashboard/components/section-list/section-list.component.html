@@ -38,11 +38,53 @@
                     class="w-full"
                   />
 
-                  <p-editor
-                    name="editContent"
-                    [(ngModel)]="editContent"
-                    [style]="{ height: '200px' }"
-                  ></p-editor>
+                  <div #editEditorBounds>
+                    <p-editor
+                      name="editContent"
+                      [(ngModel)]="editContent"
+                      [style]="{ height: '200px' }"
+                      [bounds]="editEditorBounds"
+                      (onInit)="onEditorInit($event)"
+                    ></p-editor>
+                  </div>
+
+                  <div class="edit-documents">
+                    <input
+                      #editDocumentsInput
+                      type="file"
+                      accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.ppt,.pptx"
+                      multiple
+                      hidden
+                      (change)="onEditDocumentsSelected($event)"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-file"
+                      severity="secondary"
+                      [outlined]="true"
+                      label="Choose Documents"
+                      (click)="editDocumentsInput.click()"
+                    ></button>
+
+                    @if (editDocuments.length) {
+                      <ul class="file-chip-list">
+                        @for (file of editDocuments; track file.name; let i = $index) {
+                          <li class="file-chip">
+                            <span class="file-chip__name">{{ file.name }}</span>
+                            <button
+                              type="button"
+                              class="file-chip__remove"
+                              (click)="removeEditDocument(i)"
+                              aria-label="Remove document"
+                            >
+                              <i class="pi pi-times"></i>
+                            </button>
+                          </li>
+                        }
+                      </ul>
+                    }
+                  </div>
 
                   <div class="section-edit-actions">
                     <button
@@ -62,10 +104,32 @@
                 </div>
               } @else {
                 <div class="section-top">
-                  <div>
+                  <div class="section-body">
                     <h3>{{ section.title }}</h3>
 
-                    <div class="section-content" [innerHTML]="section.content"></div>
+                    <div
+                      class="section-content"
+                      [innerHTML]="section.safeContent"
+                      (click)="onContentClick($event)"
+                    ></div>
+
+                    @if (section.documents.length) {
+                      <ul class="section-documents">
+                        @for (document of section.documents; track document.id) {
+                          <li>
+                            <a
+                              [href]="documentUrl(document)"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="section-document-link"
+                            >
+                              <i class="pi pi-file"></i>
+                              {{ document.fileName }}
+                            </a>
+                          </li>
+                        }
+                      </ul>
+                    }
                   </div>
 
                   <div class="section-top-actions">
@@ -117,5 +181,20 @@
     } @else {
       <p class="empty-text">No sections found.</p>
     }
+  }
+
+  @if (lightboxUrl) {
+    <div class="image-lightbox-backdrop" (click)="closeLightbox()">
+      <button
+        type="button"
+        class="image-lightbox-close"
+        (click)="closeLightbox()"
+        aria-label="Close image preview"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+
+      <img [src]="lightboxUrl" class="image-lightbox-img" (click)="$event.stopPropagation()" />
+    </div>
   }
 </section>

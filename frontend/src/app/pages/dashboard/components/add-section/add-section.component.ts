@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 import { DialogModule } from 'primeng/dialog';
@@ -6,10 +7,11 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SectionActions } from '../section/store/section.actions';
 import { Store } from '@ngrx/store';
+import { quillLinkHandler } from '../../../../shared/utils/quill-link-handler';
 
 @Component({
   selector: 'app-add-section',
-  imports: [FormsModule, EditorModule, DialogModule, ButtonModule, InputTextModule],
+  imports: [CommonModule, FormsModule, EditorModule, DialogModule, ButtonModule, InputTextModule],
   templateUrl: './add-section.component.html',
   styleUrl: './add-section.component.css',
 })
@@ -22,6 +24,7 @@ export class AddSectionComponent {
   content: string = '';
   catId: number | null = null;
   sectionVisibility: boolean = true;
+  documents: File[] = [];
 
   showDialog(): void {
     this.visible = true;
@@ -29,6 +32,25 @@ export class AddSectionComponent {
 
   closeDialog(): void {
     this.visible = false;
+    this.resetFiles();
+  }
+
+  onDocumentsSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.documents.push(...Array.from(input.files ?? []));
+    input.value = '';
+  }
+
+  removeDocument(index: number): void {
+    this.documents.splice(index, 1);
+  }
+
+  private resetFiles(): void {
+    this.documents = [];
+  }
+
+  onEditorInit(event: { editor: any }): void {
+    event.editor.getModule('toolbar').addHandler('link', quillLinkHandler);
   }
 
   addSection(): void {
@@ -42,6 +64,7 @@ export class AddSectionComponent {
         content: this.content,
         categoryId: this.catId!,
         visibility: this.sectionVisibility,
+        documents: this.documents,
       }),
     );
 
@@ -49,6 +72,7 @@ export class AddSectionComponent {
     this.content = '';
     this.catId = null;
     this.sectionVisibility = true;
+    this.resetFiles();
     this.visible = false;
   }
 }

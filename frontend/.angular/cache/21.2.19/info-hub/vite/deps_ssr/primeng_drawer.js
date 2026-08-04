@@ -7,37 +7,21 @@ import {
   zindexutils
 } from "./chunk-F3WZ4GO2.js";
 import {
-<<<<<<< HEAD
-  Button
-} from "./chunk-ME2GIRH7.js";
-=======
   MotionDirective,
   MotionModule
 } from "./chunk-RRBN332L.js";
 import {
   Button
-} from "./chunk-J3HGVDAE.js";
->>>>>>> 38a52d2eab6c785b2fc8f6aff2456f0502ae6b25
+} from "./chunk-IFRD3FH4.js";
+import "./chunk-WPDNK7JK.js";
 import {
   blockBodyScroll,
   unblockBodyScroll
 } from "./chunk-PONREXWP.js";
 import "./chunk-ECDSLP3E.js";
-<<<<<<< HEAD
-import {
-  MotionDirective,
-  MotionModule
-} from "./chunk-RRBN332L.js";
 import {
   TimesIcon
 } from "./chunk-IX5SMXLU.js";
-import "./chunk-WPDNK7JK.js";
-=======
-import "./chunk-WPDNK7JK.js";
-import {
-  TimesIcon
-} from "./chunk-IX5SMXLU.js";
->>>>>>> 38a52d2eab6c785b2fc8f6aff2456f0502ae6b25
 import {
   BaseComponent,
   PARENT_INSTANCE

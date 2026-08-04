@@ -1,11 +1,9 @@
 package com.aurora.info_hub.controller;
 
 import com.aurora.info_hub.dto.section.SectionPatchRequest;
-import com.aurora.info_hub.dto.section.SectionRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.service.SectionService;
-import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,13 +36,16 @@ public class SectionController {
     ) {
         return sectionService.createSection(title, content, categoryId, visibility, images, documents);
     }
-@PutMapping("/{id}")
+@PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SectionResponse updateSection(
             @PathVariable Long id,
-            @Valid @RequestBody SectionRequest request
-
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam(value = "visibility", required = false, defaultValue = "true") Boolean visibility,
+            @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ){
-        return sectionService.updateSection(id, request);
+        return sectionService.updateSection(id, title, content, categoryId, visibility, documents);
     }
     @DeleteMapping("/{id}")
     public void deleteSection(@PathVariable Long id) {

@@ -46,7 +46,51 @@
     <div class="mb-3">
       <label class="font-semibold block mb-2">Content</label>
 
-      <p-editor name="content" [(ngModel)]="content" [style]="{ height: '320px' }"> </p-editor>
+      <div #editorBounds>
+        <p-editor
+          name="content"
+          [(ngModel)]="content"
+          [style]="{ height: '320px' }"
+          [bounds]="editorBounds"
+          (onInit)="onEditorInit($event)"
+        >
+        </p-editor>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="font-semibold block mb-2">Documents</label>
+
+      <input
+        #documentsInput
+        type="file"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.ppt,.pptx"
+        multiple
+        hidden
+        (change)="onDocumentsSelected($event)"
+      />
+      <p-button
+        label="Choose Documents"
+        icon="pi pi-file"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="documentsInput.click()"
+      >
+      </p-button>
+
+      <ul class="file-chip-list" *ngIf="documents.length">
+        <li class="file-chip" *ngFor="let file of documents; let i = index">
+          <span class="file-chip__name">{{ file.name }}</span>
+          <button
+            type="button"
+            class="file-chip__remove"
+            (click)="removeDocument(i)"
+            aria-label="Remove document"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+        </li>
+      </ul>
     </div>
 
     <div class="flex align-items-center gap-3 mb-3">
