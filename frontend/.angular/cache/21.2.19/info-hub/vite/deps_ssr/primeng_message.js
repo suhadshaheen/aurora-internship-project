@@ -2,12 +2,18 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   MotionModule
 } from "./chunk-RRBN332L.js";
+<<<<<<< HEAD
 import {
   TimesIcon
 } from "./chunk-IX5SMXLU.js";
+=======
+>>>>>>> 38a52d2eab6c785b2fc8f6aff2456f0502ae6b25
 import {
   Ripple
 } from "./chunk-WPDNK7JK.js";
+import {
+  TimesIcon
+} from "./chunk-IX5SMXLU.js";
 import {
   BaseComponent,
   PARENT_INSTANCE
