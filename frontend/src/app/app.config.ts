@@ -17,9 +17,10 @@ import { authReducer } from './pages/login-page/store/auth.reducer';
 import { CategoryEffects } from './pages/dashboard/components/category/store/category.effects';
 import { SectionEffects } from './pages/dashboard/components/section/store/section.effects';
 import { authInterceptor } from './shared/components/Interceptors/auth.interceptor';
+import { UserEffects } from './shared/userStore/user.effects';
+import { userReducer } from './shared/userStore/user.reducer';
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
@@ -38,8 +39,8 @@ export const appConfig: ApplicationConfig = {
       section: sectionReducer,
       comment: commentReducer,
       auth: authReducer,
+      users: userReducer,
     }),
-    provideEffects(AuthEffects, CommentEffects, CategoryEffects, SectionEffects),
-    provideHttpClient(),
+    provideEffects(UserEffects, AuthEffects, CommentEffects, CategoryEffects, SectionEffects),
   ],
 };

@@ -9,9 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
+
+    private static final Set<String> ALLOWED_ROLES = Set.of("ADMIN", "EMPLOYEE", "GUEST");
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -40,11 +43,13 @@ public class UserService {
 
     public UserResponse createUser(UserRequest request) {
 
+        String role = validateRole(request.getRole());
+
         User user = User.builder()
                 .userHandle(request.getUserHandle())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole() != null ? request.getRole() : "USER")
+                .role(role)
                 .build();
 
         User saved = userRepository.save(user);
@@ -64,7 +69,7 @@ public class UserService {
         }
 
         if (request.getRole() != null) {
-            user.setRole(request.getRole());
+            user.setRole(validateRole(request.getRole()));
         }
 
         User updated = userRepository.save(user);
@@ -80,6 +85,17 @@ public class UserService {
 
 
     // ----- Helpers -----
+
+    private String validateRole(String role) {
+        if (role == null) {
+            return "EMPLOYEE";
+        }
+        String normalized = role.toUpperCase();
+        if (!ALLOWED_ROLES.contains(normalized)) {
+            throw new IllegalArgumentException("Invalid role: " + role);
+        }
+        return normalized;
+    }
 
     private User findUserEntityById(Long id) {
         return userRepository.findById(id)

@@ -130,7 +130,11 @@ export class SideBarComponent implements OnInit {
   onDeleteCategory(id: number): void {
     this.store.dispatch(CategoryActions.deleteCategory({ id }));
   }
-
+  onAllUsersClick(): void {
+    this.router.navigate(['/admin/users']).then((success) => {
+      console.log('Navigation result:', success);
+    });
+  }
   onLogout(event: Event): void {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
