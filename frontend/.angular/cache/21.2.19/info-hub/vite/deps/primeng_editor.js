@@ -1,34 +1,22 @@
 import {
   BaseEditableHolder
-<<<<<<< HEAD
-} from "./chunk-LTDFNTW5.js";
-import "./chunk-DF7QPWJJ.js";
-import {
-  PARENT_INSTANCE
-} from "./chunk-H5ELI7PY.js";
-=======
 } from "./chunk-Q74RTXZJ.js";
 import "./chunk-S56V3KNN.js";
 import {
   PARENT_INSTANCE
 } from "./chunk-NN5ZB6TF.js";
 import {
-  Bind,
-  BindModule
-} from "./chunk-Q5ISP34Z.js";
->>>>>>> bf971b01b8691d41a5e2d2c40b01f0871b9597f7
-import {
   BaseStyle
-} from "./chunk-SVJLNDMO.js";
+} from "./chunk-IKXP74YA.js";
 import {
   Header,
   PrimeTemplate,
   SharedModule
-<<<<<<< HEAD
-} from "./chunk-7PWQCOKA.js";
-=======
 } from "./chunk-76BDIUHB.js";
->>>>>>> bf971b01b8691d41a5e2d2c40b01f0871b9597f7
+import {
+  Bind,
+  BindModule
+} from "./chunk-Q5ISP34Z.js";
 import {
   Z
 } from "./chunk-INVD3MVZ.js";
