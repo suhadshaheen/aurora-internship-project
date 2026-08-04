@@ -4,7 +4,6 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 
 import { CommentActions } from './comment.actions';
 import { CommentService } from '../services/comment.service';
-import { IComment } from '../../../../../../models/comment.interface';
 
 @Injectable()
 export class CommentEffects {
@@ -33,20 +32,8 @@ export class CommentEffects {
   addComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CommentActions.addComment),
-      mergeMap(({ sectionId, userId, parentCommentId, content , dateCreated}) => {
-       const id = Math.floor(Math.random() * 1_000_000_000);
-
-
-const newComment: IComment = {
-  id,
-  sectionId,
-  userId,
-  parentCommentId,
-  content,
-  dateCreated,
-};
-
-        return this.commentService.addComment(newComment).pipe(
+      mergeMap(({ sectionId, parentCommentId, content }) =>
+        this.commentService.addComment({ sectionId, parentCommentId, content }).pipe(
           map((comment) =>
             CommentActions.addCommentSuccess({ comment })
           ),
@@ -57,8 +44,8 @@ const newComment: IComment = {
               })
             )
           )
-        );
-      })
+        )
+      )
     )
   );
 
