@@ -34,7 +34,7 @@ export class LoginFormComponent implements OnInit {
   email: string = '';
   password: string = '';
 
-  allowedDomain: string = '@auroratech.ps';
+  allowedDomain: string = '';
 
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
@@ -66,6 +66,9 @@ export class LoginFormComponent implements OnInit {
   }
 
   isEmailDomainValid(): boolean {
+    if (!this.allowedDomain) { //this is temporary solution to allow any domain  
+    return true;
+  }
     return this.email.endsWith(this.allowedDomain);
   }
 

@@ -11,6 +11,7 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { EditorModule } from 'primeng/editor';
+import { DialogModule } from 'primeng/dialog';
 
 import { CommentComponent } from '../comment/comment.component';
 import { SectionActions } from '../section/store/section.actions';
@@ -44,6 +45,7 @@ interface DisplaySection extends ISection {
     ButtonModule,
     InputTextModule,
     EditorModule,
+    DialogModule,
     CommentComponent,
   ],
   templateUrl: './section-list.component.html',
@@ -81,7 +83,8 @@ export class SectionListComponent implements OnInit {
   loading$ = this.store.select(selectSectionLoading);
   error$ = this.store.select(selectSectionError);
 
-  editingSectionId: number | null = null;
+  editingSection: DisplaySection | null = null;
+  editDialogVisible = false;
   editTitle = '';
   editContent = '';
   editDocuments: File[] = [];
@@ -113,17 +116,25 @@ export class SectionListComponent implements OnInit {
   }
 
   startEdit(section: DisplaySection): void {
-    this.editingSectionId = section.id;
+    this.editingSection = section;
     this.editTitle = section.title;
     this.editContent = section.content;
     this.editDocuments = [];
+    this.editDialogVisible = true;
   }
 
   cancelEdit(): void {
-    this.editingSectionId = null;
+    this.editingSection = null;
     this.editTitle = '';
     this.editContent = '';
     this.editDocuments = [];
+    this.editDialogVisible = false;
+  }
+
+  onEditDialogVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.cancelEdit();
+    }
   }
 
   onEditDocumentsSelected(event: Event): void {
@@ -136,10 +147,11 @@ export class SectionListComponent implements OnInit {
     this.editDocuments.splice(index, 1);
   }
 
-  submitEdit(section: DisplaySection): void {
+  submitEdit(): void {
+    const section = this.editingSection;
     const title = this.editTitle.trim();
     const content = this.editContent.trim();
-    if (!title || !content) {
+    if (!section || !title || !content) {
       return;
     }
 
@@ -154,10 +166,11 @@ export class SectionListComponent implements OnInit {
       }),
     );
 
-    this.editingSectionId = null;
+    this.editingSection = null;
     this.editTitle = '';
     this.editContent = '';
     this.editDocuments = [];
+    this.editDialogVisible = false;
   }
 
   deleteSection(id: number): void {

@@ -2,6 +2,48 @@
   margin-top: 1.5rem;
 }
 
+/* Edit Section dialog — mirrors add-section.component.css so the two dialogs match. */
+:host ::ng-deep .form-input.p-inputtext:enabled:focus {
+  border-color: #4dc5d9 !important;
+  box-shadow: 0 0 0 1px #4dc5d9 !important;
+}
+
+:host ::ng-deep .save-btn {
+  background: linear-gradient(135deg, #4dc5d9, #2b8da0) !important;
+  border: 1px solid rgba(77, 197, 217, 0.35) !important;
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .save-btn:hover {
+  background: linear-gradient(135deg, #53d6e5, #2e91a9) !important;
+  border-color: rgba(77, 197, 217, 0.6) !important;
+}
+
+:host ::ng-deep .cancel-btn {
+  background: #0f172a !important;
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
+  color: #e2e8f0 !important;
+}
+
+:host ::ng-deep .cancel-btn:hover {
+  background: #172033 !important;
+  border-color: rgba(148, 163, 184, 0.45) !important;
+}
+
+:host ::ng-deep .edit-section-dialog .p-dialog-header .p-dialog-header-icon:hover {
+  background: rgba(77, 197, 217, 0.12) !important;
+  color: #4dc5d9 !important;
+}
+
+:host ::ng-deep .edit-section-dialog .p-editor-container .ql-container {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+:host ::ng-deep .edit-section-dialog .p-editor-container:focus-within .ql-toolbar,
+:host ::ng-deep .edit-section-dialog .p-editor-container:focus-within .ql-container {
+  border-color: #4dc5d9 !important;
+}
+
 .section-header {
   display: flex;
   align-items: center;

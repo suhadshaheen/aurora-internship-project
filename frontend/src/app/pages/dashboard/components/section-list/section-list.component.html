@@ -28,152 +28,76 @@
             </div>
 
             <div class="section-main">
-              @if (editingSectionId === section.id) {
-                <div class="section-edit-form">
-                  <input
-                    type="text"
-                    pInputText
-                    name="editTitle"
-                    [(ngModel)]="editTitle"
-                    class="w-full"
-                  />
+              <div class="section-top">
+                <div class="section-body">
+                  <h3>{{ section.title }}</h3>
 
-                  <div #editEditorBounds>
-                    <p-editor
-                      name="editContent"
-                      [(ngModel)]="editContent"
-                      [style]="{ height: '200px' }"
-                      [bounds]="editEditorBounds"
-                      (onInit)="onEditorInit($event)"
-                    ></p-editor>
-                  </div>
+                  <div
+                    class="section-content"
+                    [innerHTML]="section.safeContent"
+                    (click)="onContentClick($event)"
+                  ></div>
 
-                  <div class="edit-documents">
-                    <input
-                      #editDocumentsInput
-                      type="file"
-                      accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.ppt,.pptx"
-                      multiple
-                      hidden
-                      (change)="onEditDocumentsSelected($event)"
-                    />
+                  @if (section.documents.length) {
+                    <ul class="section-documents">
+                      @for (document of section.documents; track document.id) {
+                        <li>
+                          <a
+                            [href]="documentUrl(document)"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="section-document-link"
+                          >
+                            <i class="pi pi-file"></i>
+                            {{ document.fileName }}
+                          </a>
+                        </li>
+                      }
+                    </ul>
+                  }
+                </div>
+
+                <div class="section-top-actions">
+                  @if (section.visibility) {
+                    <p-tag value="Visible" severity="success"></p-tag>
+                  } @else {
+                    <p-tag value="Hidden" severity="danger"></p-tag>
+                  }
+
+                  @if (section.canModify) {
                     <button
                       type="button"
                       pButton
-                      icon="pi pi-file"
+                      icon="pi pi-pencil"
                       severity="secondary"
-                      [outlined]="true"
-                      label="Choose Documents"
-                      (click)="editDocumentsInput.click()"
-                    ></button>
-
-                    @if (editDocuments.length) {
-                      <ul class="file-chip-list">
-                        @for (file of editDocuments; track file.name; let i = $index) {
-                          <li class="file-chip">
-                            <span class="file-chip__name">{{ file.name }}</span>
-                            <button
-                              type="button"
-                              class="file-chip__remove"
-                              (click)="removeEditDocument(i)"
-                              aria-label="Remove document"
-                            >
-                              <i class="pi pi-times"></i>
-                            </button>
-                          </li>
-                        }
-                      </ul>
-                    }
-                  </div>
-
-                  <div class="section-edit-actions">
-                    <button
-                      type="button"
-                      pButton
-                      severity="secondary"
-                      label="Cancel"
-                      (click)="cancelEdit()"
+                      [text]="true"
+                      (click)="startEdit(section)"
                     ></button>
                     <button
                       type="button"
                       pButton
-                      label="Save"
-                      (click)="submitEdit(section)"
+                      icon="pi pi-trash"
+                      severity="danger"
+                      [text]="true"
+                      (click)="deleteSection(section.id)"
                     ></button>
-                  </div>
+                  }
                 </div>
-              } @else {
-                <div class="section-top">
-                  <div class="section-body">
-                    <h3>{{ section.title }}</h3>
+              </div>
 
-                    <div
-                      class="section-content"
-                      [innerHTML]="section.safeContent"
-                      (click)="onContentClick($event)"
-                    ></div>
+              <div class="section-meta">
+                <span>
+                  <i class="pi pi-tag"></i>
+                  Category: {{ section.category.catName }}
+                </span>
 
-                    @if (section.documents.length) {
-                      <ul class="section-documents">
-                        @for (document of section.documents; track document.id) {
-                          <li>
-                            <a
-                              [href]="documentUrl(document)"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="section-document-link"
-                            >
-                              <i class="pi pi-file"></i>
-                              {{ document.fileName }}
-                            </a>
-                          </li>
-                        }
-                      </ul>
-                    }
-                  </div>
+                <span>
+                  <i class="pi pi-calendar"></i>
+                  {{ section.createdAt | date: 'mediumDate' }}
+                </span>
+              </div>
 
-                  <div class="section-top-actions">
-                    @if (section.visibility) {
-                      <p-tag value="Visible" severity="success"></p-tag>
-                    } @else {
-                      <p-tag value="Hidden" severity="danger"></p-tag>
-                    }
-
-                    @if (section.canModify) {
-                      <button
-                        type="button"
-                        pButton
-                        icon="pi pi-pencil"
-                        severity="secondary"
-                        [text]="true"
-                        (click)="startEdit(section)"
-                      ></button>
-                      <button
-                        type="button"
-                        pButton
-                        icon="pi pi-trash"
-                        severity="danger"
-                        [text]="true"
-                        (click)="deleteSection(section.id)"
-                      ></button>
-                    }
-                  </div>
-                </div>
-
-                <div class="section-meta">
-                  <span>
-                    <i class="pi pi-tag"></i>
-                    Category: {{ section.category.catName }}
-                  </span>
-
-                  <span>
-                    <i class="pi pi-calendar"></i>
-                    {{ section.createdAt | date: 'mediumDate' }}
-                  </span>
-                </div>
-
-                <app-comment [sectionId]="section.id"></app-comment>
-              }
+              <app-comment [sectionId]="section.id"></app-comment>
             </div>
           </article>
         }
@@ -182,6 +106,96 @@
       <p class="empty-text">No sections found.</p>
     }
   }
+
+  <p-dialog
+    header="Edit Section"
+    [modal]="true"
+    [visible]="editDialogVisible"
+    (visibleChange)="onEditDialogVisibleChange($event)"
+    [style]="{ width: '45rem' }"
+    styleClass="edit-section-dialog"
+  >
+    <div class="edit-section-form">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="editTitle" class="font-semibold w-8rem">Title</label>
+
+        <input
+          pInputText
+          id="editTitle"
+          name="editTitle"
+          class="flex-auto form-input"
+          [(ngModel)]="editTitle"
+          autocomplete="off"
+          placeholder="Section title"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block mb-2">Content</label>
+
+        <div #editEditorBounds>
+          <p-editor
+            name="editContent"
+            [(ngModel)]="editContent"
+            [style]="{ height: '200px' }"
+            [bounds]="editEditorBounds"
+            (onInit)="onEditorInit($event)"
+          ></p-editor>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block mb-2">Documents</label>
+
+        <input
+          #editDocumentsInput
+          type="file"
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.ppt,.pptx"
+          multiple
+          hidden
+          (change)="onEditDocumentsSelected($event)"
+        />
+        <p-button
+          label="Choose Documents"
+          icon="pi pi-file"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="editDocumentsInput.click()"
+        >
+        </p-button>
+
+        @if (editDocuments.length) {
+          <ul class="file-chip-list">
+            @for (file of editDocuments; track file.name; let i = $index) {
+              <li class="file-chip">
+                <span class="file-chip__name">{{ file.name }}</span>
+                <button
+                  type="button"
+                  class="file-chip__remove"
+                  (click)="removeEditDocument(i)"
+                  aria-label="Remove document"
+                >
+                  <i class="pi pi-times"></i>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="flex justify-content-end gap-2">
+        <p-button
+          label="Cancel"
+          severity="secondary"
+          styleClass="cancel-btn"
+          (onClick)="cancelEdit()"
+        >
+        </p-button>
+
+        <p-button label="Save" styleClass="save-btn" (onClick)="submitEdit()"> </p-button>
+      </div>
+    </div>
+  </p-dialog>
 
   @if (lightboxUrl) {
     <div class="image-lightbox-backdrop" (click)="closeLightbox()">
