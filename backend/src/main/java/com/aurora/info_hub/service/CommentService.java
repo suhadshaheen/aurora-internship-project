@@ -4,6 +4,7 @@ import com.aurora.info_hub.dto.comment.CommentRequest;
 import com.aurora.info_hub.dto.comment.CommentResponse;
 import com.aurora.info_hub.entity.Comment;
 import com.aurora.info_hub.entity.Section;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.CommentRepository;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class CommentService {
 
     Comment comment = commentRepository.findById(id)
             .orElseThrow(() ->
-                    new RuntimeException("Comment not found"));
+                    new NotFoundException("Comment not found"));
 
     return mapToResponse(comment);
 }
@@ -61,11 +62,7 @@ public class CommentService {
 
     User currentUser = userRepository.findByEmail(email)
         .orElseThrow(() ->
-                new RuntimeException("User not found"));
-
-    if (request.getContent() == null || request.getContent().isBlank()) {
-        throw new RuntimeException("Comment content cannot be empty");
-    }
+                new NotFoundException("User not found"));
 
     Comment comment = new Comment();
 
@@ -73,7 +70,7 @@ public class CommentService {
 
     Section section = sectionRepository.findById(request.getSectionId())
             .orElseThrow(() ->
-                    new RuntimeException("Section not found"));
+                    new NotFoundException("Section not found"));
 
     comment.setCreatedBy(currentUser);
     comment.setCreatedIn(section);
@@ -83,7 +80,7 @@ public class CommentService {
         Comment parent = commentRepository.findById(
                 request.getParentCommentId()
         ).orElseThrow(() ->
-                new RuntimeException("Parent comment not found"));
+                new NotFoundException("Parent comment not found"));
 
         comment.setParentComment(parent);
     }
@@ -118,7 +115,7 @@ public class CommentService {
 
     return commentRepository.findById(id)
             .orElseThrow(() ->
-                    new RuntimeException("Comment not found"));
+                    new NotFoundException("Comment not found"));
 }
 
     private CommentResponse mapToResponse(Comment comment) {

@@ -3,6 +3,7 @@ package com.aurora.info_hub.controller;
 import com.aurora.info_hub.dto.user.UserRequest;
 import com.aurora.info_hub.dto.user.UserResponse;
 import com.aurora.info_hub.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class UserController {
 
     
    @PostMapping
-    public UserResponse addUser(@RequestBody UserRequest request) {
+    public UserResponse addUser(@Valid @RequestBody UserRequest request) {
         return userService.createUser(request);
     }
 

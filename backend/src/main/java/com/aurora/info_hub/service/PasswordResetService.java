@@ -3,6 +3,8 @@ package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.entity.PasswordResetToken;
 import com.aurora.info_hub.entity.User;
+import com.aurora.info_hub.exception.ConflictException;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.PasswordResetTokenRepository;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,18 +67,18 @@ public class PasswordResetService {
     public void resetPassword(String token, String newPassword, String confirmPassword) {
 
         if (!newPassword.equals(confirmPassword)) {
-            throw new RuntimeException("Passwords do not match");
+            throw new IllegalArgumentException("Passwords do not match");
         }
 
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+                .orElseThrow(() -> new NotFoundException("Invalid or expired token"));
 
         if (resetToken.isUsed()) {
-            throw new RuntimeException("This reset link has already been used");
+            throw new ConflictException("This reset link has already been used");
         }
 
         if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("This reset link has expired");
+            throw new ConflictException("This reset link has expired");
         }
 
         User user = resetToken.getUser();

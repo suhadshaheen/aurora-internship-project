@@ -5,6 +5,7 @@ import com.aurora.info_hub.dto.section.SectionRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.service.SectionService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +41,7 @@ public class SectionController {
 @PutMapping("/{id}")
     public SectionResponse updateSection(
             @PathVariable Long id,
-            @RequestBody SectionRequest request
+            @Valid @RequestBody SectionRequest request
 
     ){
         return sectionService.updateSection(id, request);

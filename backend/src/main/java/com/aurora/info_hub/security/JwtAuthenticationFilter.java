@@ -14,9 +14,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.stereotype.Component;
 import com.aurora.info_hub.service.JwtService;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -50,6 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
+            log.debug("JWT validation failed, proceeding unauthenticated: {}", e.getMessage());
         }
 
         filterChain.doFilter(request, response);
