@@ -33,7 +33,7 @@ public class CommentService {
  
     // GET all comments
     public List<CommentResponse> getAllComments() {
-    return commentRepository.findAll()
+    return commentRepository.findByParentCommentIsNull()
             .stream()
             .map(this::mapToResponse)
             .toList();
@@ -123,7 +123,7 @@ public class CommentService {
             .id(comment.getId())
             .content(comment.getContent())
             .createdById(comment.getCreatedBy().getId())
-            .createdByName(comment.getCreatedBy().getUserHandle()) // أو getUsername()
+            .createdByName(comment.getCreatedBy().getUserHandle())
             .sectionId(comment.getCreatedIn().getId())
             .dateCreated(comment.getDateCreated())
             .children(
