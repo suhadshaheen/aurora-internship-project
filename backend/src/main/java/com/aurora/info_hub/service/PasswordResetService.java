@@ -33,13 +33,13 @@ public class PasswordResetService {
     }
 
     @Transactional
-    public void requestPasswordReset(String email) {
+    public String requestPasswordReset(String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElse(null);
 
         if (user == null) {
-            return;
+            return"No account is registered with this email address.";
         }
         tokenRepository.findByUser(user)
                 .ifPresent(tokenRepository::delete);
@@ -58,6 +58,7 @@ public class PasswordResetService {
         tokenRepository.save(resetToken);
 
         emailService.sendResetPasswordEmail(user.getEmail(), token);
+        return "Password reset link has been sent to your email.";
     }
 
     @Transactional
