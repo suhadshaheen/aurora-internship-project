@@ -20,6 +20,8 @@ public class CommentResponse {
 
     private Long sectionId;
 
+    private Long parentCommentId;
+
     private LocalDateTime dateCreated;
 
     private List<CommentResponse> children;
