@@ -16,8 +16,12 @@ export class CommentService {
     return this.http.get<IComment[]>(`${this.apiUrl}?sectionId=${sectionId}`);
   }
 
-  addComment(comment: IComment): Observable<IComment> {
-    return this.http.post<IComment>(this.apiUrl, comment);
+  addComment(request: {
+    sectionId: number;
+    parentCommentId: number | null;
+    content: string;
+  }): Observable<IComment> {
+    return this.http.post<IComment>(this.apiUrl, request);
   }
 
   updateComment(commentId: number, content: string): Observable<IComment> {

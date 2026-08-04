@@ -10,10 +10,8 @@ export const CommentActions = createActionGroup({
 
     'Add Comment': props<{
       sectionId: number;
-      userId: number;
-      parentCommentId: number|null;
+      parentCommentId: number | null;
       content: string;
-      dateCreated: Date;
     }>(),
     'Add Comment Success': props<{ comment: IComment }>(),
     'Add Comment Failure': props<{ error: string }>(),

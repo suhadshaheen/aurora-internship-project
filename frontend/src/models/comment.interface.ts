@@ -1,8 +1,9 @@
 export interface IComment {
-  id: number; 
+  id: number;
   content: string;
   parentCommentId: number | null;
-  userId: number;
+  createdById: number;
+  createdByName: string;
   sectionId: number;
   dateCreated: Date;
 }

@@ -2,6 +2,7 @@ package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.dto.comment.CommentRequest;
 import com.aurora.info_hub.dto.comment.CommentResponse;
+import com.aurora.info_hub.dto.comment.CommentUpdateRequest;
 import com.aurora.info_hub.entity.Comment;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.exception.NotFoundException;
@@ -36,6 +37,16 @@ public class CommentService {
     return commentRepository.findByParentCommentIsNull()
             .stream()
             .map(this::mapToResponse)
+            .toList();
+}
+
+    // GET comments for one section as a flat list (roots + replies), each
+    // carrying its own parentCommentId so the client can build the reply tree
+    // itself without duplicating nested data.
+    public List<CommentResponse> getCommentsBySection(Long sectionId) {
+    return commentRepository.findByCreatedIn_Id(sectionId)
+            .stream()
+            .map(this::mapToFlatResponse)
             .toList();
 }
 
@@ -89,8 +100,8 @@ public class CommentService {
 
     return mapToResponse(savedComment);
 }
-    // PUT update comment
-  public CommentResponse updateComment(Long id, CommentRequest request) {
+    // PATCH update comment
+  public CommentResponse updateComment(Long id, CommentUpdateRequest request) {
 
     Comment comment = getCommentEntity(id);
 
@@ -125,6 +136,7 @@ public class CommentService {
             .createdById(comment.getCreatedBy().getId())
             .createdByName(comment.getCreatedBy().getUserHandle())
             .sectionId(comment.getCreatedIn().getId())
+            .parentCommentId(comment.getParentComment() == null ? null : comment.getParentComment().getId())
             .dateCreated(comment.getDateCreated())
             .children(
                     comment.getChildren() == null
@@ -134,6 +146,19 @@ public class CommentService {
                                     .map(this::mapToResponse)
                                     .toList()
             )
+            .build();
+}
+
+    private CommentResponse mapToFlatResponse(Comment comment) {
+    return CommentResponse.builder()
+            .id(comment.getId())
+            .content(comment.getContent())
+            .createdById(comment.getCreatedBy().getId())
+            .createdByName(comment.getCreatedBy().getUserHandle())
+            .sectionId(comment.getCreatedIn().getId())
+            .parentCommentId(comment.getParentComment() == null ? null : comment.getParentComment().getId())
+            .dateCreated(comment.getDateCreated())
+            .children(List.of())
             .build();
 }
 

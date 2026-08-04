@@ -1,6 +1,7 @@
 import {
   BaseComponent,
   PARENT_INSTANCE
+<<<<<<< HEAD
 } from "./chunk-H5ELI7PY.js";
 import {
   BaseStyle
@@ -12,14 +13,27 @@ import {
 import {
   Bind
 } from "./chunk-Q5ISP34Z.js";
+=======
+} from "./chunk-NN5ZB6TF.js";
+import {
+  Bind
+} from "./chunk-Q5ISP34Z.js";
+import {
+  BaseStyle
+} from "./chunk-IKXP74YA.js";
+import {
+  PrimeTemplate,
+  SharedModule
+} from "./chunk-76BDIUHB.js";
+>>>>>>> bf971b01b8691d41a5e2d2c40b01f0871b9597f7
 import "./chunk-INVD3MVZ.js";
 import {
   CommonModule,
   NgClass,
   NgIf,
   NgTemplateOutlet
-} from "./chunk-N5BFQB5W.js";
-import "./chunk-UBHUY5TE.js";
+} from "./chunk-NRM2FHGF.js";
+import "./chunk-PCJ766W3.js";
 import {
   ChangeDetectionStrategy,
   Component,

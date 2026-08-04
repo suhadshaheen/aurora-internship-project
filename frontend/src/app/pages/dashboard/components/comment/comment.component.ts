@@ -70,10 +70,8 @@ export class CommentComponent implements OnInit {
     this.store.dispatch(
       CommentActions.addComment({
         sectionId: this.sectionId,
-        userId: user.id,
         parentCommentId: null,
         content,
-        dateCreated: new Date(),
       }),
     );
 
@@ -94,10 +92,8 @@ export class CommentComponent implements OnInit {
     this.store.dispatch(
       CommentActions.addComment({
         sectionId: this.sectionId,
-        userId: (user.id),
         parentCommentId,
         content,
-        dateCreated: new Date(),
       }),
     );
 
@@ -146,13 +142,13 @@ submitEdit(id: number): void {
     const isAdmin = role?.toLowerCase() === 'admin';
 
     const toDisplay = (comment: IComment): DisplayComment => {
-      const isOwn = !!user && user.id === comment.userId;
+      const isOwn = !!user && user.id === comment.createdById;
       return {
         ...comment,
         replies: [],
         isOwn,
         canModify: isOwn || isAdmin,
-        authorLabel: isOwn ? user!.userHandle : `User ${comment.userId}`,
+        authorLabel: comment.createdByName,
       };
     };
 
