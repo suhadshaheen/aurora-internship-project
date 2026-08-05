@@ -33,4 +33,8 @@ export class SectionsService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  deleteDocument(sectionId: number, documentId: number): Observable<ISection> {
+    return this.http.delete<ISection>(`${this.apiUrl}/${sectionId}/documents/${documentId}`);
+  }
 }

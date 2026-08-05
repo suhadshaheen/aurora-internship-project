@@ -70,4 +70,16 @@ export class SectionEffects {
       ),
     ),
   );
+
+  deleteSectionDocument$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SectionActions.deleteSectionDocument),
+      mergeMap(({ sectionId, documentId }) =>
+        this.sectionsService.deleteDocument(sectionId, documentId).pipe(
+          map((section) => SectionActions.deleteSectionDocumentSuccess({ section })),
+          catchError((error) => of(SectionActions.deleteSectionDocumentFailure({ error: error.message }))),
+        ),
+      ),
+    ),
+  );
 }

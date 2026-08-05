@@ -147,6 +147,24 @@
       <div class="mb-3">
         <label class="font-semibold block mb-2">Documents</label>
 
+        @if (editingSection && editingSection.documents.length) {
+          <ul class="file-chip-list">
+            @for (document of editingSection.documents; track document.id) {
+              <li class="file-chip">
+                <span class="file-chip__name">{{ document.fileName }}</span>
+                <button
+                  type="button"
+                  class="file-chip__remove"
+                  (click)="removeExistingDocument(document.id)"
+                  aria-label="Remove document"
+                >
+                  <i class="pi pi-times"></i>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+
         <input
           #editDocumentsInput
           type="file"

@@ -9,6 +9,7 @@ import com.aurora.info_hub.repository.SectionDocsRepository;
 import com.aurora.info_hub.repository.SectionImageRepository;
 import com.aurora.info_hub.repository.SectionRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -65,6 +66,22 @@ public class SectionService {
     private boolean isAnonymousUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
+    }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
+    }
+
+    private boolean isAdmin(User user) {
+        return "ADMIN".equalsIgnoreCase(user.getRole());
+    }
+
+    private void requireOwnerOrAdmin(Section section, String action) {
+        User currentUser = getCurrentUser();
+        if (!isAdmin(currentUser) && !section.getCreatedBy().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("You can only " + action + " your own sections");
+        }
     }
 
     @Transactional
@@ -138,6 +155,7 @@ public class SectionService {
         }
 
         Section existingSection = getSectionEntity(id);
+        requireOwnerOrAdmin(existingSection, "edit");
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Category Not Found!"));
 
@@ -167,12 +185,35 @@ public class SectionService {
     }
     public void  deleteSection(Long id){
 
+        Section existingSection = getSectionEntity(id);
+        requireOwnerOrAdmin(existingSection, "delete");
+
         sectionRepository.deleteById(id);
+    }
+
+    @Transactional
+    public SectionResponse deleteSectionDocument(Long sectionId, Long documentId) {
+        Section section = getSectionEntity(sectionId);
+        requireOwnerOrAdmin(section, "edit");
+
+        SectionDocs document = sectionDocsRepository.findById(documentId)
+                .orElseThrow(() -> new NotFoundException("Document not found"));
+
+        if (document.getSection() == null || !document.getSection().getId().equals(sectionId)) {
+            throw new NotFoundException("Document not found");
+        }
+
+        section.getSectionDocs().remove(document);
+        sectionDocsRepository.delete(document);
+        fileStorageService.deleteFile(document.getFileUrl());
+
+        return toResponse(sectionRepository.findById(sectionId).orElseThrow(() -> new NotFoundException("Section Not Found")));
     }
     @Transactional
     public SectionResponse  patchSection(Long id, SectionPatchRequest request){
 
         Section existingSection = getSectionEntity(id);
+        requireOwnerOrAdmin(existingSection, "edit");
 
         if(request.getTitle() != null){
             existingSection.setTitle(request.getTitle());

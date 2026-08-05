@@ -36,4 +36,17 @@ public class FileStorageService {
             throw new RuntimeException("Failed to store file", e);
         }
     }
+
+    public void deleteFile(String fileUrl) {
+        if (fileUrl == null || fileUrl.isBlank()) {
+            return;
+        }
+        try {
+            String fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+            Path targetPath = Paths.get(uploadDir, "sections", fileName);
+            Files.deleteIfExists(targetPath);
+        } catch (IOException e) {
+            // Best-effort: an orphaned file on disk isn't worth failing the request over.
+        }
+    }
 }

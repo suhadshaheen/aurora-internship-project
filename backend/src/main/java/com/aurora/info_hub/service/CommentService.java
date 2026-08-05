@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.aurora.info_hub.repository.SectionRepository;
 import java.util.List;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.aurora.info_hub.entity.User;
@@ -104,6 +105,7 @@ public class CommentService {
   public CommentResponse updateComment(Long id, CommentUpdateRequest request) {
 
     Comment comment = getCommentEntity(id);
+    requireOwnerOrAdmin(comment, "edit");
 
     comment.setContent(request.getContent());
 
@@ -114,10 +116,11 @@ public class CommentService {
 
 
 
-    
+
     public void deleteComment(Long id){
 
     Comment comment = getCommentEntity(id);
+    requireOwnerOrAdmin(comment, "delete");
 
     commentRepository.delete(comment);
 }
@@ -128,6 +131,24 @@ public class CommentService {
             .orElseThrow(() ->
                     new NotFoundException("Comment not found"));
 }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmailAndDeletedFalse(email)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    private boolean isAdmin(User user) {
+        return "ADMIN".equalsIgnoreCase(user.getRole());
+    }
+
+    private void requireOwnerOrAdmin(Comment comment, String action) {
+        User currentUser = getCurrentUser();
+        if (!isAdmin(currentUser) && !comment.getCreatedBy().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("You can only " + action + " your own comments");
+        }
+    }
 
     private CommentResponse mapToResponse(Comment comment) {
     return CommentResponse.builder()

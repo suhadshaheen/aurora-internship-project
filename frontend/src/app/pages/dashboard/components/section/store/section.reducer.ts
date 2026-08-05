@@ -84,4 +84,12 @@ on(SectionActions.updateSectionSuccess, (state, { section }) => ({
     ...state,
     selectedSection: section,
   })),
+  on(SectionActions.deleteSectionDocumentSuccess, (state, { section }) => ({
+    ...state,
+    sections: state.sections.map((s) => (s.id === section.id ? section : s)),
+  })),
+  on(SectionActions.deleteSectionDocumentFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
 );

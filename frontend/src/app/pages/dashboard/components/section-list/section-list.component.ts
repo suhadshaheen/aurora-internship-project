@@ -147,6 +147,22 @@ export class SectionListComponent implements OnInit {
     this.editDocuments.splice(index, 1);
   }
 
+  removeExistingDocument(documentId: number): void {
+    const section = this.editingSection;
+    if (!section) {
+      return;
+    }
+
+    this.store.dispatch(SectionActions.deleteSectionDocument({ sectionId: section.id, documentId }));
+
+    // Optimistic local update so the dialog reflects the removal immediately
+    // instead of waiting on the round trip.
+    this.editingSection = {
+      ...section,
+      documents: section.documents.filter((d) => d.id !== documentId),
+    };
+  }
+
   submitEdit(): void {
     const section = this.editingSection;
     const title = this.editTitle.trim();

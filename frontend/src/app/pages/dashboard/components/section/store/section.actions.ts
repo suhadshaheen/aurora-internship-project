@@ -53,5 +53,18 @@ export const SectionActions = {
     props<{ error: string }>(),
   ),
 
+  deleteSectionDocument: createAction(
+    '[Section] Delete Section Document',
+    props<{ sectionId: number; documentId: number }>(),
+  ),
+  deleteSectionDocumentSuccess: createAction(
+    '[Section] Delete Section Document Success',
+    props<{ section: ISection }>(),
+  ),
+  deleteSectionDocumentFailure: createAction(
+    '[Section] Delete Section Document Failure',
+    props<{ error: string }>(),
+  ),
+
   selectSection: createAction('[Section] Select Section', props<{ section: ISection }>()),
 };

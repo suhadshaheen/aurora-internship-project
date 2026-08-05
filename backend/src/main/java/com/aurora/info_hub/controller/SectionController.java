@@ -52,6 +52,13 @@ public class SectionController {
         sectionService.deleteSection(id);
 
     }
+    @DeleteMapping("/{sectionId}/documents/{documentId}")
+    public SectionResponse deleteSectionDocument(
+            @PathVariable Long sectionId,
+            @PathVariable Long documentId
+    ) {
+        return sectionService.deleteSectionDocument(sectionId, documentId);
+    }
     @PatchMapping("/{id}")
     public SectionResponse patchSection(
             @PathVariable Long id,
