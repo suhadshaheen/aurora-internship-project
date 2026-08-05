@@ -22,7 +22,7 @@
     @if (sections.length > 0) {
       <div class="sections-list">
         @for (section of sections; track section.id) {
-          <article class="section-item">
+          <article class="section-item" [class.section-item--important]="section.important">
             <div class="section-icon">
               <i class="pi pi-folder"></i>
             </div>
@@ -58,6 +58,10 @@
                 </div>
 
                 <div class="section-top-actions">
+                  @if (section.important) {
+                    <p-tag value="Important" severity="warn" icon="pi pi-star-fill"></p-tag>
+                  }
+
                   @if (section.visibility) {
                     <p-tag value="Visible" severity="success"></p-tag>
                   } @else {
@@ -65,6 +69,15 @@
                   }
 
                   @if (section.canModify) {
+                    <button
+                      type="button"
+                      pButton
+                      [icon]="section.important ? 'pi pi-star-fill' : 'pi pi-star'"
+                      severity="warn"
+                      [text]="true"
+                      [attr.aria-label]="section.important ? 'Unmark as important' : 'Mark as important'"
+                      (click)="toggleImportant(section)"
+                    ></button>
                     <button
                       type="button"
                       pButton

@@ -36,6 +36,10 @@ public class Section {
 
     private Boolean visibility;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean important = false;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 

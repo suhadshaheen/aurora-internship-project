@@ -66,5 +66,18 @@ export const SectionActions = {
     props<{ error: string }>(),
   ),
 
+  setSectionImportant: createAction(
+    '[Section] Set Section Important',
+    props<{ id: number; important: boolean }>(),
+  ),
+  setSectionImportantSuccess: createAction(
+    '[Section] Set Section Important Success',
+    props<{ section: ISection }>(),
+  ),
+  setSectionImportantFailure: createAction(
+    '[Section] Set Section Important Failure',
+    props<{ error: string }>(),
+  ),
+
   selectSection: createAction('[Section] Select Section', props<{ section: ISection }>()),
 };

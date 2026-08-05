@@ -8,4 +8,5 @@ public class SectionPatchRequest {
     private String content;
     private Boolean visibility;
     private Long categoryId;
+    private Boolean important;
 }

@@ -10,11 +10,10 @@ import java.util.List;
 public interface SectionRepository extends JpaRepository<Section, Long>,
         JpaSpecificationExecutor {
 
-    @Override
     @EntityGraph(attributePaths = {"createdBy", "category"})
-    List<Section> findAll();
+    List<Section> findAllByOrderByImportantDescCreatedAtDesc();
 
     @EntityGraph(attributePaths = {"createdBy", "category"})
-    List<Section> findByCategoryId(Long categoryId);
+    List<Section> findByCategoryIdOrderByImportantDescCreatedAtDesc(Long categoryId);
 
 }

@@ -82,4 +82,16 @@ export class SectionEffects {
       ),
     ),
   );
+
+  setSectionImportant$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SectionActions.setSectionImportant),
+      mergeMap(({ id, important }) =>
+        this.sectionsService.setImportant(id, important).pipe(
+          map((section) => SectionActions.setSectionImportantSuccess({ section })),
+          catchError((error) => of(SectionActions.setSectionImportantFailure({ error: error.message }))),
+        ),
+      ),
+    ),
+  );
 }

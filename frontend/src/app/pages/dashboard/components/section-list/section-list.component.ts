@@ -193,6 +193,12 @@ export class SectionListComponent implements OnInit {
     this.store.dispatch(SectionActions.deleteSection({ sectionId: id }));
   }
 
+  toggleImportant(section: DisplaySection): void {
+    this.store.dispatch(
+      SectionActions.setSectionImportant({ id: section.id, important: !section.important }),
+    );
+  }
+
   documentUrl(document: ISectionDocResponse): string {
     return `${environment.apiUrl}${document.fileUrl}`;
   }

@@ -8,6 +8,7 @@ export interface ISection {
   title: string;
   content: string;
   visibility: boolean;
+  important: boolean;
   createdAt: string;
   category: ISectionCategoryResponse;
   createdBy: ISectionUserResponse;

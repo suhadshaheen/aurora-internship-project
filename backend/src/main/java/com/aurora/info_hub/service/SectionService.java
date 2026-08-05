@@ -47,7 +47,7 @@ public class SectionService {
     public List<SectionResponse> getAllSections() {
         boolean isAnonymous = isAnonymousUser();
 
-        return sectionRepository.findAll()
+        return sectionRepository.findAllByOrderByImportantDescCreatedAtDesc()
                 .stream()
                 .filter(section -> !isAnonymous || Boolean.TRUE.equals(section.getVisibility()))
                 .map(this::toResponse)
@@ -232,6 +232,10 @@ public class SectionService {
             existingSection.setCategory(category);
         }
 
+        if(request.getImportant() != null){
+            existingSection.setImportant(request.getImportant());
+        }
+
         return toResponse(sectionRepository.save(existingSection));
     }
 
@@ -242,6 +246,7 @@ public class SectionService {
                 .title(section.getTitle())
                 .content(section.getContent())
                 .visibility(section.getVisibility())
+                .important(section.getImportant())
                 .createdAt(section.getCreatedAt())
 
                 .category(toSectionCategoryResponse(section.getCategory()))
@@ -307,7 +312,7 @@ public class SectionService {
     }
 
     public List<SectionResponse> getSectionsByCategory(Long categoryId) {
-        return sectionRepository.findByCategoryId(categoryId)
+        return sectionRepository.findByCategoryIdOrderByImportantDescCreatedAtDesc(categoryId)
                 .stream().map(this::toResponse).toList();
     }
 }

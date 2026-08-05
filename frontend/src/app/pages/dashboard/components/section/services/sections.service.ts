@@ -37,4 +37,8 @@ export class SectionsService {
   deleteDocument(sectionId: number, documentId: number): Observable<ISection> {
     return this.http.delete<ISection>(`${this.apiUrl}/${sectionId}/documents/${documentId}`);
   }
+
+  setImportant(id: number, important: boolean): Observable<ISection> {
+    return this.http.patch<ISection>(`${this.apiUrl}/${id}`, { important });
+  }
 }
