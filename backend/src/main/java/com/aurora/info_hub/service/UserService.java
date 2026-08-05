@@ -5,6 +5,8 @@ import com.aurora.info_hub.dto.user.UserResponse;
 import com.aurora.info_hub.entity.User;
 import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -79,8 +81,20 @@ public class UserService {
 
     public void deleteUser(Long id) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentEmail = authentication.getName();
+
+        User currentUser = userRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new NotFoundException("Current user not found"));
+
+        if (currentUser.getId().equals(id)) {
+            throw new IllegalArgumentException("You cannot delete your own account.");
+        }
+
         User user = findUserEntityById(id);
-        userRepository.delete(user);
+
+        user.setDeleted(true);
+        userRepository.save(user);
     }
 
 
@@ -108,6 +122,7 @@ public class UserService {
                 .userHandle(user.getUserHandle())
                 .email(user.getEmail())
                 .role(user.getRole())
+                .deleted(user.isDeleted())
                 .build();
     }
 }

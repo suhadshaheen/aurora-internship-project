@@ -15,4 +15,5 @@ public class UserResponse {
     private String userHandle;
     private String email;
     private String role;
+    private boolean deleted;
 }

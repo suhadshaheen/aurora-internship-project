@@ -35,16 +35,18 @@ public class PasswordResetService {
 
     @Transactional
     public String requestPasswordReset(String email) {
-
         User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("No account is registered with this email address."));
+
+
+
+        PasswordResetToken existingToken = tokenRepository.findByUser(user)
                 .orElse(null);
 
-        if (user == null) {
-            return"No account is registered with this email address.";
+        if (existingToken != null) {
+            tokenRepository.delete(existingToken);
+            tokenRepository.flush();
         }
-
-        tokenRepository.deleteByUser(user);
-
         String token = UUID.randomUUID().toString();
 
         PasswordResetToken resetToken = PasswordResetToken.builder()
@@ -55,7 +57,6 @@ public class PasswordResetService {
                 .build();
 
         tokenRepository.save(resetToken);
-
         emailService.sendResetPasswordEmail(user.getEmail(), token);
         return "Password reset link has been sent to your email.";
     }
