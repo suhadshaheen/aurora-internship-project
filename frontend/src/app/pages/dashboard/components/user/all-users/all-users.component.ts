@@ -48,9 +48,10 @@ export class AllUsersComponent implements OnInit {
     { label: 'Guest', value: 'GUEST' },
   ];
   constructor() {}
-
+  currentUserId!: number;
   ngOnInit(): void {
     this.store.dispatch(UserActions.loadUsers());
+    this.currentUserId = Number(localStorage.getItem('userId'));
   }
   onAddUser(): void {
     this.newUser = { userHandle: '', email: '', password: '', role: 'EMPLOYEE' };

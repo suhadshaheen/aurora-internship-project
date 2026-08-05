@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Object> handleAuth(AuthenticationException ex) {
-        return build(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        return build(HttpStatus.UNAUTHORIZED, "Incorrect email or password. Please try again.");
     }
 
     // @Valid failures → 400 with field messages

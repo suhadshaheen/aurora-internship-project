@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { email, form, FormField, pattern, required } from '@angular/forms/signals';
+import { email, form, FormField, required } from '@angular/forms/signals';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -30,9 +30,6 @@ export class ForgotPasswordCard {
     });
     email(path.email, {
       message: 'Enter a valid email address.',
-    });
-    pattern(path.email, /^[a-zA-Z0-9._%+-]+@auroratech\.ps$/, {
-      message: 'Only @auroratech.ps emails are allowed.',
     });
   });
 

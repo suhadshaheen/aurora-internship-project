@@ -1,9 +1,10 @@
 export interface IUser {
-  id:  number;
+  id: number;
   email: string;
   userHandle: string;
   role: string;
   password?: string;
+  deleted: boolean;
 }
 
 // export const user: User = {

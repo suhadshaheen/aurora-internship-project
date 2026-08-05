@@ -84,7 +84,7 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentEmail = authentication.getName();
 
-        User currentUser = userRepository.findByEmail(currentEmail)
+        User currentUser = userRepository.findByEmailAndDeletedFalse(currentEmail)
                 .orElseThrow(() -> new NotFoundException("Current user not found"));
 
         if (currentUser.getId().equals(id)) {

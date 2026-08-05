@@ -35,7 +35,7 @@ public class PasswordResetService {
 
     @Transactional
     public String requestPasswordReset(String email) {
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmailAndDeletedFalse(email)
                 .orElseThrow(() -> new NotFoundException("No account is registered with this email address."));
 
 

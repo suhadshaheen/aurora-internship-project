@@ -71,7 +71,7 @@ public class CommentService {
 
     String email = authentication.getName();
 
-    User currentUser = userRepository.findByEmail(email)
+    User currentUser = userRepository.findByEmailAndDeletedFalse(email)
         .orElseThrow(() ->
                 new NotFoundException("User not found"));
 
