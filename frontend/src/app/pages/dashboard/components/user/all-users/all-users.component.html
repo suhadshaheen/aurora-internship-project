@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="users-page">
   <p-confirmdialog />
 
@@ -41,7 +42,7 @@
 
         <td>
           <button
-            *ngIf="user.id !== currentUserId"
+            *ngIf="user.id !== currentUserId && !user.deleted"
             pButton
             icon="pi pi-trash"
             severity="danger"
