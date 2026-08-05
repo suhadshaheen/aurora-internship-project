@@ -46,7 +46,7 @@ export class UserEffects {
       ofType(UserActions.deleteUser),
       mergeMap(({ id }) =>
         this.userService.deleteUser(id).pipe(
-          map(() => UserActions.deleteUserSuccess({ id })),
+          mergeMap(() => [UserActions.deleteUserSuccess({ id }), UserActions.loadUsers()]),
           catchError((error) =>
             of(
               UserActions.deleteUserFailure({

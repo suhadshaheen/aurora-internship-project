@@ -30,11 +30,14 @@ public class Category {
     @PrePersist
     protected void onCreate() {
         this.dateCreated = LocalDateTime.now();
-    } 
+    }
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(
+            mappedBy = "category",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
     private List<Section> sections;
-
   
     
 

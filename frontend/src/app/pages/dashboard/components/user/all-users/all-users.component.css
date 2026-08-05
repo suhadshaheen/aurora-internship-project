@@ -19,7 +19,63 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   transition: 0.2s ease;
 }
+:host ::ng-deep .users-table {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+}
 
+:host ::ng-deep .users-table .p-datatable-table {
+  background: transparent;
+}
+
+:host ::ng-deep .users-table .p-datatable-thead > tr > th {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr > td {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: transparent;
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:host ::ng-deep .users-table .p-datatable-emptymessage > td {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr.deleted-user {
+  background: rgba(255, 255, 255, 0.02);
+  opacity: 0.55;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr.deleted-user:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr.deleted-user td {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr.deleted-user .p-tag {
+  opacity: 0.8;
+}
+
+:host ::ng-deep .users-table .p-datatable-tbody > tr.deleted-user button {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 .add-user-trigger:hover {
   transform: translateY(-2px);
   border-color: rgba(77, 197, 217, 0.55);

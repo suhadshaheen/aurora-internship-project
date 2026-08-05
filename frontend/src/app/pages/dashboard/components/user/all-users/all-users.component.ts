@@ -11,7 +11,9 @@ import { PasswordModule } from 'primeng/password';
 import { SelectModule } from 'primeng/select';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { Actions, ofType } from '@ngrx/effects';
 import { selectAllUsers, selectUsersLoading } from '../../../../../shared/userStore/user.selectors';
 import { IUserRequest } from '../../../../../../models/userRequest.interface';
 import { UserActions } from '../../../../../shared/userStore/user.actions';
@@ -30,13 +32,16 @@ import { Tag } from 'primeng/tag';
     SelectModule,
     ConfirmDialogModule,
     Tag,
+    ToastModule,
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './all-users.component.html',
   styleUrl: './all-users.component.css',
 })
 export class AllUsersComponent implements OnInit {
   private store = inject(Store);
+  private actions$ = inject(Actions);
+  private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
   users = this.store.selectSignal(selectAllUsers);
   loading = this.store.selectSignal(selectUsersLoading);
@@ -48,9 +53,17 @@ export class AllUsersComponent implements OnInit {
     { label: 'Guest', value: 'GUEST' },
   ];
   constructor() {}
-
+  currentUserId!: number;
   ngOnInit(): void {
     this.store.dispatch(UserActions.loadUsers());
+    this.currentUserId = Number(localStorage.getItem('userId'));
+    this.actions$.pipe(ofType(UserActions.deleteUserFailure)).subscribe(({ error }) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Delete failed',
+        detail: error,
+      });
+    });
   }
   onAddUser(): void {
     this.newUser = { userHandle: '', email: '', password: '', role: 'EMPLOYEE' };

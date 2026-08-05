@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="users-page">
   <p-confirmdialog />
 
@@ -11,37 +12,52 @@
     </button>
   </div>
 
-  <div class="users-list">
-    @for (user of users(); track user.id) {
-      <article class="user-item">
-        <div class="user-icon">
-          <i class="pi pi-user"></i>
-        </div>
+  <p-table [value]="users()" [loading]="loading()" styleClass="p-datatable-sm users-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Handle</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th style="width: 4rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr [class.deleted-user]="user.deleted">
+        <td>
+          {{ user.userHandle }}
 
-        <div class="user-main">
-          <div class="user-top">
-            <div class="user-body">
-              <h3>{{ user.userHandle }}</h3>
-              <p class="user-email">{{ user.email }}</p>
-            </div>
+          <p-tag
+            *ngIf="user.deleted"
+            value="Deleted"
+            severity="secondary"
+            styleClass="ml-2"
+          ></p-tag>
+        </td>
 
-            <div class="user-top-actions">
-              <p-tag [value]="user.role" severity="info"></p-tag>
-              <button
-                pButton
-                icon="pi pi-trash"
-                severity="danger"
-                [text]="true"
-                (click)="onDeleteUser($event, user.id)"
-              ></button>
-            </div>
-          </div>
-        </div>
-      </article>
-    } @empty {
-      <p class="empty-text">No users yet</p>
-    }
-  </div>
+        <td>{{ user.email }}</td>
+
+        <td>
+          <p-tag [value]="user.role" severity="info"></p-tag>
+        </td>
+
+        <td>
+          <button
+            *ngIf="user.id !== currentUserId && !user.deleted"
+            pButton
+            icon="pi pi-trash"
+            severity="danger"
+            [text]="true"
+            (click)="onDeleteUser($event, user.id)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="empty-text">No users yet</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
   <p-dialog
     header="Add User"
