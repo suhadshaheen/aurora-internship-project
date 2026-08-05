@@ -10,14 +10,14 @@ import {
   BaseStyle
 } from "./chunk-FPS4AEG7.js";
 import {
+  Bind,
+  BindModule
+} from "./chunk-VURFAXHP.js";
+import {
   Header,
   PrimeTemplate,
   SharedModule
 } from "./chunk-4DZVJAOK.js";
-import {
-  Bind,
-  BindModule
-} from "./chunk-VURFAXHP.js";
 import {
   Z
 } from "./chunk-HTHJSC3E.js";

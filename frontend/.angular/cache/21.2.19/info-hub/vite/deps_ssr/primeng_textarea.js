@@ -11,10 +11,10 @@ import {
 import {
   BaseStyle
 } from "./chunk-FPS4AEG7.js";
-import "./chunk-4DZVJAOK.js";
 import {
   Bind
 } from "./chunk-VURFAXHP.js";
+import "./chunk-4DZVJAOK.js";
 import "./chunk-HTHJSC3E.js";
 import {
   NgControl

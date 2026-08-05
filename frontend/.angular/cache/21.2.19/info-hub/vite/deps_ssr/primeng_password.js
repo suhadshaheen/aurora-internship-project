@@ -2,13 +2,13 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   BaseInput,
   Overlay
-} from "./chunk-7ZVM4ZER.js";
-import {
-  BaseEditableHolder
-} from "./chunk-7JO2WOXF.js";
+} from "./chunk-O2DGEN3Z.js";
 import {
   InputText
 } from "./chunk-KPXOXYN5.js";
+import {
+  BaseEditableHolder
+} from "./chunk-7JO2WOXF.js";
 import "./chunk-QGDN2DML.js";
 import "./chunk-KRBMT5EE.js";
 import "./chunk-TPOYXDFN.js";
@@ -32,15 +32,15 @@ import {
   BaseStyle
 } from "./chunk-FPS4AEG7.js";
 import {
+  Bind,
+  BindModule
+} from "./chunk-VURFAXHP.js";
+import {
   OverlayService,
   PrimeTemplate,
   SharedModule,
   TranslationKeys
 } from "./chunk-4DZVJAOK.js";
-import {
-  Bind,
-  BindModule
-} from "./chunk-VURFAXHP.js";
 import {
   M,
   P,

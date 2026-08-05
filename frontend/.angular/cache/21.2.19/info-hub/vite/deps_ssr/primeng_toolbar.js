@@ -7,13 +7,13 @@ import {
   BaseStyle
 } from "./chunk-FPS4AEG7.js";
 import {
-  PrimeTemplate,
-  SharedModule
-} from "./chunk-4DZVJAOK.js";
-import {
   Bind,
   BindModule
 } from "./chunk-VURFAXHP.js";
+import {
+  PrimeTemplate,
+  SharedModule
+} from "./chunk-4DZVJAOK.js";
 import "./chunk-HTHJSC3E.js";
 import {
   CommonModule,

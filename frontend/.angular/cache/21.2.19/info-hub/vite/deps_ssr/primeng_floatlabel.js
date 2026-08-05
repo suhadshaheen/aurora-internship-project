@@ -7,12 +7,12 @@ import {
   BaseStyle
 } from "./chunk-FPS4AEG7.js";
 import {
-  SharedModule
-} from "./chunk-4DZVJAOK.js";
-import {
   Bind,
   BindModule
 } from "./chunk-VURFAXHP.js";
+import {
+  SharedModule
+} from "./chunk-4DZVJAOK.js";
 import "./chunk-HTHJSC3E.js";
 import {
   CommonModule
