@@ -1,11 +1,9 @@
 <p-card styleClass="login-card">
   <div class="login-card-content">
-
     <div class="login-left">
-      <h1>{{ formTitle()}}</h1>
+      <h1>{{ formTitle() }}</h1>
       <p>{{ formDescription() }}</p>
-     <ng-content select="[left-content]"></ng-content>
-
+      <ng-content select="[left-content]"></ng-content>
     </div>
 
     <div class="login-right">
@@ -24,6 +22,5 @@
         </p>
       </div>
     </div>
-
   </div>
 </p-card>

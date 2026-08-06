@@ -18,4 +18,5 @@ export class GuestDashboardComponent {
   goHome(): void {
     this.store.dispatch(AuthActions.logout());
     this.router.navigate(['/']);
-  }}
+  }
+}

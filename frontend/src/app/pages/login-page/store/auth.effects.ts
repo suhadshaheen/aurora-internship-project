@@ -8,7 +8,6 @@ import { AuthUser } from './auth.state';
 
 @Injectable()
 export class AuthEffects {
-
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -31,13 +30,13 @@ export class AuthEffects {
           catchError((error) =>
             of(
               AuthActions.loginFailure({
-                error: error?.error?.message || error.message || 'Login failed'
-              })
-            )
-          )
-        )
-      )
-    )
+                error: error?.error?.message || error.message || 'Login failed',
+              }),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   logout$ = createEffect(
@@ -47,9 +46,9 @@ export class AuthEffects {
         map(() => {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
-        })
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
   loginSuccess$ = createEffect(
@@ -60,9 +59,9 @@ export class AuthEffects {
           localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate([this.getDashboardRoute(user.role)]);
-        })
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
   private getDashboardRoute(role: AuthUser['role']): string {

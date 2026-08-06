@@ -6,7 +6,13 @@ import { SideBarComponent } from '../components/side-bar/side-bar.component';
 import { AddSectionComponent } from '../components/add-section/add-section.component';
 @Component({
   selector: 'app-employee-dashboard',
-  imports: [NavBarComponent, RouterOutlet, SectionListComponent, SideBarComponent, AddSectionComponent],
+  imports: [
+    NavBarComponent,
+    RouterOutlet,
+    SectionListComponent,
+    SideBarComponent,
+    AddSectionComponent,
+  ],
   templateUrl: './employee-dashboard.component.html',
   styleUrl: './employee-dashboard.component.css',
 })

@@ -8,8 +8,8 @@ import { CardModule } from 'primeng/card';
   styleUrl: './login-card.component.css',
 })
 export class LoginCardComponent {
- formTitle = input<string>('');
- formDescription = input<string>('');
- cardTitle = input<string>('');
- cardDescription = input<string>('');
+  formTitle = input<string>('');
+  formDescription = input<string>('');
+  cardTitle = input<string>('');
+  cardDescription = input<string>('');
 }

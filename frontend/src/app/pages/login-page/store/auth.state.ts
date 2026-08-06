@@ -13,11 +13,10 @@ export interface AuthState {
   error: string | null;
 }
 
-
 export const initialAuthState: AuthState = {
   user: null,
   token: null,
   isLoggedIn: false,
   loading: false,
-  error: null
+  error: null,
 };

@@ -7,10 +7,15 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { RouterLink, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../../store/auth.actions';
-import { selectAuthLoading, selectAuthError, selectIsLoggedIn, selectUserRole } from '../../store/auth.selectors';
+import {
+  selectAuthLoading,
+  selectAuthError,
+  selectIsLoggedIn,
+  selectUserRole,
+} from '../../store/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { take } from 'rxjs';
-import {LOGIN_FORM_CONSTANTS} from '../login-form.constants';
+import { LOGIN_FORM_CONSTANTS } from '../login-form.constants';
 @Component({
   selector: 'app-login-form',
   imports: [
@@ -23,7 +28,7 @@ import {LOGIN_FORM_CONSTANTS} from '../login-form.constants';
     AsyncPipe,
   ],
   templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.css'
+  styleUrl: './login-form.component.css',
 })
 export class LoginFormComponent implements OnInit {
   private router = inject(Router);
@@ -66,9 +71,10 @@ export class LoginFormComponent implements OnInit {
   }
 
   isEmailDomainValid(): boolean {
-    if (!this.allowedDomain) { //this is temporary solution to allow any domain  
-    return true;
-  }
+    if (!this.allowedDomain) {
+      //this is temporary solution to allow any domain
+      return true;
+    }
     return this.email.endsWith(this.allowedDomain);
   }
 
@@ -80,8 +86,8 @@ export class LoginFormComponent implements OnInit {
     this.store.dispatch(
       AuthActions.login({
         email: this.email.trim().toLowerCase(),
-        password: this.password
-      })
+        password: this.password,
+      }),
     );
   }
 }

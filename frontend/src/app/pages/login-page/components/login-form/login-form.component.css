@@ -110,12 +110,7 @@
   border: none !important;
   border-radius: 12px !important;
 
-  background: linear-gradient(
-    135deg,
-    #18375f 0%,
-    #6579b8 52%,
-    #42c7d3 100%
-  ) !important;
+  background: linear-gradient(135deg, #18375f 0%, #6579b8 52%, #42c7d3 100%) !important;
 
   color: #ffffff !important;
   font-size: 17px !important;
@@ -150,7 +145,7 @@
   text-align: right;
   margin-top: 8px;
   font-size: 14px;
-  color: #1a1a2e ;
+  color: #1a1a2e;
   text-decoration: none;
   font-weight: 500;
   cursor: pointer;

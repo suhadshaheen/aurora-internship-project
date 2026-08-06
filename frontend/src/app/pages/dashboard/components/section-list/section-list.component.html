@@ -75,7 +75,9 @@
                       [icon]="section.important ? 'pi pi-star-fill' : 'pi pi-star'"
                       severity="warn"
                       [text]="true"
-                      [attr.aria-label]="section.important ? 'Unmark as important' : 'Mark as important'"
+                      [attr.aria-label]="
+                        section.important ? 'Unmark as important' : 'Mark as important'
+                      "
                       (click)="toggleImportant(section)"
                     ></button>
                     <button
