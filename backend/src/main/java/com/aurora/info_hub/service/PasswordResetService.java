@@ -69,14 +69,14 @@ public class PasswordResetService {
         }
 
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
-                .orElseThrow(() -> new NotFoundException("Invalid or expired token"));
+                .orElseThrow(() -> new NotFoundException("Invalid reset token"));
 
         if (resetToken.isUsed()) {
             throw new ConflictException("This reset link has already been used");
         }
 
         if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new ConflictException("This reset link has expired");
+            throw new IllegalArgumentException("This reset link has expired");
         }
 
         User user = resetToken.getUser();
