@@ -1,22 +1,35 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
 import { SectionActions } from '../section/store/section.actions';
+import { CategoryActions } from '../category/store/category.actions';
+import { selectCategories } from '../category/store/category.selectors';
 import { Store } from '@ngrx/store';
 import { quillLinkHandler } from '../../../../shared/utils/quill-link-handler';
 
 @Component({
   selector: 'app-add-section',
-  imports: [CommonModule, FormsModule, EditorModule, DialogModule, ButtonModule, InputTextModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    EditorModule,
+    DialogModule,
+    ButtonModule,
+    InputTextModule,
+    SelectModule,
+  ],
   templateUrl: './add-section.component.html',
   styleUrl: './add-section.component.css',
 })
-export class AddSectionComponent {
+export class AddSectionComponent implements OnInit {
   private store = inject(Store);
+
+  categories$ = this.store.select(selectCategories);
 
   visible: boolean = false;
 
@@ -25,6 +38,10 @@ export class AddSectionComponent {
   catId: number | null = null;
   sectionVisibility: boolean = true;
   documents: File[] = [];
+
+  ngOnInit(): void {
+    this.store.dispatch(CategoryActions.loadCategories());
+  }
 
   showDialog(): void {
     this.visible = true;

@@ -31,15 +31,17 @@
     <div class="flex align-items-center gap-3 mb-3">
       <label for="catId" class="font-semibold w-8rem">Category</label>
 
-      <input
-        pInputText
+      <p-select
         id="catId"
         name="catId"
-        type="number"
-        class="flex-auto form-input"
+        class="flex-auto"
+        styleClass="w-full form-input"
+        [options]="categories$ | async"
         [(ngModel)]="catId"
-        autocomplete="off"
-        placeholder="Category id"
+        optionLabel="catName"
+        optionValue="id"
+        placeholder="Select a category"
+        appendTo="body"
       />
     </div>
 
