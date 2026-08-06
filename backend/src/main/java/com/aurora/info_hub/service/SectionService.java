@@ -134,27 +134,28 @@ public class SectionService {
         sectionRepository.deleteById(id);
     }
     @Transactional
-    public Section patchSection(Long id, Section section){
+    public SectionResponse  patchSection(Long id, SectionPatchRequest request){
 
         Section existingSection = getSectionEntity(id);
 
-        if(section.getTitle() != null){
-            existingSection.setTitle(section.getTitle());
+        if(request.getTitle() != null){
+            existingSection.setTitle(request.getTitle());
         }
 
-        if(section.getContent() != null){
-            existingSection.setContent(section.getContent());
+        if(request.getContent() != null){
+            existingSection.setContent(request.getContent());
         }
 
-        if(section.getVisibility() != null){
-            existingSection.setVisibility(section.getVisibility());
+        if(request.getVisibility() != null){
+            existingSection.setVisibility(request.getVisibility());
         }
 
-        if(section.getCategory() != null){
-            existingSection.setCategory(section.getCategory());
+        if(request.getCategoryId() != null){
+            Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new RuntimeException("Category Not Found!"));
+            existingSection.setCategory(category);
         }
 
-        return sectionRepository.save(existingSection);
+        return toResponse(sectionRepository.save(existingSection));
     }
 
     private SectionResponse toResponse(Section section) {

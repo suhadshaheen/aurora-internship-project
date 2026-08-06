@@ -1,5 +1,6 @@
 package com.aurora.info_hub.controller;
 
+import com.aurora.info_hub.dto.section.SectionPatchRequest;
 import com.aurora.info_hub.dto.section.SectionRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
@@ -50,10 +51,10 @@ public class SectionController {
 
     }
     @PatchMapping("/{id}")
-    public Section patchSection(
+    public SectionResponse patchSection(
             @PathVariable Long id,
-            @RequestBody Section section
+            @RequestBody SectionPatchRequest request
     ){
-        return sectionService.patchSection(id, section);
+        return sectionService.patchSection(id, request);
     }
 }
