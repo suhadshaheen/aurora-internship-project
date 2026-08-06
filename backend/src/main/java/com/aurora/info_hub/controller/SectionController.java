@@ -1,5 +1,6 @@
 package com.aurora.info_hub.controller;
 
+import com.aurora.info_hub.dto.section.SectionPatchRequest;
 import com.aurora.info_hub.dto.section.SectionRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
@@ -31,9 +32,10 @@ public class SectionController {
             @RequestParam("content") String content,
             @RequestParam("categoryId") Long categoryId,
             @RequestParam(value = "images", required = false) List<MultipartFile> images,
+            @RequestParam(value = "visibility", required = false, defaultValue = "true") Boolean visibility,
             @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ) {
-        return sectionService.createSection(title, content,categoryId, images, documents);
+        return sectionService.createSection(title, content,categoryId, visibility, images, documents);
     }
 @PutMapping("/{id}")
     public SectionResponse updateSection(
@@ -49,10 +51,10 @@ public class SectionController {
 
     }
     @PatchMapping("/{id}")
-    public Section patchSection(
+    public SectionResponse patchSection(
             @PathVariable Long id,
-            @RequestBody Section section
+            @RequestBody SectionPatchRequest request
     ){
-        return sectionService.patchSection(id, section);
+        return sectionService.patchSection(id, request);
     }
 }

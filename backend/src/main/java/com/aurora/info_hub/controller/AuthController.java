@@ -4,7 +4,6 @@ import com.aurora.info_hub.dto.auth.LoginRequest;
 import com.aurora.info_hub.dto.auth.LoginResponse;
 import com.aurora.info_hub.service.JwtService;
 import com.aurora.info_hub.service.PasswordResetService;
-import com.aurora.info_hub.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,7 +32,7 @@ public class AuthController {
         this.passwordResetService = passwordResetService;
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -42,8 +41,7 @@ public class AuthController {
         User user = (User) authentication.getPrincipal();
         String token = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(new LoginResponse(token, user.getUserHandle(), user.getEmail(), user.getRole()));
-    }
+        return ResponseEntity.ok(new LoginResponse(token, user.getUserHandle(), user.getEmail(), user.getRole()));    }
 
 
 
