@@ -1,6 +1,5 @@
 package com.aurora.info_hub.service;
 
-
 import com.aurora.info_hub.entity.PasswordResetToken;
 import com.aurora.info_hub.entity.User;
 import com.aurora.info_hub.repository.PasswordResetTokenRepository;
@@ -41,11 +40,9 @@ public class PasswordResetService {
         if (user == null) {
             return;
         }
-        tokenRepository.findByUser(user)
-                .ifPresent(tokenRepository::delete);
 
-        tokenRepository.flush();
         tokenRepository.deleteByUser(user);
+
         String token = UUID.randomUUID().toString();
 
         PasswordResetToken resetToken = PasswordResetToken.builder()

@@ -2,11 +2,10 @@ package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.dto.category.CategoryRequest;
 import com.aurora.info_hub.dto.category.CategoryResponse;
-import com.aurora.info_hub.dto.category.CategoryUserResponse;
 import com.aurora.info_hub.entity.Category;
 import com.aurora.info_hub.entity.User;
 import com.aurora.info_hub.repository.CategoryRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -49,9 +48,6 @@ public class CategoryService {
                 .createdBy(user)
                 .build();
 
-        if (categoryRepository.existsByCatName(request.getCatName())) {
-            throw new RuntimeException("Category already exists");
-        }
         categoryRepository.save(category);
         return toResponse(category);
 
@@ -73,16 +69,7 @@ public class CategoryService {
                 .build();
     }
 
-    private CategoryUserResponse toCategoryUserResponse(User createdBy) {
-        if (createdBy == null) {
-            return null;
-        }
-        return CategoryUserResponse.builder()
-                .id(createdBy.getId())
-                .userHandle(createdBy.getUserHandle())
-                .role(createdBy.getRole())
-                .build();
-    }
+
 
     private Category getCategoryEntity(Long id) {
 
