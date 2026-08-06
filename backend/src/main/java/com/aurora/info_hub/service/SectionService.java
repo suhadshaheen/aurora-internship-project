@@ -9,6 +9,7 @@ import com.aurora.info_hub.repository.SectionDocsRepository;
 import com.aurora.info_hub.repository.SectionImageRepository;
 import com.aurora.info_hub.repository.SectionRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -42,16 +43,28 @@ public class SectionService {
         this.fileStorageService = fileStorageService;
         this.sectionRepository = sectionRepositry;
     }
-
     public List<SectionResponse> getAllSections() {
+        boolean isAnonymous = isAnonymousUser();
 
         return sectionRepository.findAll()
                 .stream()
+                .filter(section -> !isAnonymous || Boolean.TRUE.equals(section.getVisibility()))
                 .map(this::toResponse)
                 .toList();
     }
     public SectionResponse getSectionById(Long id) {
-        return toResponse(getSectionEntity(id));
+        Section section = getSectionEntity(id);
+
+        if (isAnonymousUser() && !Boolean.TRUE.equals(section.getVisibility())) {
+            throw new RuntimeException("Section Not Found"); // نفس رسالة 404 العادية، ما منكشف وجودها
+        }
+
+        return toResponse(section);
+    }
+
+    private boolean isAnonymousUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
 
     @Transactional
@@ -135,27 +148,28 @@ public class SectionService {
         sectionRepository.deleteById(id);
     }
     @Transactional
-    public Section patchSection(Long id, Section section){
+    public SectionResponse  patchSection(Long id, SectionPatchRequest request){
 
         Section existingSection = getSectionEntity(id);
 
-        if(section.getTitle() != null){
-            existingSection.setTitle(section.getTitle());
+        if(request.getTitle() != null){
+            existingSection.setTitle(request.getTitle());
         }
 
-        if(section.getContent() != null){
-            existingSection.setContent(section.getContent());
+        if(request.getContent() != null){
+            existingSection.setContent(request.getContent());
         }
 
-        if(section.getVisibility() != null){
-            existingSection.setVisibility(section.getVisibility());
+        if(request.getVisibility() != null){
+            existingSection.setVisibility(request.getVisibility());
         }
 
-        if(section.getCategory() != null){
-            existingSection.setCategory(section.getCategory());
+        if(request.getCategoryId() != null){
+            Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new RuntimeException("Category Not Found!"));
+            existingSection.setCategory(category);
         }
 
-        return sectionRepository.save(existingSection);
+        return toResponse(sectionRepository.save(existingSection));
     }
 
     private SectionResponse toResponse(Section section) {

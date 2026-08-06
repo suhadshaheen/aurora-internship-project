@@ -2,6 +2,7 @@ package com.aurora.info_hub.controller;
 
 import com.aurora.info_hub.dto.auth.ForgotPasswordRequest;
 import com.aurora.info_hub.dto.auth.ResetPasswordRequest;
+import com.aurora.info_hub.dto.common.MessageResponse;
 import com.aurora.info_hub.service.PasswordResetService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,5 @@ public class PasswordResetController {
                 request.getNewPassword(),
                 request.getConfirmPassword()
         );
-        return ResponseEntity.ok("Password has been reset successfully.");
-    }
+        return ResponseEntity.ok(new MessageResponse("Password has been reset successfully."));    }
 }
