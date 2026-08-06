@@ -24,14 +24,14 @@ public class SectionService {
     private final CategoryRepository categoryRepository;
 
     private static final List<String> ALLOWED_DOCUMENT_TYPES = List.of(
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/vnd.ms-excel",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "text/plain",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-);
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "text/plain",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    );
 
     private  final SectionDocsRepository sectionDocsRepository;
     private final SectionImageRepository sectionImageRepository;
@@ -124,14 +124,14 @@ public class SectionService {
                 savedSection.getImages().add(sectionImage);
             }
         }
-    
+
         if (documents != null) {
             for (MultipartFile document : documents) {
                 if (!ALLOWED_DOCUMENT_TYPES.contains(document.getContentType())) {
-                   throw new IllegalArgumentException(
-                    "Unsupported document type: " + document.getContentType()
-            );
-        }
+                    throw new IllegalArgumentException(
+                            "Unsupported document type: " + document.getContentType()
+                    );
+                }
                 String url = fileStorageService.storeFile(document);
                 SectionDocs sectionDoc = SectionDocs.builder().fileName(document.getOriginalFilename()).fileUrl(url).section(savedSection).build();
 

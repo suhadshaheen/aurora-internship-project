@@ -1,6 +1,7 @@
 package com.aurora.info_hub.security;
 
 import com.aurora.info_hub.service.CustomUserDetailsService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.stereotype.Component;
@@ -52,8 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
-        } catch (Exception e) {
-            log.debug("JWT validation failed, proceeding unauthenticated: {}", e.getMessage());
+        } catch (JwtException e) {
+            log.debug("JWT validation failed: {}", e.getMessage());
+        } catch (UsernameNotFoundException e) {
+            log.debug("User not found during JWT authentication: {}", e.getMessage());
         }
 
         filterChain.doFilter(request, response);
