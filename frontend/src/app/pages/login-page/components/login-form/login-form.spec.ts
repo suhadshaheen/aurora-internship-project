@@ -1,37 +1,37 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router, provideRouter } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { LoginFormComponent } from './login-form.component';
+import { AuthActions } from '../../store/auth.actions';
 import {
   selectAuthLoading,
   selectAuthError,
   selectIsLoggedIn,
   selectUserRole,
 } from '../../store/auth.selectors';
-import { LOGIN_FORM_CONSTANTS } from '../login-form.constants';
 
-describe('LoginFormComponent (template)', () => {
+describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
   let fixture: ComponentFixture<LoginFormComponent>;
   let store: MockStore;
-  let routerSpy: { navigate: jest.Mock };
+  let router: Router;
+  let navigateSpy: jest.SpyInstance;
 
-  const initialState = {};
+  const initialState = {
+    // adjust shape to match your real auth state slice
+  };
 
   beforeEach(async () => {
-    routerSpy = { navigate: jest.fn() };
-
     await TestBed.configureTestingModule({
-      imports: [LoginFormComponent, NoopAnimationsModule],
-      providers: [
-        provideMockStore({ initialState }),
-        { provide: Router, useValue: routerSpy },
-      ],
+      imports: [LoginFormComponent], // standalone component
+      providers: [provideRouter([]), provideMockStore({ initialState })],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
+    router = TestBed.inject(Router);
+    navigateSpy = jest.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    // default selector values before each test
     store.overrideSelector(selectAuthLoading, false);
     store.overrideSelector(selectAuthError, null);
     store.overrideSelector(selectIsLoggedIn, false);
@@ -39,117 +39,120 @@ describe('LoginFormComponent (template)', () => {
 
     fixture = TestBed.createComponent(LoginFormComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // ngOnInit
   });
 
-  function getSubmitButton(): HTMLButtonElement {
-    return fixture.debugElement.query(By.css('button.login-btn')).nativeElement;
-  }
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-  function getEmailInput(): HTMLInputElement {
-    return fixture.debugElement.query(By.css('#email')).nativeElement;
-  }
-
-  function setInputValue(input: HTMLInputElement, value: string): void {
-    input.value = value;
-    input.dispatchEvent(new Event('input'));
-    input.dispatchEvent(new Event('blur'));
-  }
-
-  it('submit button should be disabled when form is empty/invalid', fakeAsync(() => {
-    tick();
+  it('should create', () => {
     fixture.detectChanges();
+    expect(component).toBeTruthy();
+  });
 
-    const button = getSubmitButton();
-    expect(button.disabled).toBe(true);
-  }));
+  describe('ngOnInit - redirect logic', () => {
+    it('should NOT navigate if user is not logged in', () => {
+      store.overrideSelector(selectIsLoggedIn, false);
+      store.refreshState();
 
-  it('should show required/invalid email error message once email field is dirty and invalid', fakeAsync(() => {
-    const emailInput = getEmailInput();
-    setInputValue(emailInput, 'not-an-email');
-    tick();
-    fixture.detectChanges();
+      fixture.detectChanges(); // triggers ngOnInit
 
-    const errorEl = fixture.debugElement.query(By.css('.error-message'));
-    expect(errorEl).toBeTruthy();
-    expect(errorEl.nativeElement.textContent).toContain(
-      LOGIN_FORM_CONSTANTS.inValidErrorMassage,
-    );
-  }));
+      expect(navigateSpy).not.toHaveBeenCalled();
+    });
 
-  it('should show domain error message when email is valid but domain does not match', fakeAsync(() => {
-    component.allowedDomain = '@company.com';
+    it('should navigate to /admin-dashboard when logged in as ADMIN', () => {
+      store.overrideSelector(selectIsLoggedIn, true);
+      store.overrideSelector(selectUserRole, 'ADMIN');
+      store.refreshState();
 
-    const emailInput = getEmailInput();
-    setInputValue(emailInput, 'user@other.com');
-    tick();
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    const errorMessages = fixture.debugElement
-      .queryAll(By.css('.error-message'))
-      .map((el) => el.nativeElement.textContent.trim());
+      expect(navigateSpy).toHaveBeenCalledWith(['/admin-dashboard']);
+    });
 
-    expect(errorMessages).toContain(LOGIN_FORM_CONSTANTS.domainErrorMassage);
-  }));
+    it('should navigate to /employee-dashboard when logged in as a regular employee', () => {
+      store.overrideSelector(selectIsLoggedIn, true);
+      store.overrideSelector(selectUserRole, 'EMPLOYEE');
+      store.refreshState();
 
-  it('submit button should be enabled when form is valid and domain matches', fakeAsync(() => {
-    component.allowedDomain = '';
+      fixture.detectChanges();
 
-    const emailInput = getEmailInput();
-    setInputValue(emailInput, 'user@example.com');
-    tick();
-    fixture.detectChanges();
+      expect(navigateSpy).toHaveBeenCalledWith(['/employee-dashboard']);
+    });
 
-    // password field uses p-password (PrimeNG); set via ngModel directly
-    component.password = 'secret123';
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
+    it('should dispatch logout and NOT navigate when role is GUEST', () => {
+      const dispatchSpy = jest.spyOn(store, 'dispatch');
 
-    const button = getSubmitButton();
-    expect(button.disabled).toBe(false);
-  }));
+      store.overrideSelector(selectIsLoggedIn, true);
+      store.overrideSelector(selectUserRole, 'GUEST');
+      store.refreshState();
 
-  it('should call login() when the form is submitted', fakeAsync(() => {
-    const loginSpy = jest.spyOn(component, 'login');
+      fixture.detectChanges();
 
-    component.email = 'user@example.com';
-    component.password = 'secret123';
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
+      expect(dispatchSpy).toHaveBeenCalledWith(AuthActions.logout());
+      expect(navigateSpy).not.toHaveBeenCalled();
+    });
+  });
 
-    const form = fixture.debugElement.query(By.css('form')).nativeElement as HTMLFormElement;
-    form.dispatchEvent(new Event('submit'));
-    fixture.detectChanges();
+  describe('isEmailDomainValid', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
 
-    expect(loginSpy).toHaveBeenCalled();
-  }));
+    it('should return true when allowedDomain is empty (temporary behavior)', () => {
+      component.allowedDomain = '';
+      component.email = 'anything@whatever.com';
 
-  it('should display the store error message when error$ emits a value', fakeAsync(() => {
-    store.overrideSelector(selectAuthError, 'Invalid credentials');
-    store.refreshState();
-    tick();
-    fixture.detectChanges();
+      expect(component.isEmailDomainValid()).toBe(true);
+    });
 
-    const errorMessages = fixture.debugElement
-      .queryAll(By.css('.error-message'))
-      .map((el) => el.nativeElement.textContent.trim());
+    it('should return true when email ends with allowedDomain', () => {
+      component.allowedDomain = '@company.com';
+      component.email = 'user@company.com';
 
-    expect(errorMessages).toContain('Invalid credentials');
-  }));
+      expect(component.isEmailDomainValid()).toBe(true);
+    });
 
-  it('should NOT display any store error message when error$ is null', fakeAsync(() => {
-    store.overrideSelector(selectAuthError, null);
-    store.refreshState();
-    tick();
-    fixture.detectChanges();
+    it('should return false when email does not end with allowedDomain', () => {
+      component.allowedDomain = '@company.com';
+      component.email = 'user@other.com';
 
-    // only the field-level error-message elements (if any) should exist, not a store error
-    const errorMessages = fixture.debugElement
-      .queryAll(By.css('.error-message'))
-      .map((el) => el.nativeElement.textContent.trim());
+      expect(component.isEmailDomainValid()).toBe(false);
+    });
+  });
 
-    expect(errorMessages).not.toContain('Invalid credentials');
-  }));
+  describe('login()', () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+
+    it('should NOT dispatch login action if email domain is invalid', () => {
+      const dispatchSpy = jest.spyOn(store, 'dispatch');
+
+      component.allowedDomain = '@company.com';
+      component.email = 'user@other.com';
+      component.password = '123456';
+
+      component.login();
+
+      expect(dispatchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should dispatch AuthActions.login with trimmed, lowercased email and password', () => {
+      const dispatchSpy = jest.spyOn(store, 'dispatch');
+
+      component.allowedDomain = '';
+      component.email = '  User@Example.com  ';
+      component.password = 'secret123';
+
+      component.login();
+
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        AuthActions.login({
+          email: 'user@example.com',
+          password: 'secret123',
+        }),
+      );
+    });
+  });
 });
