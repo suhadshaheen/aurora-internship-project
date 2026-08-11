@@ -64,7 +64,11 @@ describe('SectionListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SectionListComponent],
       providers: [
-        provideMockStore({ initialState: {} }),
+        provideMockStore({
+          initialState: {
+            comment: { comments: [], selectedComment: null, loading: false, error: null },
+          },
+        }),
         {
           provide: ActivatedRoute,
           useValue: {
