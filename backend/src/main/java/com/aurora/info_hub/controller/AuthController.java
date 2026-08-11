@@ -33,7 +33,9 @@ public class AuthController {
         this.passwordResetService = passwordResetService;
     }
     @PostMapping("/login")
+
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
