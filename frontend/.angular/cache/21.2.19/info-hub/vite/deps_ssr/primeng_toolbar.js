@@ -4,12 +4,12 @@ import {
   PARENT_INSTANCE
 } from "./chunk-B4BECBKH.js";
 import {
-  BaseStyle
-} from "./chunk-FPS4AEG7.js";
-import {
   Bind,
   BindModule
 } from "./chunk-VURFAXHP.js";
+import {
+  BaseStyle
+} from "./chunk-FPS4AEG7.js";
 import {
   PrimeTemplate,
   SharedModule
