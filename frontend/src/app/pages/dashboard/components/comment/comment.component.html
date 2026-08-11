@@ -1,5 +1,5 @@
 <div class="comments-wrapper">
-  @let currentUser = (currentUser$ | async);
+  @let currentUser = currentUser$ | async;
 
   <h4 class="comments-title">
     <i class="pi pi-comments"></i>
@@ -46,11 +46,7 @@
                   (click)="submitEdit(comment.id)"
                 ></button>
 
-                <button
-                  type="button"
-                  class="comment-cancel-btn"
-                  (click)="cancelEdit()"
-                >
+                <button type="button" class="comment-cancel-btn" (click)="cancelEdit()">
                   Cancel
                 </button>
               </div>
@@ -61,22 +57,14 @@
 
           <div class="comment-actions">
             @if (canComment$ | async) {
-              <button
-                type="button"
-                class="comment-reply-toggle"
-                (click)="startReply(comment.commentId)"
-              >
+              <button type="button" class="comment-reply-toggle" (click)="startReply(comment.id)">
                 <i class="pi pi-reply"></i>
                 Reply
               </button>
             }
 
             @if (comment.canModify && editingCommentId !== comment.id) {
-              <button
-                type="button"
-                class="comment-edit-toggle"
-                (click)="startEdit(comment)"
-              >
+              <button type="button" class="comment-edit-toggle" (click)="startEdit(comment)">
                 <i class="pi pi-pencil"></i>
                 Edit
               </button>
@@ -92,7 +80,7 @@
             }
           </div>
 
-          @if (activeReplyId === comment.commentId) {
+          @if (activeReplyId === comment.id) {
             <div class="comment-reply-form">
               <textarea
                 pTextarea
@@ -107,7 +95,7 @@
                 type="button"
                 label="Post reply"
                 class="comment-submit-btn"
-                (click)="submitReply(currentUser, comment.commentId)"
+                (click)="submitReply(currentUser, comment.id)"
               ></button>
             </div>
           }
@@ -140,11 +128,7 @@
                           (click)="submitEdit(reply.id)"
                         ></button>
 
-                        <button
-                          type="button"
-                          class="comment-cancel-btn"
-                          (click)="cancelEdit()"
-                        >
+                        <button type="button" class="comment-cancel-btn" (click)="cancelEdit()">
                           Cancel
                         </button>
                       </div>
@@ -155,11 +139,7 @@
 
                   @if (reply.canModify && editingCommentId !== reply.id) {
                     <div class="comment-actions">
-                      <button
-                        type="button"
-                        class="comment-edit-toggle"
-                        (click)="startEdit(reply)"
-                      >
+                      <button type="button" class="comment-edit-toggle" (click)="startEdit(reply)">
                         <i class="pi pi-pencil"></i>
                         Edit
                       </button>
@@ -202,8 +182,6 @@
       ></button>
     </div>
   } @else {
-    <p class="comments-status comments-status--muted">
-      Guests cannot post comments.
-    </p>
+    <p class="comments-status comments-status--muted">Guests cannot post comments.</p>
   }
 </div>

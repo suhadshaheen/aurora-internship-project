@@ -1,14 +1,15 @@
 export interface IUser {
-  id:  number;
+  id: number;
   email: string;
-  userName: string;
+  userHandle: string;
   role: string;
   password?: string;
+  deleted: boolean;
 }
 
 // export const user: User = {
 //   id: '',
 //   email: '',
-//   user_name: '',
+//   userHandle: '',
 //   role: ''
 // };

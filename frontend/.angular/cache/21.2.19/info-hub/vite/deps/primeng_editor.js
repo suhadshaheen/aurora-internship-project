@@ -1,36 +1,36 @@
 import {
   BaseEditableHolder
-} from "./chunk-2AUP7BQH.js";
-import "./chunk-DBPGSEMQ.js";
+} from "./chunk-LTDFNTW5.js";
+import "./chunk-DF7QPWJJ.js";
 import {
   PARENT_INSTANCE
-} from "./chunk-SQW6O3TI.js";
+} from "./chunk-H5ELI7PY.js";
 import {
   Bind,
   BindModule
-} from "./chunk-53VGIMAU.js";
+} from "./chunk-Q5ISP34Z.js";
 import {
   BaseStyle
-} from "./chunk-XESWNRYT.js";
+} from "./chunk-SVJLNDMO.js";
 import {
   Header,
   PrimeTemplate,
   SharedModule
-} from "./chunk-LYF62BBJ.js";
+} from "./chunk-7PWQCOKA.js";
 import {
   Z
-} from "./chunk-YM355AYV.js";
+} from "./chunk-INVD3MVZ.js";
 import {
   NG_VALUE_ACCESSOR
-} from "./chunk-OI7Y6CF5.js";
+} from "./chunk-NCLUNNUL.js";
 import {
   CommonModule,
   NgIf,
   NgStyle,
   NgTemplateOutlet,
   isPlatformServer
-} from "./chunk-NRM2FHGF.js";
-import "./chunk-PCJ766W3.js";
+} from "./chunk-N5BFQB5W.js";
+import "./chunk-UBHUY5TE.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -435,7 +435,7 @@ var Editor = class _Editor extends BaseEditableHolder {
       return;
     }
     if (!this.dynamicQuill) {
-      import("./quill-JWWMRHMP.js").then((quillModule) => {
+      import("./quill-JKMNJGVR.js").then((quillModule) => {
         this.dynamicQuill = quillModule.default;
         this.createQuillEditor();
       }).catch((e) => console.error(e.message));

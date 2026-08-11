@@ -17,6 +17,8 @@ public class SectionResponse {
 
     private Boolean visibility;
 
+    private Boolean important;
+
     private LocalDateTime createdAt;
 
     private SectionCategoryResponse category;

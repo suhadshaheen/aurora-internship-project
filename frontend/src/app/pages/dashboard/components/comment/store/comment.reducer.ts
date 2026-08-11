@@ -16,7 +16,6 @@ export const initialCommentState: CommentState = {
   error: null,
 };
 
-
 export const commentReducer = createReducer(
   initialCommentState,
 
@@ -28,10 +27,7 @@ export const commentReducer = createReducer(
 
   on(CommentActions.loadCommentsSuccess, (state, { sectionId, comments }) => ({
     ...state,
-    comments: [
-      ...state.comments.filter((comment) => comment.sectionId !== sectionId),
-      ...comments,
-    ],
+    comments: [...state.comments.filter((comment) => comment.sectionId !== sectionId), ...comments],
     loading: false,
     error: null,
   })),
@@ -70,7 +66,7 @@ export const commentReducer = createReducer(
   on(CommentActions.updateCommentSuccess, (state, { comment }) => ({
     ...state,
     comments: state.comments.map((oldComment) =>
-      oldComment.commentId === comment.commentId ? comment : oldComment
+      oldComment.id === comment.id ? comment : oldComment,
     ),
     selectedComment: null,
     loading: false,
@@ -91,9 +87,7 @@ export const commentReducer = createReducer(
 
   on(CommentActions.deleteCommentSuccess, (state, { commentId }) => ({
     ...state,
-    comments: state.comments.filter(
-      (comment) => comment.commentId !== commentId
-    ),
+    comments: state.comments.filter((comment) => comment.id !== commentId),
     loading: false,
     error: null,
   })),
@@ -102,5 +96,5 @@ export const commentReducer = createReducer(
     ...state,
     loading: false,
     error,
-  }))
+  })),
 );

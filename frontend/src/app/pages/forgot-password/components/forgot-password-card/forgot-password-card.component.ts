@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { email, form, FormField, pattern, required } from '@angular/forms/signals';
+import { email, form, FormField, required } from '@angular/forms/signals';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -16,23 +16,20 @@ import { AuthService } from '../../../../shared/services/auth.services';
   styleUrl: './forgot-password-card.component.css',
 })
 export class ForgotPasswordCard {
- private readonly messageService = inject(MessageService);
-private readonly authService = inject(AuthService);
-private readonly router = inject(Router);
-protected readonly isLoading = signal(false);
-protected readonly constants = FORGOT_PASSWORD_CONSTANTS;
-protected readonly model = signal({ email: '' });
+  private readonly messageService = inject(MessageService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  protected readonly isLoading = signal(false);
+  protected readonly constants = FORGOT_PASSWORD_CONSTANTS;
+  protected readonly model = signal({ email: '' });
 
-  protected readonly forgotForm  = form(this.model, (path) => {
+  protected readonly forgotForm = form(this.model, (path) => {
     required(path.email, {
       when: ({ state }) => state.dirty(),
       message: 'Email is required.',
     });
     email(path.email, {
       message: 'Enter a valid email address.',
-    });
-    pattern(path.email, /^[a-zA-Z0-9._%+-]+@auroratech\.ps$/, {
-      message: 'Only @auroratech.ps emails are allowed.',
     });
   });
 
@@ -43,23 +40,23 @@ protected readonly model = signal({ email: '' });
 
     this.isLoading.set(true);
 
-    this.authService.sendResetLink(this.forgotForm.email().value() ?? '').subscribe({
-      next: () => {
+    this.authService.forgotPassword(this.forgotForm.email().value() ?? '').subscribe({
+      next: (response) => {
         this.isLoading.set(false);
         this.messageService.add({
           severity: 'success',
-          summary: 'Email Sent!',
-          detail: 'Check your inbox for the reset link.',
-          life: 3000,
+          summary: 'Check your email',
+          detail: response.message,
+          life: 5000,
         });
-        setTimeout(() => this.router.navigate(['/reset-password']), 3000);
+        setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: (err) => {
         this.isLoading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-         detail: err.error?.message ?? 'Something went wrong. Please try again.',
+          detail: err.error?.message ?? 'Something went wrong. Please try again.',
           life: 3000,
         });
       },

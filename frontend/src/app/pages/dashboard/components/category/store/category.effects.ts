@@ -37,7 +37,6 @@ export class CategoryEffects {
     ),
   );
 
-  // TODO(TEMP-ID-RENAME): رجّع catId مكان id بكل هاد الـ effect
   deleteCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CategoryActions.deleteCategory),

@@ -2,6 +2,8 @@ package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.entity.PasswordResetToken;
 import com.aurora.info_hub.entity.User;
+import com.aurora.info_hub.exception.ConflictException;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.PasswordResetTokenRepository;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,16 +35,18 @@ public class PasswordResetService {
 
     @Transactional
     public String requestPasswordReset(String email) {
+        User user = userRepository.findByEmailAndDeletedFalse(email)
+                .orElseThrow(() -> new NotFoundException("No account is registered with this email address."));
 
-        User user = userRepository.findByEmail(email)
+
+
+        PasswordResetToken existingToken = tokenRepository.findByUser(user)
                 .orElse(null);
 
-        if (user == null) {
-            return"No account is registered with this email address.";
+        if (existingToken != null) {
+            tokenRepository.delete(existingToken);
+            tokenRepository.flush();
         }
-
-        tokenRepository.deleteByUser(user);
-
         String token = UUID.randomUUID().toString();
 
         PasswordResetToken resetToken = PasswordResetToken.builder()
@@ -53,7 +57,6 @@ public class PasswordResetService {
                 .build();
 
         tokenRepository.save(resetToken);
-
         emailService.sendResetPasswordEmail(user.getEmail(), token);
         return "Password reset link has been sent to your email.";
     }
@@ -62,18 +65,18 @@ public class PasswordResetService {
     public void resetPassword(String token, String newPassword, String confirmPassword) {
 
         if (!newPassword.equals(confirmPassword)) {
-            throw new RuntimeException("Passwords do not match");
+            throw new IllegalArgumentException("Passwords do not match");
         }
 
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+                .orElseThrow(() -> new NotFoundException("Invalid reset token"));
 
         if (resetToken.isUsed()) {
-            throw new RuntimeException("This reset link has already been used");
+            throw new ConflictException("This reset link has already been used");
         }
 
         if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("This reset link has expired");
+            throw new IllegalArgumentException("This reset link has expired");
         }
 
         User user = resetToken.getUser();

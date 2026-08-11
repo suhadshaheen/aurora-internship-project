@@ -21,98 +21,98 @@
   @if (visibleSections$ | async; as sections) {
     @if (sections.length > 0) {
       <div class="sections-list">
-        @for (section of sections; track section.sectionId) {
-          <article class="section-item">
+        @for (section of sections; track section.id) {
+          <article class="section-item" [class.section-item--important]="section.important">
             <div class="section-icon">
               <i class="pi pi-folder"></i>
             </div>
 
             <div class="section-main">
-              @if (editingSectionId === section.sectionId) {
-                <div class="section-edit-form">
-                  <input
-                    type="text"
-                    pInputText
-                    name="editTitle"
-                    [(ngModel)]="editTitle"
-                    class="w-full"
-                  />
+              <div class="section-top">
+                <div class="section-body">
+                  <h3>{{ section.title }}</h3>
 
-                  <p-editor
-                    name="editContent"
-                    [(ngModel)]="editContent"
-                    [style]="{ height: '200px' }"
-                  ></p-editor>
+                  <div
+                    class="section-content"
+                    [innerHTML]="section.safeContent"
+                    (click)="onContentClick($event)"
+                  ></div>
 
-                  <div class="section-edit-actions">
+                  @if (section.documents.length) {
+                    <ul class="section-documents">
+                      @for (document of section.documents; track document.id) {
+                        <li>
+                          <a
+                            [href]="documentUrl(document)"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="section-document-link"
+                          >
+                            <i class="pi pi-file"></i>
+                            {{ document.fileName }}
+                          </a>
+                        </li>
+                      }
+                    </ul>
+                  }
+                </div>
+
+                <div class="section-top-actions">
+                  @if (section.important) {
+                    <p-tag value="Important" severity="warn" icon="pi pi-star-fill"></p-tag>
+                  }
+
+                  @if (section.visibility) {
+                    <p-tag value="Visible" severity="success"></p-tag>
+                  } @else {
+                    <p-tag value="Hidden" severity="danger"></p-tag>
+                  }
+
+                  @if (section.canModify) {
                     <button
                       type="button"
                       pButton
+                      [icon]="section.important ? 'pi pi-star-fill' : 'pi pi-star'"
+                      severity="warn"
+                      [text]="true"
+                      [attr.aria-label]="
+                        section.important ? 'Unmark as important' : 'Mark as important'
+                      "
+                      (click)="toggleImportant(section)"
+                    ></button>
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-pencil"
                       severity="secondary"
-                      label="Cancel"
-                      (click)="cancelEdit()"
+                      [text]="true"
+                      (click)="startEdit(section)"
                     ></button>
                     <button
                       type="button"
                       pButton
-                      label="Save"
-                      (click)="submitEdit(section)"
+                      icon="pi pi-trash"
+                      severity="danger"
+                      [text]="true"
+                      (click)="deleteSection(section.id)"
                     ></button>
-                  </div>
+                  }
                 </div>
-              } @else {
-                <div class="section-top">
-                  <div>
-                    <h3>{{ section.title }}</h3>
+              </div>
 
-                    <div
-                      class="section-content"
-                      [innerHTML]="section.content">
-                    </div>
-                  </div>
+              <div class="section-meta">
+                <span>
+                  <i class="pi pi-tag"></i>
+                  Category: {{ section.category.catName }}
+                </span>
 
-                  <div class="section-top-actions">
-                    @if (section.visibility) {
-                      <p-tag value="Visible" severity="success"></p-tag>
-                    } @else {
-                      <p-tag value="Hidden" severity="danger"></p-tag>
-                    }
+                <span>
+                  <i class="pi pi-calendar"></i>
+                  {{ section.createdAt | date: 'mediumDate' }}
+                </span>
+              </div>
 
-                    @if (section.canModify) {
-                      <button
-                        type="button"
-                        pButton
-                        icon="pi pi-pencil"
-                        severity="secondary"
-                        [text]="true"
-                        (click)="startEdit(section)"
-                      ></button>
-                      <button
-                        type="button"
-                        pButton
-                        icon="pi pi-trash"
-                        severity="danger"
-                        [text]="true"
-                        (click)="deleteSection(section.id)"
-                      ></button>
-                    }
-                  </div>
-                </div>
-
-                <div class="section-meta">
-                  <span>
-                    <i class="pi pi-tag"></i>
-                    Category: {{ section.catId }}
-                  </span>
-
-                  <span>
-                    <i class="pi pi-calendar"></i>
-                    {{ section.dateCreated | date:'mediumDate' }}
-                  </span>
-                </div>
-
-                <app-comment [sectionId]="section.sectionId"></app-comment>
-              }
+              <app-comment [sectionId]="section.id"></app-comment>
             </div>
           </article>
         }
@@ -120,5 +120,128 @@
     } @else {
       <p class="empty-text">No sections found.</p>
     }
+  }
+
+  <p-dialog
+    header="Edit Section"
+    [modal]="true"
+    [visible]="editDialogVisible"
+    (visibleChange)="onEditDialogVisibleChange($event)"
+    [style]="{ width: '45rem' }"
+    styleClass="edit-section-dialog"
+  >
+    <div class="edit-section-form">
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="editTitle" class="font-semibold w-8rem">Title</label>
+
+        <input
+          pInputText
+          id="editTitle"
+          name="editTitle"
+          class="flex-auto form-input"
+          [(ngModel)]="editTitle"
+          autocomplete="off"
+          placeholder="Section title"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block mb-2">Content</label>
+
+        <div #editEditorBounds>
+          <p-editor
+            name="editContent"
+            [(ngModel)]="editContent"
+            [style]="{ height: '200px' }"
+            [bounds]="editEditorBounds"
+            (onInit)="onEditorInit($event)"
+          ></p-editor>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block mb-2">Documents</label>
+
+        @if (editingSection && editingSection.documents.length) {
+          <ul class="file-chip-list">
+            @for (document of editingSection.documents; track document.id) {
+              <li class="file-chip">
+                <span class="file-chip__name">{{ document.fileName }}</span>
+                <button
+                  type="button"
+                  class="file-chip__remove"
+                  (click)="removeExistingDocument(document.id)"
+                  aria-label="Remove document"
+                >
+                  <i class="pi pi-times"></i>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+
+        <input
+          #editDocumentsInput
+          type="file"
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.ppt,.pptx"
+          multiple
+          hidden
+          (change)="onEditDocumentsSelected($event)"
+        />
+        <p-button
+          label="Choose Documents"
+          icon="pi pi-file"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="editDocumentsInput.click()"
+        >
+        </p-button>
+
+        @if (editDocuments.length) {
+          <ul class="file-chip-list">
+            @for (file of editDocuments; track file.name; let i = $index) {
+              <li class="file-chip">
+                <span class="file-chip__name">{{ file.name }}</span>
+                <button
+                  type="button"
+                  class="file-chip__remove"
+                  (click)="removeEditDocument(i)"
+                  aria-label="Remove document"
+                >
+                  <i class="pi pi-times"></i>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="flex justify-content-end gap-2">
+        <p-button
+          label="Cancel"
+          severity="secondary"
+          styleClass="cancel-btn"
+          (onClick)="cancelEdit()"
+        >
+        </p-button>
+
+        <p-button label="Save" styleClass="save-btn" (onClick)="submitEdit()"> </p-button>
+      </div>
+    </div>
+  </p-dialog>
+
+  @if (lightboxUrl) {
+    <div class="image-lightbox-backdrop" (click)="closeLightbox()">
+      <button
+        type="button"
+        class="image-lightbox-close"
+        (click)="closeLightbox()"
+        aria-label="Close image preview"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+
+      <img [src]="lightboxUrl" class="image-lightbox-img" (click)="$event.stopPropagation()" />
+    </div>
   }
 </section>

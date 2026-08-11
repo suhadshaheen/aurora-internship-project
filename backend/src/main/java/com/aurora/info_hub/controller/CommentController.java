@@ -1,9 +1,11 @@
 package com.aurora.info_hub.controller;
 import com.aurora.info_hub.dto.comment.CommentRequest;
 import com.aurora.info_hub.dto.comment.CommentResponse;
+import com.aurora.info_hub.dto.comment.CommentUpdateRequest;
 
 
 import com.aurora.info_hub.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
-@CrossOrigin(origins = "http://localhost:4200")
 public class CommentController {
 
 
@@ -26,8 +27,11 @@ public class CommentController {
 
     
     @GetMapping
-   public List<CommentResponse> getAllComments(){
+   public List<CommentResponse> getAllComments(@RequestParam(value = "sectionId", required = false) Long sectionId){
 
+        if (sectionId != null) {
+            return commentService.getCommentsBySection(sectionId);
+        }
         return commentService.getAllComments();
     }
 
@@ -44,7 +48,7 @@ public CommentResponse getCommentById(@PathVariable Long id) {
     
     @PostMapping
 public CommentResponse addComment(
-        @RequestBody CommentRequest request
+        @Valid @RequestBody CommentRequest request
 ) {
     return commentService.createComment(request);
 }
@@ -52,10 +56,10 @@ public CommentResponse addComment(
 
 
    
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
 public CommentResponse updateComment(
         @PathVariable Long id,
-        @RequestBody CommentRequest request
+        @Valid @RequestBody CommentUpdateRequest request
 ) {
     return commentService.updateComment(id, request);
 }

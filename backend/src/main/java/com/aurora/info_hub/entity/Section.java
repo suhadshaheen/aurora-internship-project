@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 
 @Entity
@@ -35,10 +36,15 @@ public class Section {
 
     private Boolean visibility;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean important = false;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 50)
     @Builder.Default
     private List<SectionDocs> sectionDocs = new ArrayList<>();
 
@@ -49,6 +55,7 @@ public class Section {
 
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 50)
     @Builder.Default
     private List<SectionImage> images = new ArrayList<>();
 }

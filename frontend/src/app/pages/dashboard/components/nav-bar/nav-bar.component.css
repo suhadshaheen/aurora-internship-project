@@ -8,7 +8,6 @@
   object-fit: cover;
 }
 
-
 ::ng-deep .app-navbar {
   margin: 1rem;
   padding: 0.7rem 1.2rem;
@@ -24,8 +23,6 @@
   align-items: center;
   gap: 0.8rem;
 }
-
-
 
 .brand-name {
   color: white;

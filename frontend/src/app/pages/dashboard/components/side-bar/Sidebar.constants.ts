@@ -8,10 +8,11 @@ export const SIDEBAR_ROUTES = {
 export const QUERY_PARAMS = {
   catId: 'catId',
   mine: 'mine',
+  view: 'view',
 } as const;
 
 export const USER_ROLES = {
-  admin: 'admin',
-  employee: 'employee',
-  guest: 'guest',
+  admin: 'ADMIN',
+  employee: 'EMPLOYEE',
+  guest: 'GUEST',
 } as const;

@@ -7,7 +7,7 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RESET_PASSWORD_CONSTANTS } from '../../reset-password.constants';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../shared/services/auth.services';
 
 @Component({
@@ -21,9 +21,13 @@ export class ResetPasswordCardComponent {
   private readonly messageService = inject(MessageService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   protected readonly constants = RESET_PASSWORD_CONSTANTS;
   protected readonly isLoading = signal(false);
+  protected readonly tokenMissing = signal(false);
+
+  private token = '';
 
   protected readonly model = signal({ newPassword: '', confirmPassword: '' });
 
@@ -44,21 +48,27 @@ export class ResetPasswordCardComponent {
     return this.resetForm().valid() && !this.passwordMismatch();
   });
 
+  constructor() {
+    this.token = this.route.snapshot.queryParamMap.get('token') ?? '';
+    if (!this.token) {
+      this.tokenMissing.set(true);
+    }
+  }
+
   protected onSubmit(event: Event): void {
     event.preventDefault();
-    if (!this.isFormValid()) return;
+    if (!this.isFormValid() || !this.token) return;
 
     this.isLoading.set(true);
-    const email = localStorage.getItem('resetEmail') ?? '';
+    const { newPassword, confirmPassword } = this.model();
 
-    this.authService.resetPassword(email, this.model().newPassword).subscribe({
-      next: () => {
+    this.authService.resetPassword(this.token, newPassword, confirmPassword).subscribe({
+      next: (response) => {
         this.isLoading.set(false);
-        localStorage.removeItem('resetEmail');
         this.messageService.add({
           severity: 'success',
           summary: this.constants.toast.summary,
-          detail: this.constants.toast.detail,
+          detail: response.message,
           life: 3000,
         });
         setTimeout(() => this.router.navigate(['/login']), 3000);

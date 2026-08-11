@@ -2,14 +2,17 @@ package com.aurora.info_hub.service;
 
 import com.aurora.info_hub.dto.comment.CommentRequest;
 import com.aurora.info_hub.dto.comment.CommentResponse;
+import com.aurora.info_hub.dto.comment.CommentUpdateRequest;
 import com.aurora.info_hub.entity.Comment;
 import com.aurora.info_hub.entity.Section;
+import com.aurora.info_hub.exception.NotFoundException;
 import com.aurora.info_hub.repository.CommentRepository;
 import com.aurora.info_hub.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import com.aurora.info_hub.repository.SectionRepository;
 import java.util.List;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.aurora.info_hub.entity.User;
@@ -32,9 +35,19 @@ public class CommentService {
  
     // GET all comments
     public List<CommentResponse> getAllComments() {
-    return commentRepository.findAll()
+    return commentRepository.findByParentCommentIsNull()
             .stream()
             .map(this::mapToResponse)
+            .toList();
+}
+
+    // GET comments for one section as a flat list (roots + replies), each
+    // carrying its own parentCommentId so the client can build the reply tree
+    // itself without duplicating nested data.
+    public List<CommentResponse> getCommentsBySection(Long sectionId) {
+    return commentRepository.findByCreatedIn_Id(sectionId)
+            .stream()
+            .map(this::mapToFlatResponse)
             .toList();
 }
 
@@ -45,7 +58,7 @@ public class CommentService {
 
     Comment comment = commentRepository.findById(id)
             .orElseThrow(() ->
-                    new RuntimeException("Comment not found"));
+                    new NotFoundException("Comment not found"));
 
     return mapToResponse(comment);
 }
@@ -59,13 +72,9 @@ public class CommentService {
 
     String email = authentication.getName();
 
-    User currentUser = userRepository.findByEmail(email)
+    User currentUser = userRepository.findByEmailAndDeletedFalse(email)
         .orElseThrow(() ->
-                new RuntimeException("User not found"));
-
-    if (request.getContent() == null || request.getContent().isBlank()) {
-        throw new RuntimeException("Comment content cannot be empty");
-    }
+                new NotFoundException("User not found"));
 
     Comment comment = new Comment();
 
@@ -73,7 +82,7 @@ public class CommentService {
 
     Section section = sectionRepository.findById(request.getSectionId())
             .orElseThrow(() ->
-                    new RuntimeException("Section not found"));
+                    new NotFoundException("Section not found"));
 
     comment.setCreatedBy(currentUser);
     comment.setCreatedIn(section);
@@ -83,7 +92,7 @@ public class CommentService {
         Comment parent = commentRepository.findById(
                 request.getParentCommentId()
         ).orElseThrow(() ->
-                new RuntimeException("Parent comment not found"));
+                new NotFoundException("Parent comment not found"));
 
         comment.setParentComment(parent);
     }
@@ -92,10 +101,11 @@ public class CommentService {
 
     return mapToResponse(savedComment);
 }
-    // PUT update comment
-  public CommentResponse updateComment(Long id, CommentRequest request) {
+    // PATCH update comment
+  public CommentResponse updateComment(Long id, CommentUpdateRequest request) {
 
     Comment comment = getCommentEntity(id);
+    requireOwnerOrAdmin(comment, "edit");
 
     comment.setContent(request.getContent());
 
@@ -106,10 +116,11 @@ public class CommentService {
 
 
 
-    
+
     public void deleteComment(Long id){
 
     Comment comment = getCommentEntity(id);
+    requireOwnerOrAdmin(comment, "delete");
 
     commentRepository.delete(comment);
 }
@@ -118,16 +129,35 @@ public class CommentService {
 
     return commentRepository.findById(id)
             .orElseThrow(() ->
-                    new RuntimeException("Comment not found"));
+                    new NotFoundException("Comment not found"));
 }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmailAndDeletedFalse(email)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    private boolean isAdmin(User user) {
+        return "ADMIN".equalsIgnoreCase(user.getRole());
+    }
+
+    private void requireOwnerOrAdmin(Comment comment, String action) {
+        User currentUser = getCurrentUser();
+        if (!isAdmin(currentUser) && !comment.getCreatedBy().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("You can only " + action + " your own comments");
+        }
+    }
 
     private CommentResponse mapToResponse(Comment comment) {
     return CommentResponse.builder()
             .id(comment.getId())
             .content(comment.getContent())
             .createdById(comment.getCreatedBy().getId())
-            .createdByName(comment.getCreatedBy().getUserHandle()) // أو getUsername()
+            .createdByName(comment.getCreatedBy().getUserHandle())
             .sectionId(comment.getCreatedIn().getId())
+            .parentCommentId(comment.getParentComment() == null ? null : comment.getParentComment().getId())
             .dateCreated(comment.getDateCreated())
             .children(
                     comment.getChildren() == null
@@ -137,6 +167,19 @@ public class CommentService {
                                     .map(this::mapToResponse)
                                     .toList()
             )
+            .build();
+}
+
+    private CommentResponse mapToFlatResponse(Comment comment) {
+    return CommentResponse.builder()
+            .id(comment.getId())
+            .content(comment.getContent())
+            .createdById(comment.getCreatedBy().getId())
+            .createdByName(comment.getCreatedBy().getUserHandle())
+            .sectionId(comment.getCreatedIn().getId())
+            .parentCommentId(comment.getParentComment() == null ? null : comment.getParentComment().getId())
+            .dateCreated(comment.getDateCreated())
+            .children(List.of())
             .build();
 }
 

@@ -101,7 +101,6 @@
           </li>
         }
 
-        <!-- TODO(TEMP-ID-RENAME): رجّع cat.catId مكان cat.id بالأربع أسطر تحت -->
         @for (cat of categories(); track cat.id) {
           <li class="sidebar__subitem" [class.sidebar__item--active]="activeCatId() === cat.id">
             <div pRipple class="sidebar__link" (click)="onCategoryClick(cat.id)">
@@ -138,6 +137,30 @@
         }
       </ul>
     </li>
+    @if (isAdmin()) {
+      <li class="sidebar__item">
+        <div
+          pRipple
+          (click)="onAllUsersClick()"
+          [class.sidebar__item--active]="isUsersViewActive()"
+          class="sidebar__link"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="sidebar__icon"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>All Users</span>
+        </div>
+      </li>
+    }
   </ul>
 
   <div class="sidebar__footer">
@@ -145,11 +168,11 @@
 
     <div class="sidebar__user">
       <p-avatar
-        [label]="currentUser()?.userName?.charAt(0) ?? 'U'"
+        [label]="currentUser()?.userHandle?.charAt(0) ?? 'U'"
         shape="circle"
         class="sidebar__avatar"
       />
-      <span class="sidebar__username">{{ currentUser()?.userName ?? 'Guest' }}</span>
+      <span class="sidebar__username">{{ currentUser()?.userHandle ?? 'Guest' }}</span>
     </div>
 
     @if (!isGuest()) {

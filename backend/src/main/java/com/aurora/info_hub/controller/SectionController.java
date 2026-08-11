@@ -1,7 +1,6 @@
 package com.aurora.info_hub.controller;
 
 import com.aurora.info_hub.dto.section.SectionPatchRequest;
-import com.aurora.info_hub.dto.section.SectionRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Section;
 import com.aurora.info_hub.service.SectionService;
@@ -31,24 +30,34 @@ public class SectionController {
             @RequestParam("title") String title,
             @RequestParam("content") String content,
             @RequestParam("categoryId") Long categoryId,
-            @RequestParam(value = "images", required = false) List<MultipartFile> images,
             @RequestParam(value = "visibility", required = false, defaultValue = "true") Boolean visibility,
+            @RequestParam(value = "images", required = false) List<MultipartFile> images,
             @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ) {
-        return sectionService.createSection(title, content,categoryId, visibility, images, documents);
+        return sectionService.createSection(title, content, categoryId, visibility, images, documents);
     }
-@PutMapping("/{id}")
+@PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SectionResponse updateSection(
             @PathVariable Long id,
-            @RequestBody SectionRequest request
-
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam(value = "visibility", required = false, defaultValue = "true") Boolean visibility,
+            @RequestParam(value = "documents", required = false) List<MultipartFile> documents
     ){
-        return sectionService.updateSection(id, request);
+        return sectionService.updateSection(id, title, content, categoryId, visibility, documents);
     }
     @DeleteMapping("/{id}")
     public void deleteSection(@PathVariable Long id) {
         sectionService.deleteSection(id);
 
+    }
+    @DeleteMapping("/{sectionId}/documents/{documentId}")
+    public SectionResponse deleteSectionDocument(
+            @PathVariable Long sectionId,
+            @PathVariable Long documentId
+    ) {
+        return sectionService.deleteSectionDocument(sectionId, documentId);
     }
     @PatchMapping("/{id}")
     public SectionResponse patchSection(
@@ -56,5 +65,9 @@ public class SectionController {
             @RequestBody SectionPatchRequest request
     ){
         return sectionService.patchSection(id, request);
+    }
+    @GetMapping("/by-category/{categoryId}")
+    public List<SectionResponse> getSectionsByCategory(@PathVariable Long categoryId) {
+        return sectionService.getSectionsByCategory(categoryId);
     }
 }

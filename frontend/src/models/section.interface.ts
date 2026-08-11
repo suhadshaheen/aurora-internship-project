@@ -1,10 +1,17 @@
+import { ISectionCategoryResponse } from './SectionCategoryResponse.interface';
+import { ISectionDocResponse } from './SectionDocResponse.interface';
+import { ISectionImageResponse } from './SectionImageResponse.interface';
+import { ISectionUserResponse } from './SectionUserResponse.interface';
+
 export interface ISection {
   id: number; // Optional ID for sections that may not have a database-generated ID yet
-  sectionId: number;
   title: string;
   content: string;
-  userId: number;
-  catId: number;
   visibility: boolean;
-  dateCreated: Date;
+  important: boolean;
+  createdAt: string;
+  category: ISectionCategoryResponse;
+  createdBy: ISectionUserResponse;
+  images: ISectionImageResponse[];
+  documents: ISectionDocResponse[];
 }

@@ -1,16 +1,19 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from '../guards/auth.guard';
-
+import { AllUsersComponent } from './pages/dashboard/components/user/all-users/all-users.component';
+import { adminGuard } from '../guards/admin.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/landing-page/landing-page.component').then((m) => m.LandingPage),
+    loadComponent: () =>
+      import('./pages/landing-page/landing-page.component').then((m) => m.LandingPage),
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login-page/login-page.component').then((m) => m.LoginPageComponent),
+    loadComponent: () =>
+      import('./pages/login-page/login-page.component').then((m) => m.LoginPageComponent),
   },
   {
     path: 'forgot-password',
@@ -37,13 +40,17 @@ export const routes: Routes = [
   {
     path: 'admin-dashboard',
     loadComponent: () =>
-      import('./pages/dashboard/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent),
+      import('./pages/dashboard/admin-dashboard/admin-dashboard.component').then(
+        (m) => m.AdminDashboardComponent,
+      ),
     canActivate: [authGuard],
   },
   {
     path: 'guest-dashboard',
     loadComponent: () =>
-      import('./pages/dashboard/guest-dashboard/guest-dashboard.component').then((m) => m.GuestDashboardComponent),
+      import('./pages/dashboard/guest-dashboard/guest-dashboard.component').then(
+        (m) => m.GuestDashboardComponent,
+      ),
     canActivate: [authGuard],
   },
 ];

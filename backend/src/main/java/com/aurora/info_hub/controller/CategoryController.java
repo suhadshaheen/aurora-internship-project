@@ -3,6 +3,7 @@ package com.aurora.info_hub.controller;
 import com.aurora.info_hub.dto.category.CategoryRequest;
 import com.aurora.info_hub.dto.category.CategoryResponse;
 import com.aurora.info_hub.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class CategoryController {
 
     }
     @PostMapping
-    public CategoryResponse createCategory(@RequestBody CategoryRequest request){
+    public CategoryResponse createCategory(@Valid @RequestBody CategoryRequest request){
         return categoryService.createCategory(request);
     }
 

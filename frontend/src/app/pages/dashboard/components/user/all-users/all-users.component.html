@@ -1,0 +1,116 @@
+<p-toast></p-toast>
+<div class="users-page">
+  <p-confirmdialog />
+
+  <div class="users-page__header">
+    <h2>All Users</h2>
+    <button type="button" class="add-user-trigger" (click)="onAddUser()">
+      <span class="add-icon">
+        <i class="pi pi-plus"></i>
+      </span>
+      <span class="add-text">Add User</span>
+    </button>
+  </div>
+
+  <p-table [value]="users()" [loading]="loading()" styleClass="p-datatable-sm users-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Handle</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th style="width: 4rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr [class.deleted-user]="user.deleted">
+        <td>
+          {{ user.userHandle }}
+
+          <p-tag
+            *ngIf="user.deleted"
+            value="Deleted"
+            severity="secondary"
+            styleClass="ml-2"
+          ></p-tag>
+        </td>
+
+        <td>{{ user.email }}</td>
+
+        <td>
+          <p-tag [value]="user.role" severity="info"></p-tag>
+        </td>
+
+        <td>
+          <button
+            *ngIf="user.id !== currentUserId && !user.deleted"
+            pButton
+            icon="pi pi-trash"
+            severity="danger"
+            [text]="true"
+            (click)="onDeleteUser($event, user.id)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="empty-text">No users yet</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    header="Add User"
+    [(visible)]="showAddDialog"
+    [modal]="true"
+    [style]="{ width: '28rem' }"
+  >
+    <div class="add-user-field">
+      <label for="userHandle">User handle</label>
+      <input
+        pInputText
+        id="userHandle"
+        [(ngModel)]="newUser.userHandle"
+        class="w-full form-input"
+      />
+    </div>
+    <div class="add-user-field">
+      <label for="email">Email</label>
+      <input pInputText id="email" [(ngModel)]="newUser.email" class="w-full form-input" />
+    </div>
+    <div class="add-user-field">
+      <label for="password">Password</label>
+      <p-password
+        id="password"
+        [(ngModel)]="newUser.password"
+        [toggleMask]="true"
+        [feedback]="false"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+      />
+    </div>
+    <div class="add-user-field">
+      <label for="role">Role</label>
+      <p-select
+        id="role"
+        [options]="roles"
+        [(ngModel)]="newUser.role"
+        optionLabel="label"
+        optionValue="value"
+        styleClass="w-full"
+        appendTo="body"
+      />
+    </div>
+    <div class="add-user-actions">
+      <button
+        pButton
+        label="Cancel"
+        severity="secondary"
+        [outlined]="true"
+        styleClass="cancel-btn"
+        (click)="onCancelAddUser()"
+      ></button>
+      <button pButton label="Add" styleClass="save-btn" (click)="onConfirmAddUser()"></button>
+    </div>
+  </p-dialog>
+</div>

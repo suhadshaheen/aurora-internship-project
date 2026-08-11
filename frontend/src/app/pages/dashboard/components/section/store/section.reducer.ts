@@ -16,6 +16,16 @@ const initialSectionState: ISectionState = {
   error: null,
 };
 
+// Important sections float to the top; within each tier, newest first.
+function sortSections(sections: ISection[]): ISection[] {
+  return [...sections].sort((a, b) => {
+    if (a.important !== b.important) {
+      return a.important ? -1 : 1;
+    }
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+}
+
 export const sectionReducer = createReducer(
   initialSectionState,
   on(SectionActions.loadSections, (state) => ({
@@ -41,7 +51,7 @@ export const sectionReducer = createReducer(
   on(SectionActions.addSectionSuccess, (state, { section }) => ({
     ...state,
     loading: false,
-    sections: [section, ...state.sections],
+    sections: sortSections([section, ...state.sections]),
   })),
   on(SectionActions.addSectionFailure, (state, { error }) => ({
     ...state,
@@ -54,10 +64,10 @@ export const sectionReducer = createReducer(
     error: null,
   })),
   on(SectionActions.deleteSectionSuccess, (state, { sectionId }) => ({
-  ...state,
-  loading: false,
-  sections: state.sections.filter((s) => s.id !== sectionId),
-})),
+    ...state,
+    loading: false,
+    sections: state.sections.filter((s) => s.id !== sectionId),
+  })),
   on(SectionActions.deleteSectionFailure, (state, { error }) => ({
     ...state,
     loading: false,
@@ -68,13 +78,11 @@ export const sectionReducer = createReducer(
     loading: true,
     error: null,
   })),
-on(SectionActions.updateSectionSuccess, (state, { section }) => ({
-  ...state,
-  loading: false,
-  sections: state.sections.map((s) =>
-    s.id === section.id ? section : s
-  ),
-})),
+  on(SectionActions.updateSectionSuccess, (state, { section }) => ({
+    ...state,
+    loading: false,
+    sections: state.sections.map((s) => (s.id === section.id ? section : s)),
+  })),
   on(SectionActions.updateSectionFailure, (state, { error }) => ({
     ...state,
     loading: false,
@@ -83,5 +91,21 @@ on(SectionActions.updateSectionSuccess, (state, { section }) => ({
   on(SectionActions.selectSection, (state, { section }) => ({
     ...state,
     selectedSection: section,
+  })),
+  on(SectionActions.deleteSectionDocumentSuccess, (state, { section }) => ({
+    ...state,
+    sections: state.sections.map((s) => (s.id === section.id ? section : s)),
+  })),
+  on(SectionActions.deleteSectionDocumentFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(SectionActions.setSectionImportantSuccess, (state, { section }) => ({
+    ...state,
+    sections: sortSections(state.sections.map((s) => (s.id === section.id ? section : s))),
+  })),
+  on(SectionActions.setSectionImportantFailure, (state, { error }) => ({
+    ...state,
+    error,
   })),
 );

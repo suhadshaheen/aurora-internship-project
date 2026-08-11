@@ -57,7 +57,7 @@ export class SideBarComponent implements OnInit {
   activeCatId = signal<number | null>(null);
   isMineActive = signal(false);
   isDashboardActive = signal(false);
-
+  isUsersViewActive = signal(false);
   showAddCategoryDialog = false;
   newCategoryName = '';
 
@@ -76,10 +76,12 @@ export class SideBarComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       const catParam = params.get(QUERY_PARAMS.catId);
       const mineParam = params.get(QUERY_PARAMS.mine) === 'true';
+      const viewParam = params.get(QUERY_PARAMS.view);
 
       this.activeCatId.set(catParam ? Number(catParam) : null);
       this.isMineActive.set(mineParam);
-      this.isDashboardActive.set(!catParam && !mineParam);
+      this.isUsersViewActive.set(viewParam === 'users');
+      this.isDashboardActive.set(!catParam && !mineParam && !viewParam);
     });
   }
 
@@ -97,8 +99,7 @@ export class SideBarComponent implements OnInit {
     });
   }
 
-  onCategoryClick(id: number): void  {
-    // TODO(TEMP-ID-RENAME): اسم البارامتر اختياري بس - القيمة هي id الكاتيجوري
+  onCategoryClick(id: number): void {
     this.router.navigate([this.getDashboardRoute()], {
       queryParams: { [QUERY_PARAMS.catId]: id },
     });
@@ -112,18 +113,14 @@ export class SideBarComponent implements OnInit {
   onCancelAddCategory(): void {
     this.showAddCategoryDialog = false;
   }
-
   onConfirmAddCategory(): void {
     const name = this.newCategoryName.trim();
     if (!name) return;
 
-    // TODO(TEMP-ID-RENAME): ما عاد محتاجين نولد id يدوياً - json-server عم يولده
-    // تلقائياً بما إنه الحقل الوحيد للـ identity هلق اسمه "id" فعلياً
     this.store.dispatch(
       CategoryActions.addCategory({
         category: {
           catName: name,
-          userId: this.currentUser()?.id ?? 0,
         },
       }),
     );
@@ -133,10 +130,13 @@ export class SideBarComponent implements OnInit {
   }
 
   onDeleteCategory(id: number): void {
-    // TODO(TEMP-ID-RENAME): رجّع catId مكان id
     this.store.dispatch(CategoryActions.deleteCategory({ id }));
   }
-
+  onAllUsersClick(): void {
+    this.router.navigate([this.getDashboardRoute()], {
+      queryParams: { [QUERY_PARAMS.view]: 'users' },
+    });
+  }
   onLogout(event: Event): void {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
