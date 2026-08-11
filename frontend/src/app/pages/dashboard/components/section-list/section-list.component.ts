@@ -153,7 +153,9 @@ export class SectionListComponent implements OnInit {
       return;
     }
 
-    this.store.dispatch(SectionActions.deleteSectionDocument({ sectionId: section.id, documentId }));
+    this.store.dispatch(
+      SectionActions.deleteSectionDocument({ sectionId: section.id, documentId }),
+    );
 
     // Optimistic local update so the dialog reflects the removal immediately
     // instead of waiting on the round trip.

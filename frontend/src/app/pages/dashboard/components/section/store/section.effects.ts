@@ -77,7 +77,9 @@ export class SectionEffects {
       mergeMap(({ sectionId, documentId }) =>
         this.sectionsService.deleteDocument(sectionId, documentId).pipe(
           map((section) => SectionActions.deleteSectionDocumentSuccess({ section })),
-          catchError((error) => of(SectionActions.deleteSectionDocumentFailure({ error: error.message }))),
+          catchError((error) =>
+            of(SectionActions.deleteSectionDocumentFailure({ error: error.message })),
+          ),
         ),
       ),
     ),
@@ -89,7 +91,9 @@ export class SectionEffects {
       mergeMap(({ id, important }) =>
         this.sectionsService.setImportant(id, important).pipe(
           map((section) => SectionActions.setSectionImportantSuccess({ section })),
-          catchError((error) => of(SectionActions.setSectionImportantFailure({ error: error.message }))),
+          catchError((error) =>
+            of(SectionActions.setSectionImportantFailure({ error: error.message })),
+          ),
         ),
       ),
     ),

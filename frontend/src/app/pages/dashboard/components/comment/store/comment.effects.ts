@@ -7,26 +7,24 @@ import { CommentService } from '../services/comment.service';
 
 @Injectable()
 export class CommentEffects {
- private actions$ = inject(Actions);
+  private actions$ = inject(Actions);
   private commentService = inject(CommentService);
   loadComments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CommentActions.loadComments),
       mergeMap(({ sectionId }) =>
         this.commentService.getCommentsBySectionId(sectionId).pipe(
-          map((comments) =>
-            CommentActions.loadCommentsSuccess({ sectionId, comments })
-          ),
+          map((comments) => CommentActions.loadCommentsSuccess({ sectionId, comments })),
           catchError((error) =>
             of(
               CommentActions.loadCommentsFailure({
                 error: error.message || 'Failed to load comments',
-              })
-            )
-          )
-        )
-      )
-    )
+              }),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   addComment$ = createEffect(() =>
@@ -34,19 +32,17 @@ export class CommentEffects {
       ofType(CommentActions.addComment),
       mergeMap(({ sectionId, parentCommentId, content }) =>
         this.commentService.addComment({ sectionId, parentCommentId, content }).pipe(
-          map((comment) =>
-            CommentActions.addCommentSuccess({ comment })
-          ),
+          map((comment) => CommentActions.addCommentSuccess({ comment })),
           catchError((error) =>
             of(
               CommentActions.addCommentFailure({
                 error: error.message || 'Failed to add comment',
-              })
-            )
-          )
-        )
-      )
-    )
+              }),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   updateComment$ = createEffect(() =>
@@ -54,40 +50,34 @@ export class CommentEffects {
       ofType(CommentActions.updateComment),
       mergeMap(({ commentId, content }) =>
         this.commentService.updateComment(commentId, content).pipe(
-          map((comment) =>
-            CommentActions.updateCommentSuccess({ comment })
-          ),
+          map((comment) => CommentActions.updateCommentSuccess({ comment })),
           catchError((error) =>
             of(
               CommentActions.updateCommentFailure({
                 error: error.message || 'Failed to update comment',
-              })
-            )
-          )
-        )
-      )
-    )
+              }),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
-deleteComment$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(CommentActions.deleteComment),
-    mergeMap(({ commentId }) =>
-      this.commentService.deleteComment(commentId).pipe(
-        map(() =>
-          CommentActions.deleteCommentSuccess({ commentId })
+  deleteComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CommentActions.deleteComment),
+      mergeMap(({ commentId }) =>
+        this.commentService.deleteComment(commentId).pipe(
+          map(() => CommentActions.deleteCommentSuccess({ commentId })),
+          catchError((error) =>
+            of(
+              CommentActions.deleteCommentFailure({
+                error: error.message || 'Delete comment failed',
+              }),
+            ),
+          ),
         ),
-        catchError((error) =>
-          of(
-            CommentActions.deleteCommentFailure({
-              error: error.message || 'Delete comment failed'
-            })
-          )
-        )
-      )
-    )
-  )
-);
-
-  
+      ),
+    ),
+  );
 }

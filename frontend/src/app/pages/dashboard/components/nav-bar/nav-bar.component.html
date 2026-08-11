@@ -2,7 +2,7 @@
   <ng-template pTemplate="start">
     <div class="brand">
       <div class="brand-logo">
-         <img src="assets/logo-4.png" alt="Info Hub Logo" class="navbar_logo" />
+        <img src="assets/logo-4.png" alt="Info Hub Logo" class="navbar_logo" />
       </div>
       <span class="brand-name"> Info Hub</span>
     </div>
@@ -14,38 +14,35 @@
     </div>
   </ng-template>
 
- <ng-template pTemplate="end">
-  @if (user$ | async; as user) {
-    <div class="user-box">
-      <p-avatar
-        [label]="user.userHandle.charAt(0).toUpperCase()"
-        shape="circle"
-        styleClass="user-avatar">
-      </p-avatar>
+  <ng-template pTemplate="end">
+    @if (user$ | async; as user) {
+      <div class="user-box">
+        <p-avatar
+          [label]="user.userHandle.charAt(0).toUpperCase()"
+          shape="circle"
+          styleClass="user-avatar"
+        >
+        </p-avatar>
 
-      <div class="user-info">
-        <span class="user-name">
-          {{ user.userHandle }}
-        </span>
+        <div class="user-info">
+          <span class="user-name">
+            {{ user.userHandle }}
+          </span>
 
-        <small>
-          {{ user.role }}
-        </small>
+          <small>
+            {{ user.role }}
+          </small>
+        </div>
       </div>
-    </div>
-  } @else {
-    <div class="user-box">
-      <p-avatar
-        label="U"
-        shape="circle"
-        styleClass="user-avatar">
-      </p-avatar>
+    } @else {
+      <div class="user-box">
+        <p-avatar label="U" shape="circle" styleClass="user-avatar"> </p-avatar>
 
-      <div class="user-info">
-        <span class="user-name">User</span>
-        <small>Not loaded</small>
+        <div class="user-info">
+          <span class="user-name">User</span>
+          <small>Not loaded</small>
+        </div>
       </div>
-    </div>
-  }
-</ng-template>
+    }
+  </ng-template>
 </p-toolbar>

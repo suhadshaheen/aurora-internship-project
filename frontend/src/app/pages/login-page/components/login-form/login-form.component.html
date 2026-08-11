@@ -1,74 +1,67 @@
 <form #loginForm="ngForm" class="login-form" (ngSubmit)="login()">
+  <p-floatlabel variant="in" class="field-wrapper">
+    <input
+      pInputText
+      id="email"
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      #emailInput="ngModel"
+      required
+      email
+      placeholder="Your email"
+      class="login-input"
+    />
 
-<p-floatlabel variant="in" class="field-wrapper">
-  <input
-    pInputText
-    id="email"
-    type="email"
-    name="email"
-    [(ngModel)]="email"
-    #emailInput="ngModel"
-    required
-    email
-    placeholder="Your email"
-    class="login-input"
-  />
-
-  <label for="email">Email</label>
-</p-floatlabel>
+    <label for="email">Email</label>
+  </p-floatlabel>
 
   @if (emailInput.invalid && emailInput.dirty) {
     <small class="error-message">
-      {{loginConstants.inValidErrorMassage}}
+      {{ loginConstants.inValidErrorMassage }}
     </small>
   }
 
   @if (emailInput.valid && email && !isEmailDomainValid()) {
     <small class="error-message">
-      {{ loginConstants.domainErrorMassage}}
+      {{ loginConstants.domainErrorMassage }}
     </small>
   }
-<p-floatlabel variant="in" class="field-wrapper">
-  <p-password
-    inputId="password"
-    name="password"
-    [(ngModel)]="password"
-    #passwordInput="ngModel"
-    required
-    placeholder="Password"
-    styleClass="password-field"
-    inputStyleClass="login-input"
-    [feedback]="false"
-    [toggleMask]="true">
-  </p-password>
+  <p-floatlabel variant="in" class="field-wrapper">
+    <p-password
+      inputId="password"
+      name="password"
+      [(ngModel)]="password"
+      #passwordInput="ngModel"
+      required
+      placeholder="Password"
+      styleClass="password-field"
+      inputStyleClass="login-input"
+      [feedback]="false"
+      [toggleMask]="true"
+    >
+    </p-password>
 
-  <label for="password">Password</label>
-</p-floatlabel>
+    <label for="password">Password</label>
+  </p-floatlabel>
 
   @if (passwordInput.invalid && passwordInput.dirty) {
     <small class="error-message">
-      {{loginConstants.PasswordError}}
+      {{ loginConstants.PasswordError }}
     </small>
   }
 
-  <a routerLink="/forgot-password" class="forgot-password">
-    Forgot Password?
-  </a>
+  <a routerLink="/forgot-password" class="forgot-password"> Forgot Password? </a>
 
   <button
-  pButton
-  type="submit"
-  label="Log In"
-  class="login-btn"
-  [disabled]="loginForm.invalid || !isEmailDomainValid()">
-</button>
-@if (error$ | async; as error) {
-  <small class="error-message">{{ error }}</small>
-}
+    pButton
+    type="submit"
+    label="Log In"
+    class="login-btn"
+    [disabled]="loginForm.invalid || !isEmailDomainValid()"
+  ></button>
+  @if (error$ | async; as error) {
+    <small class="error-message">{{ error }}</small>
+  }
 </form>
-<button
-  type="button"
-  class="back-home-btn"
-  routerLink="/">
-  Back to Landing Page
-</button>
+<button type="button" class="back-home-btn" routerLink="/">Back to Landing Page</button>

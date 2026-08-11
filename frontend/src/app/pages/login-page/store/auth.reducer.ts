@@ -35,7 +35,7 @@ export const authReducer = createReducer(
   on(AuthActions.login, (state) => ({
     ...state,
     loading: true,
-    error: null
+    error: null,
   })),
 
   on(AuthActions.loginSuccess, (state, { user, token }) => ({
@@ -44,34 +44,33 @@ export const authReducer = createReducer(
     token,
     isLoggedIn: true,
     loading: false,
-    error: null
+    error: null,
   })),
 
-  
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
-on(AuthActions.continueAsGuest, (state) => ({
-  ...state,
-  user: {
-    id: 0,
-    email: 'guest@auroratech.ps',
-    userHandle: 'Guest',
-    role: 'GUEST'
-  },
-  token: 'guest-token',
-  isLoggedIn: true,
-  loading: false,
-  error: null
-})),
+  on(AuthActions.continueAsGuest, (state) => ({
+    ...state,
+    user: {
+      id: 0,
+      email: 'guest@auroratech.ps',
+      userHandle: 'Guest',
+      role: 'GUEST',
+    },
+    token: 'guest-token',
+    isLoggedIn: true,
+    loading: false,
+    error: null,
+  })),
   on(AuthActions.logout, () => ({
-    ...initialAuthState
+    ...initialAuthState,
   })),
 
   on(AuthActions.clearError, (state) => ({
     ...state,
-    error: null
-  }))
+    error: null,
+  })),
 );

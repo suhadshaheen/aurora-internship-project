@@ -4,7 +4,7 @@ import { AuthUser } from './auth.state';
 export const AuthActions = createActionGroup({
   source: 'Auth',
   events: {
-    'Login': props<{ email: string; password: string }>(),
+    Login: props<{ email: string; password: string }>(),
 
     'Login Success': props<{
       user: AuthUser;
@@ -15,8 +15,8 @@ export const AuthActions = createActionGroup({
 
     'Continue As Guest': emptyProps(),
 
-    'Logout': emptyProps(),
+    Logout: emptyProps(),
 
-    'Clear Error': emptyProps()
-  }
+    'Clear Error': emptyProps(),
+  },
 });

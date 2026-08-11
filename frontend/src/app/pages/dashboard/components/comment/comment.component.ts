@@ -8,7 +8,11 @@ import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 
 import { CommentActions } from './store/comment.actions';
-import { selectCommentsBySectionId, selectCommentError, selectCommentLoading } from './store/comment.selectors';
+import {
+  selectCommentsBySectionId,
+  selectCommentError,
+  selectCommentLoading,
+} from './store/comment.selectors';
 import { selectCurrentUser, selectUserRole } from '../../../login-page/store/auth.selectors';
 import { AuthUser } from '../../../login-page/store/auth.state';
 import { IComment } from '../../../../../models/comment.interface';
@@ -101,38 +105,38 @@ export class CommentComponent implements OnInit {
     this.activeReplyId = null;
   }
 
- startEdit(comment: DisplayComment): void {
-  this.editingCommentId = comment.id;
-  this.editContent = comment.content;
-}
+  startEdit(comment: DisplayComment): void {
+    this.editingCommentId = comment.id;
+    this.editContent = comment.content;
+  }
 
   cancelEdit(): void {
     this.editingCommentId = null;
     this.editContent = '';
   }
-submitEdit(id: number): void {
-  const content = this.editContent.trim();
-  if (!content) {
-    return;
+  submitEdit(id: number): void {
+    const content = this.editContent.trim();
+    if (!content) {
+      return;
+    }
+
+    this.store.dispatch(
+      CommentActions.updateComment({
+        commentId: id,
+        content,
+      }),
+    );
+
+    this.editingCommentId = null;
+    this.editContent = '';
   }
-
-  this.store.dispatch(
-    CommentActions.updateComment({
-      commentId: id,
-      content
-    })
-  );
-
-  this.editingCommentId = null;
-  this.editContent = '';
-}
- deleteComment(id: number): void {
-  this.store.dispatch(
-    CommentActions.deleteComment({
-      commentId: id
-    })
-  );
-}
+  deleteComment(id: number): void {
+    this.store.dispatch(
+      CommentActions.deleteComment({
+        commentId: id,
+      }),
+    );
+  }
 
   private buildCommentTree(
     comments: IComment[],

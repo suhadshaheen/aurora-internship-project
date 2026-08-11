@@ -64,10 +64,10 @@ export const sectionReducer = createReducer(
     error: null,
   })),
   on(SectionActions.deleteSectionSuccess, (state, { sectionId }) => ({
-  ...state,
-  loading: false,
-  sections: state.sections.filter((s) => s.id !== sectionId),
-})),
+    ...state,
+    loading: false,
+    sections: state.sections.filter((s) => s.id !== sectionId),
+  })),
   on(SectionActions.deleteSectionFailure, (state, { error }) => ({
     ...state,
     loading: false,
@@ -78,13 +78,11 @@ export const sectionReducer = createReducer(
     loading: true,
     error: null,
   })),
-on(SectionActions.updateSectionSuccess, (state, { section }) => ({
-  ...state,
-  loading: false,
-  sections: state.sections.map((s) =>
-    s.id === section.id ? section : s
-  ),
-})),
+  on(SectionActions.updateSectionSuccess, (state, { section }) => ({
+    ...state,
+    loading: false,
+    sections: state.sections.map((s) => (s.id === section.id ? section : s)),
+  })),
   on(SectionActions.updateSectionFailure, (state, { error }) => ({
     ...state,
     loading: false,
