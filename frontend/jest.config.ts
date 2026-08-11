@@ -5,14 +5,7 @@ export default {
 
   testEnvironment: 'jsdom',
 
-  transform: {
-    '^.+\\.(ts|mjs|js|html)$': [
-      'jest-preset-angular',
-      {
-        tsconfig: '<rootDir>/tsconfig.spec.json',
-      },
-    ],
-  },
+  
 
   moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
 
