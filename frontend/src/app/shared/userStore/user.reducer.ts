@@ -49,11 +49,19 @@ export const userReducer = createReducer(
     error,
   })),
 
-  on(UserActions.deleteUserSuccess, (state, { id }) => ({
-    ...state,
-    users: state.users.filter((u) => u.id !== id),
-  })),
-  on(UserActions.deleteUserSuccess, (state) => ({
-    ...state,
-  })),
+  on(UserActions.deleteUser, (state) => ({
+  ...state,
+  loading: true,
+  error: null,
+})),
+on(UserActions.deleteUserSuccess, (state, { id }) => ({
+  ...state,
+  users: state.users.filter((u) => u.id !== id),
+  loading: false,
+})),
+on(UserActions.deleteUserFailure, (state, { error }) => ({
+  ...state,
+  loading: false,
+  error,
+})),
 );

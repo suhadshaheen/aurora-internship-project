@@ -35,3 +35,4 @@ build/
 .vscode/frontend/.angular/
 frontend/node_modules/
 
+.coverage
