@@ -9,6 +9,9 @@ import { selectCurrentUser, selectUserRole } from '../../../login-page/store/aut
 import { selectCategories } from '../category/store/category.selectors';
 import { Store } from '@ngrx/store';
 import { CategoryActions } from '../category/store/category.actions';
+import { AuthActions } from '../../../login-page/store/auth.actions';
+import { QUERY_PARAMS, SIDEBAR_ROUTES } from './Sidebar.constants';
+import { ConfirmationService } from 'primeng/api';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -16,6 +19,7 @@ describe('SideBarComponent', () => {
   let store: MockStore;
   let dispatchSpy: jest.SpyInstance;
   let routerMock: { navigate: jest.Mock };
+  let confirmSpy: jest.SpyInstance;
   const mockCategory: ICategory = {
     id: 1,
     catName: 'Networking',
@@ -52,6 +56,10 @@ describe('SideBarComponent', () => {
     dispatchSpy = jest.spyOn(store, 'dispatch');
     fixture = TestBed.createComponent(SideBarComponent);
     component = fixture.componentInstance;
+    const confirmationService = fixture.debugElement.injector.get(ConfirmationService);
+    confirmSpy = jest
+      .spyOn(confirmationService, 'confirm')
+      .mockImplementation(() => confirmationService);
 
     fixture.detectChanges();
   };
@@ -159,6 +167,157 @@ describe('SideBarComponent', () => {
       component.onDeleteCategory(5);
 
       expect(dispatchSpy).toHaveBeenCalledWith(CategoryActions.deleteCategory({ id: 5 }));
+    });
+  });
+  describe('getDashboardRoute', () => {
+    it('should return adminDashboard route when role is ADMIN', () => {
+      expect(component.getDashboardRoute()).toBe(SIDEBAR_ROUTES.adminDashboard);
+    });
+  });
+
+  describe('ngOnInit - query params', () => {
+    it('should set activeCatId when catId param is present', () => {
+      queryParamMapSubject.next(convertToParamMap({ catId: '3' }));
+
+      expect(component.activeCatId()).toBe(3);
+    });
+
+    it('should set activeCatId to null when catId param is absent', () => {
+      queryParamMapSubject.next(convertToParamMap({}));
+
+      expect(component.activeCatId()).toBeNull();
+    });
+
+    it('should set isMineActive to true when mine=true', () => {
+      queryParamMapSubject.next(convertToParamMap({ mine: 'true' }));
+
+      expect(component.isMineActive()).toBe(true);
+    });
+
+    it('should set isMineActive to false when mine is absent', () => {
+      queryParamMapSubject.next(convertToParamMap({}));
+
+      expect(component.isMineActive()).toBe(false);
+    });
+
+    it('should set isUsersViewActive to true when view=users', () => {
+      queryParamMapSubject.next(convertToParamMap({ view: 'users' }));
+
+      expect(component.isUsersViewActive()).toBe(true);
+    });
+
+    it('should set isUsersViewActive to false when view is something else', () => {
+      queryParamMapSubject.next(convertToParamMap({ view: 'other' }));
+
+      expect(component.isUsersViewActive()).toBe(false);
+    });
+
+    it('should set isDashboardActive to true when no params are present', () => {
+      queryParamMapSubject.next(convertToParamMap({}));
+
+      expect(component.isDashboardActive()).toBe(true);
+    });
+
+    it('should set isDashboardActive to false when catId is present', () => {
+      queryParamMapSubject.next(convertToParamMap({ catId: '1' }));
+
+      expect(component.isDashboardActive()).toBe(false);
+    });
+
+    it('should set isDashboardActive to false when mine is present', () => {
+      queryParamMapSubject.next(convertToParamMap({ mine: 'true' }));
+
+      expect(component.isDashboardActive()).toBe(false);
+    });
+
+    it('should set isDashboardActive to false when view is present', () => {
+      queryParamMapSubject.next(convertToParamMap({ view: 'users' }));
+
+      expect(component.isDashboardActive()).toBe(false);
+    });
+  });
+
+  describe('onDashboardClick', () => {
+    it('should navigate to the dashboard route', () => {
+      component.onDashboardClick();
+
+      expect(routerMock.navigate).toHaveBeenCalledWith([SIDEBAR_ROUTES.adminDashboard]);
+    });
+  });
+
+  describe('onMySectionsClick', () => {
+    it('should navigate to the dashboard route with mine=true', () => {
+      component.onMySectionsClick();
+
+      expect(routerMock.navigate).toHaveBeenCalledWith([SIDEBAR_ROUTES.adminDashboard], {
+        queryParams: { [QUERY_PARAMS.mine]: true },
+      });
+    });
+  });
+
+  describe('onCategoryClick', () => {
+    it('should navigate to the dashboard route with the given catId', () => {
+      component.onCategoryClick(7);
+
+      expect(routerMock.navigate).toHaveBeenCalledWith([SIDEBAR_ROUTES.adminDashboard], {
+        queryParams: { [QUERY_PARAMS.catId]: 7 },
+      });
+    });
+  });
+
+  describe('onAllUsersClick', () => {
+    it('should navigate to the dashboard route with view=users', () => {
+      component.onAllUsersClick();
+
+      expect(routerMock.navigate).toHaveBeenCalledWith([SIDEBAR_ROUTES.adminDashboard], {
+        queryParams: { [QUERY_PARAMS.view]: 'users' },
+      });
+    });
+  });
+
+  describe('onLogout', () => {
+    it('should call confirmationService.confirm with the correct message', () => {
+      const fakeEvent = { target: {} } as unknown as Event;
+
+      component.onLogout(fakeEvent);
+
+      expect(confirmSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Are you sure you want to log out?',
+          header: 'Confirm Logout',
+        }),
+      );
+    });
+
+    it('should dispatch logout and navigate to login when accepted', () => {
+      const fakeEvent = { target: {} } as unknown as Event;
+
+      component.onLogout(fakeEvent);
+
+      const confirmCallArgs = confirmSpy.mock.calls[0][0];
+      confirmCallArgs.accept();
+
+      expect(dispatchSpy).toHaveBeenCalledWith(AuthActions.logout());
+      expect(routerMock.navigate).toHaveBeenCalledWith([SIDEBAR_ROUTES.login]);
+    });
+
+    it('should not dispatch logout when not accepted', () => {
+      const fakeEvent = { target: {} } as unknown as Event;
+      dispatchSpy.mockClear();
+
+      component.onLogout(fakeEvent);
+      // ما استدعينا accept()
+
+      expect(dispatchSpy).not.toHaveBeenCalledWith(AuthActions.logout());
+    });
+  });
+
+  describe('onBackToHome', () => {
+    it('should dispatch logout and navigate to root', () => {
+      component.onBackToHome();
+
+      expect(dispatchSpy).toHaveBeenCalledWith(AuthActions.logout());
+      expect(routerMock.navigate).toHaveBeenCalledWith(['/']);
     });
   });
 });
