@@ -79,6 +79,21 @@ describe('LoginFormComponent (template)', () => {
     );
   }));
 
+  it('should show password required error message once password field is dirty and empty', fakeAsync(() => {
+    const passwordInput = getPasswordInput();
+    // type then clear, to mark the field as dirty while empty
+    setInputValue(passwordInput, 'temp');
+    setInputValue(passwordInput, '');
+    tick();
+    fixture.detectChanges();
+
+    const errorMessages = fixture.debugElement
+      .queryAll(By.css('.error-message'))
+      .map((el) => el.nativeElement.textContent.trim());
+
+    expect(errorMessages).toContain(LOGIN_FORM_CONSTANTS.PasswordError);
+  }));
+
   it('should show domain error message when email is valid but domain does not match', fakeAsync(() => {
     component.allowedDomain = '@company.com';
 
@@ -157,4 +172,18 @@ describe('LoginFormComponent (template)', () => {
 
     expect(errorMessages).not.toContain('Invalid credentials');
   }));
+
+  it('should render a "Forgot Password?" link pointing to /forgot-password', () => {
+    const link = fixture.debugElement.query(By.css('a.forgot-password'));
+    expect(link).toBeTruthy();
+    expect(link.nativeElement.textContent.trim()).toContain('Forgot Password?');
+    expect(link.nativeElement.getAttribute('routerlink')).toBe('/forgot-password');
+  });
+
+  it('should render a "Back to Landing Page" button pointing to /', () => {
+    const link = fixture.debugElement.query(By.css('button.back-home-btn'));
+    expect(link).toBeTruthy();
+    expect(link.nativeElement.textContent.trim()).toContain('Back to Landing Page');
+    expect(link.nativeElement.getAttribute('routerlink')).toBe('/');
+  });
 });
