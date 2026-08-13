@@ -1,6 +1,5 @@
 package com.aurora.info_hub.service;
 
-import com.aurora.info_hub.FileStorageService;
 import com.aurora.info_hub.dto.section.SectionPatchRequest;
 import com.aurora.info_hub.dto.section.SectionResponse;
 import com.aurora.info_hub.entity.Category;

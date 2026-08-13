@@ -1,4 +1,4 @@
-package com.aurora.info_hub;
+package com.aurora.info_hub.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
