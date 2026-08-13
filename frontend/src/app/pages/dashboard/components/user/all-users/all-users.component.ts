@@ -56,7 +56,8 @@ export class AllUsersComponent implements OnInit {
   currentUserId!: number;
   ngOnInit(): void {
     this.store.dispatch(UserActions.loadUsers());
-    this.currentUserId = Number(localStorage.getItem('userId'));
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.currentUserId = Number(user.id) || 0;
     this.actions$.pipe(ofType(UserActions.deleteUserFailure)).subscribe(({ error }) => {
       this.messageService.add({
         severity: 'error',
@@ -84,6 +85,15 @@ export class AllUsersComponent implements OnInit {
     this.showAddDialog = false;
   }
   onDeleteUser(event: Event, id: number): void {
+    if (id === this.currentUserId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Action not allowed',
+        detail: 'You cannot delete yourself.',
+      });
+      return;
+    }
+
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Are you sure you want to delete this user? This action cannot be undone.',

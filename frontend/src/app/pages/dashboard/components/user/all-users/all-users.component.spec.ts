@@ -60,7 +60,16 @@ describe('AllUsersComponent', () => {
   };
 
   beforeEach(async () => {
-    localStorage.setItem('userId', '1');
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        id: 1,
+        userHandle: 'suhad_sh',
+        email: 'suhad@auroratech.ps',
+        role: 'ADMIN',
+      }),
+    );
+
     await createComponent();
   });
 
@@ -86,8 +95,8 @@ describe('AllUsersComponent', () => {
       expect(component.currentUserId).toBe(1);
     });
 
-    it('should set currentUserId to 0 when localStorage has no userId', () => {
-      localStorage.removeItem('userId');
+    it('should set currentUserId to 0 when localStorage has no user', () => {
+      localStorage.removeItem('user');
 
       fixture.detectChanges();
 
@@ -221,6 +230,33 @@ describe('AllUsersComponent', () => {
   });
 
   describe('onDeleteUser', () => {
+    it('should show an error toast and not open confirm dialog when deleting self', () => {
+      fixture.detectChanges();
+      component.currentUserId = 1;
+
+      const fakeEvent = { target: {} } as unknown as Event;
+
+      component.onDeleteUser(fakeEvent, 1);
+
+      expect(messageServiceAddSpy).toHaveBeenCalledWith({
+        severity: 'error',
+        summary: 'Action not allowed',
+        detail: 'You cannot delete yourself.',
+      });
+      expect(confirmSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not dispatch deleteUser when attempting to delete self', () => {
+      fixture.detectChanges();
+      component.currentUserId = 1;
+      dispatchSpy.mockClear();
+
+      const fakeEvent = { target: {} } as unknown as Event;
+
+      component.onDeleteUser(fakeEvent, 1);
+
+      expect(dispatchSpy).not.toHaveBeenCalled();
+    });
     it('should call confirmationService.confirm with the correct message', () => {
       fixture.detectChanges();
 
