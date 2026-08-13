@@ -6,10 +6,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
 public class FileStorageService {
+
+    private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
+            "jpg", "jpeg", "png", "gif",
+            "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt"
+    );
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -23,12 +30,20 @@ public class FileStorageService {
 
             String originalFilename = file.getOriginalFilename();
             String extension = originalFilename != null && originalFilename.contains(".")
-                    ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                    ? originalFilename.substring(originalFilename.lastIndexOf(".") + 1)
+                            .toLowerCase(Locale.ROOT)
                     : "";
-            String fileName = UUID.randomUUID() + extension;
+
+            if (!ALLOWED_EXTENSIONS.contains(extension)) {
+                throw new IllegalArgumentException("Unsupported file type: ." + extension);
+            }
+
+            String fileName = UUID.randomUUID() + "." + extension;
 
             Path targetPath = uploadPath.resolve(fileName);
-            Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+            try (var inputStream = file.getInputStream()) {
+                Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+            }
 
             return "/uploads/sections/" + fileName;
 
