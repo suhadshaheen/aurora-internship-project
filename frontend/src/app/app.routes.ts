@@ -43,7 +43,7 @@ export const routes: Routes = [
       import('./pages/dashboard/admin-dashboard/admin-dashboard.component').then(
         (m) => m.AdminDashboardComponent,
       ),
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   {
     path: 'guest-dashboard',

@@ -17,6 +17,8 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0.5rem 1rem 1rem;
+  user-select: none;
+  cursor: default;
 }
 
 .sidebar__logo {
@@ -42,6 +44,7 @@
   padding: 0.5rem 0;
   margin: 0;
   flex: 1;
+  user-select: none;
 }
 
 .sidebar__item {
@@ -156,6 +159,7 @@
 
 .sidebar__footer {
   padding: 0;
+  user-select: none;
 }
 
 .sidebar__user {
